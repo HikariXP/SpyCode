@@ -1,28 +1,41 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 局域网战局总体管理，负责整体的网络响应
 /// </summary>
 public class GameNetworkManager : NetworkManager
 {
-    //public static GameNetworkManager Instance { get; private set; }
+    public static GameNetworkManager Instance { get; private set; }
 
-    //public override void Awake()
-    //{
-    //    base.Awake();
-    //    if (Instance != null)
-    //    {
-    //        Debug.LogError("instance is existed");
-    //        return;
-    //    }
+    /// <summary>
+    /// [事件]玩家数量发生变化:现有玩家数
+    /// </summary>
+    public event Action<int> OnPlayerAmountChange;
 
-    //    Instance = this;
-    //}
+    public override void Awake()
+    {
+        base.Awake();
+        if (Instance != null)
+        {
+            Debug.LogError("instance is existed");
+            return;
+        }
+
+        Instance = this;
+    }
+
     public Dictionary<NetworkConnectionToClient, PlayerUnit> playerList = new Dictionary<NetworkConnectionToClient, PlayerUnit>();
+
+    public override void OnStartHost()
+    {
+        base.OnStartHost();
+    }
 
     public override void OnStartServer()
     {
@@ -45,6 +58,7 @@ public class GameNetworkManager : NetworkManager
     //这是客户端调用的，客户端发送信息
     public override void OnClientConnect()
     {
+        //默认是设置了Mirror自己的Ready才允许创建PlayerPref，但是我们用自己的Ready，所以这个得保留
         base.OnClientConnect();
 
         var playerAddInfo = new PlayerAddInfo()
@@ -59,6 +73,9 @@ public class GameNetworkManager : NetworkManager
     public override void OnClientDisconnect()
     {
         base.OnClientDisconnect();
+
+        //通知
+        OnPlayerAmountChange?.Invoke(playerList.Count);
     }
 
     /// <summary>
@@ -68,6 +85,8 @@ public class GameNetworkManager : NetworkManager
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
         base.OnServerConnect(conn);
+
+
     }
 
     /// <summary>
@@ -79,12 +98,17 @@ public class GameNetworkManager : NetworkManager
         base.OnServerDisconnect(conn);
 
         playerList.Remove(conn);
+
+        //通知
+        OnPlayerAmountChange?.Invoke(playerList.Count);
     }
 
 
 
+
+
     /// <summary>
-    /// 根据用户传递的个人信息创建玩家
+    /// 根据用户传递的个人信息创建玩家(这个方法只会在Server层面调用，所以Client收不到的)
     /// </summary>
     public void OnCreatePlayerInLANRoom(NetworkConnectionToClient clientConnection,PlayerAddInfo info)
     {
@@ -92,13 +116,14 @@ public class GameNetworkManager : NetworkManager
 
         var playerUnit = playerTemp.GetComponent<PlayerUnit>();
         playerUnit.playerName = info.playerName;
-        playerUnit.playerLabel = info.playerLabel;
+        playerUnit.playerSignature = info.playerLabel;
 
         playerList.Add(clientConnection, playerUnit);
 
         NetworkServer.AddPlayerForConnection(clientConnection, playerTemp);
+
+
         Debug.Log("Server:New Player is Added,with name:"+ playerUnit.playerName);
-        
     }
 
     /// <summary>
@@ -117,6 +142,22 @@ public class GameNetworkManager : NetworkManager
         }
         return AddressIP;
     }
+
+    /// <summary>
+    /// 主动断开连接
+    /// </summary>
+    public void Disconnect()
+    {
+        switch (mode)
+        {
+            case NetworkManagerMode.Host:
+                StopHost();
+                break;
+            case NetworkManagerMode.ClientOnly:
+                StopClient();
+                break;
+        }
+    }
 }
 
 /// <summary>
@@ -132,8 +173,9 @@ public struct PlayerAddInfo : NetworkMessage
 /// <summary>
 /// 本机模式
 /// </summary>
-public enum GameMode
+public enum ServerMode
 {
     host,
-    client
+    client,
+    offline
 }

@@ -20,7 +20,7 @@ public class PlayerUnit : NetworkBehaviour
     /// 玩家个性签名
     /// </summary>
     [SyncVar]
-    public string playerLabel;
+    public string playerSignature;
 
     #endregion
 
@@ -33,7 +33,7 @@ public class PlayerUnit : NetworkBehaviour
     public bool isReady;
 
     /// <summary>
-    /// 玩家队伍
+    /// 玩家队伍,0是蓝队、1是红队，无关队名
     /// </summary>
     [SyncVar]
     public int playerTeamIndex;
@@ -41,11 +41,11 @@ public class PlayerUnit : NetworkBehaviour
     #endregion 对局信息
 
     /// <summary>
-    /// 设置为准备
+    /// 反选准备状态
     /// </summary>
     [Command]
     public void SetReady()
     {
-        isReady = true;
+        isReady = !isReady;
     }
 }
