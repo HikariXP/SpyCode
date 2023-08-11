@@ -15,6 +15,4 @@ public class UIHelper : MonoBehaviour
     }
 
     public PlayerUnit localPlayerUnit;
-
-    public PlayerUnitCommander localPlayerUnitCommander;
 }

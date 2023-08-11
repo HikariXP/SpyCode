@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 3764186754989855353}
   - component: {fileID: 3764186754989855355}
   - component: {fileID: 3764186754989855354}
-  - component: {fileID: 7476291548118561978}
   m_Layer: 0
   m_Name: PlayerUnit
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,21 +66,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   playerName: 
-  playerLabel: 
+  playerSignature: 
   isReady: 0
   playerTeamIndex: 0
---- !u!114 &7476291548118561978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3764186754989855352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: beac2e1d2e0dc944a8ecc7675cfdbfcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0

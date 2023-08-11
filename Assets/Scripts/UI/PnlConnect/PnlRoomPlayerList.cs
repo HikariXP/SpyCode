@@ -12,26 +12,18 @@ public class PnlRoomPlayerList : MonoBehaviour
 
     public GameObject playerInfoUnitPerfab;
 
-    private void Start()
+    internal void Init()
     {
-        
-    }
 
-    private void OnEnable()
-    {
-        GameNetworkManager.Instance.OnPlayerAmountChange += RefreshCurrentState;
-    }
-
-    private void OnDisable()
-    {
-        GameNetworkManager.Instance.OnPlayerAmountChange -= RefreshCurrentState;
     }
 
     /// <summary>
     /// 根据现在GameNetworkManager的状况刷新房间玩家显示
     /// </summary>
-    public void RefreshCurrentState(int playerAmount)
+    public void RefreshCurrentState()
     {
+        Debug.Log("Client Refresh");
+
         ClearChilds(teamPlayerShowListArchor_A);
         ClearChilds(teamPlayerShowListArchor_B);
 
@@ -52,21 +44,21 @@ public class PnlRoomPlayerList : MonoBehaviour
 
     private void CreatePlayerInfoShowUnitToTransform()
     {
-        //求效率了，可重构
-        foreach (KeyValuePair<Mirror.NetworkConnectionToClient, PlayerUnit> playerConnect in GameNetworkManager.Instance.playerList)
-        {
-            if (playerConnect.Value.playerTeamIndex == 0)
-            {
-                var tempPlayerInfoUnit = Instantiate(playerInfoUnitPerfab, teamPlayerShowListArchor_A);
-                tempPlayerInfoUnit.GetComponent<PlayerInfoShow>().txtPlayerName.text = playerConnect.Value.playerName;
-                tempPlayerInfoUnit.GetComponent<PlayerInfoShow>().txtPlayerSignature.text = playerConnect.Value.playerSignature;
-            }
-            else
-            {
-                var tempPlayerInfoUnit = Instantiate(playerInfoUnitPerfab, teamPlayerShowListArchor_B);
-                tempPlayerInfoUnit.GetComponent<PlayerInfoShow>().txtPlayerName.text = playerConnect.Value.playerName;
-                tempPlayerInfoUnit.GetComponent<PlayerInfoShow>().txtPlayerSignature.text = playerConnect.Value.playerSignature;
-            }
-        }
+        //foreach (PlayerUnit pu in GameNetworkManager.Instance.playerUnits)
+        //{
+        //    if (pu.playerTeamIndex == 0)
+        //    {
+        //        var playerProfileDisplayUnit = Instantiate(playerInfoUnitPerfab, teamPlayerShowListArchor_A).GetComponent<PlayerInfoShow>();
+        //        playerProfileDisplayUnit.txtPlayerName.text = pu.playerName;
+        //        playerProfileDisplayUnit.txtPlayerSignature.text = pu.playerSignature;
+        //    }
+        //    else
+        //    {
+        //        var playerProfileDisplayUnit = Instantiate(playerInfoUnitPerfab, teamPlayerShowListArchor_B).GetComponent<PlayerInfoShow>();
+        //        playerProfileDisplayUnit.txtPlayerName.text = pu.playerName;
+        //        playerProfileDisplayUnit.txtPlayerSignature.text = pu.playerSignature;
+        //    }
+        //}
+
     }
 }

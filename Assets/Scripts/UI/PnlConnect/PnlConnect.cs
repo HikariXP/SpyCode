@@ -28,7 +28,9 @@ public class PnlConnect : MonoBehaviour
     {
         foreach (GameObject panelGameObject in panels)
         {
-            panelGameObject.GetComponent<PnlConnectUnit>().SetOrderRecevier(this);
+            var panelTemp = panelGameObject.GetComponent<PnlConnectUnit>();
+            panelTemp.SetOrderRecevier(this);
+            panelTemp.Init();
         }
     }
 
@@ -51,4 +53,6 @@ public class PnlConnect : MonoBehaviour
 public interface PnlConnectUnit
 {
     void SetOrderRecevier(PnlConnect pnlConnect);
+
+    void Init();
 }

@@ -13,15 +13,17 @@ public class WordSystem
     private int m_WordStartIndex;
     private int m_WordEndIndex;
 
-    //特殊词库索引
+    //特殊词库索引W
     private int m_WordSpecialStartIndex;
     private int m_WordSpecialEndIndex;
+
+    private List<int> wordIndexHaveBeSelected = new List<int>();
 
     /// <summary>
     /// 加载新的词库。此操作会清空原有词库。
     /// </summary>
     /// <returns></returns>
-    public bool LoadWordCollection(ref List<string> standardWords,ref List<string> specialWords)
+    public bool LoadWordCollection(ref List<string> standardWords)
     {
         if(standardWords==null)
         {
@@ -53,6 +55,6 @@ public class WordSystem
     /// <param name="standardWords"></param>
     private void LoadStandardWords(ref List<string> standardWords)
     { 
-    
+        
     }
 }
