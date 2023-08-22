@@ -1,3 +1,4 @@
+using Mirror;
 using NetworkControl.GamePlayNetwork;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PnlProfile : PanelBase
+public class PnlProfile : MonoBehaviour
 {
     public TMP_InputField inputField_Name;
     public TMP_InputField inputField_Signature;
@@ -14,7 +15,7 @@ public class PnlProfile : PanelBase
     public Button ClientButton;
 
     [SerializeField]
-    private GPNServer server;
+    private NetworkManager server;
 
     void Start()
     {
@@ -22,6 +23,8 @@ public class PnlProfile : PanelBase
         LoadProfile();
 
         RegisterButtonClickCallBack();
+
+        server = GPNServer.singleton;
     }
 
     void RegisterButtonClickCallBack()
@@ -88,18 +91,18 @@ public class PnlProfile : PanelBase
         return true;
     }
 
-    private void OnPlayerConnectedToServer()
-    {
-        UIManager.instance.ChangePanel(1);
-    }
+    //private void OnPlayerConnectedToServer()
+    //{
+    //    UIManager.instance.ChangePanel(1);
+    //}
 
-    public override void Reset()
-    {
-        Debug.Log("Reset");
-    }
+    //public override void Reset()
+    //{
+    //    Debug.Log("Reset");
+    //}
 
-    public override void Init()
-    {
-        server = UIManager.instance.GPN_Server;
-    }
+    //public override void Init()
+    //{
+    //    server = UIManager.instance.GPN_Server;
+    //}
 }

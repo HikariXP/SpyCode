@@ -40,9 +40,6 @@ public class PlayerUnit : NetworkBehaviour
     [SyncVar]
     public int playerTeamIndex;
 
-
-    public SyncList<int> playerDecode;
-
     #endregion 对局信息
 
     public event Action<SyncList<int>> OnLocalPlayerGetCode;
