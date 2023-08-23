@@ -1862,7 +1862,6 @@ MonoBehaviour:
   inputField_Signature: {fileID: 649732446}
   HostButton: {fileID: 173286911}
   ClientButton: {fileID: 1901495749}
-  server: {fileID: 0}
 --- !u!1 &376667125
 GameObject:
   m_ObjectHideFlags: 0
@@ -6376,6 +6375,7 @@ MonoBehaviour:
     dynamicAdjustmentTolerance: 1
     deliveryTimeEmaDuration: 2
   timeInterpolationGui: 0
+  GPN_Play: {fileID: 0}
 --- !u!4 &1090337469
 Transform:
   m_ObjectHideFlags: 0
@@ -6439,7 +6439,19 @@ MonoBehaviour:
   transport: {fileID: 1090337470}
   OnServerFound:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1090337468}
+        m_TargetAssemblyTypeName: NetworkControl.GamePlayNetwork.GPNServer, GamePlayNetwork
+        m_MethodName: OnDiscoveryFindServer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   secretHandshake: 8442559620821733915
 --- !u!1 &1092408087
 GameObject:

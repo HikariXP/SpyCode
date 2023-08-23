@@ -14,8 +14,7 @@ public class PnlProfile : MonoBehaviour
     public Button HostButton;
     public Button ClientButton;
 
-    [SerializeField]
-    private NetworkManager server;
+    private GPNServer server;
 
     void Start()
     {
@@ -24,7 +23,7 @@ public class PnlProfile : MonoBehaviour
 
         RegisterButtonClickCallBack();
 
-        server = GPNServer.singleton;
+        server = GPNServer.instance;
     }
 
     void RegisterButtonClickCallBack()
@@ -51,6 +50,8 @@ public class PnlProfile : MonoBehaviour
     void PlayerDoStartClient()
     {
         if (!CheckAndSaveProfile()) return;
+
+        server.StartFindServer();
 
         Debug.Log("PnlProfile:StartFindServer");
     }

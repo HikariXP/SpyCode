@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using Mirror.Discovery;
 using System.Net;
+using System.Linq;
 
 namespace NetworkControl.GamePlayNetwork
 {
@@ -13,19 +14,39 @@ namespace NetworkControl.GamePlayNetwork
 
         private int passwordCount;
 
-        //对于多队伍的同步需要再看看文档。
+      
 
-        private void InitBattleBase()
-        { 
-            
+        [Server]
+        private void ResetBattleBase()
+        {
+
         }
 
         public override void OnStartServer()
         {
             base.OnStartServer();
-            InitBattleBase();
+            ResetBattleBase();
+        }
 
+        private void OnDestroy()
+        {
+            UnregisterGPNServerEvent();
+        }
+
+        private void RegisterGPNServerEvent()
+        {
+            GPNServer.instance.OnConnectedPlayerChange += RefreshPlayerUnit;
+        }
+
+        private void UnregisterGPNServerEvent()
+        {
+            GPNServer.instance.OnConnectedPlayerChange -= RefreshPlayerUnit;
+        }
+
+        private void RefreshPlayerUnit()
+        { 
             
+        
         }
     }
 

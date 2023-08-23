@@ -13,6 +13,21 @@ namespace NetworkControl.GamePlayNetwork
     {
         private NetworkDiscovery m_Discovery;
 
+        public GPNPlay GPN_Play;
+
+        public event Action OnConnectedPlayerChange;
+
+        private Dictionary<NetworkConnectionToClient, PlayerUnit> connectPlayers = new Dictionary<NetworkConnectionToClient, PlayerUnit>();
+
+        private List<PlayerUnit> playerListReturnCache = new List<PlayerUnit>();
+
+        /// <summary>
+        /// 只允许GameOnlineScene的Object调用
+        /// </summary>
+        public static GPNServer instance;
+
+
+
         public override void Awake()
         {
             base.Awake();
@@ -20,6 +35,8 @@ namespace NetworkControl.GamePlayNetwork
             Debug.Log("GameServerManager is Awake");
 
             m_Discovery = gameObject.GetComponent<NetworkDiscovery>();
+
+            instance = this;
         }
 
         public override void OnStartServer()
@@ -33,6 +50,8 @@ namespace NetworkControl.GamePlayNetwork
             
             //广播
             m_Discovery.AdvertiseServer();
+
+            Debug.Log("[GPNServer]Start Server, AdvertiseServer");
         }
 
         public override void OnStopServer()
@@ -58,8 +77,6 @@ namespace NetworkControl.GamePlayNetwork
                 Debug.Log("[GPNServer]Discovery is Stoped");
             }
 
-
-
             Debug.Log("[GPNServer]As Client Connected");
 
             //默认是设置了Mirror自己的Ready才允许创建PlayerPref，但是我们用自己的Ready，所以这个得保留
@@ -74,7 +91,6 @@ namespace NetworkControl.GamePlayNetwork
             NetworkClient.Send(playerAddInfo);
         }
 
-
         /// <summary>
         /// [服务端]当有新的客户端连接到服务器
         /// </summary>
@@ -82,8 +98,6 @@ namespace NetworkControl.GamePlayNetwork
         public override void OnServerConnect(NetworkConnectionToClient conn)
         {
             base.OnServerConnect(conn);
-
-
 
             RefreshPlayerUnitState();
         }
@@ -96,7 +110,9 @@ namespace NetworkControl.GamePlayNetwork
         {
             base.OnServerDisconnect(conn);
 
-            RefreshPlayerUnitState();
+            connectPlayers.Remove(conn);
+
+            RefreshPlayerUnitState();  
         }
 
         /// <summary>
@@ -105,6 +121,8 @@ namespace NetworkControl.GamePlayNetwork
         public void RefreshPlayerUnitState()
         {
             Debug.Log("Refresh PlayerUnits");
+            OnConnectedPlayerChange?.Invoke();
+            Debug.Log("[GPNServer]"+connectPlayers.Count);
         }
 
 
@@ -122,10 +140,20 @@ namespace NetworkControl.GamePlayNetwork
 
             NetworkServer.AddPlayerForConnection(clientConnection, playerTemp);
 
+            connectPlayers.Add(clientConnection, playerUnit);
+
             Debug.Log("Server:New Player is Added,with name:" + playerUnit.playerName);
 
             RefreshPlayerUnitState();
         }
+
+        //public List<PlayerUnit> GetPlayerUnits()
+        //{
+        //    playerListReturnCache.Clear();
+        //    connectPlayers.Values.CopyTo(playerListReturnCache);
+        //    return playerListReturnCache;
+        //}
+
 
         #region Discovery
 
