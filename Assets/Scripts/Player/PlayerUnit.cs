@@ -1,4 +1,6 @@
 using Mirror;
+using NetworkControl.GamePlayNetwork;
+using NetworkControl.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,12 +44,50 @@ public class PlayerUnit : NetworkBehaviour
 
     #endregion 对局信息
 
-    public event Action<SyncList<int>> OnLocalPlayerGetCode;
+    #region 服务器初始化
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+
+        UISystem.Instance.PlayerSetup(this);
+    }
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        RegisterToGPNPlay();
+        Debug.Log("[PlayerUnit]OnStartClient");
+    }
+
+    public override void OnStopServer()
+    {
+        base.OnStopServer();
+        UnregisterToGPNPlay();
+        Debug.Log("[PlayerUnit]OnStopClient");
+    }
+
+    [Server]
+    private void RegisterToGPNPlay()
+    {
+        GPNPlay.instance.AddPlayerUnit(this);
+
+    }
+
+    [Server]
+    private void UnregisterToGPNPlay()
+    {
+        GPNPlay.instance.RemovePlayerUnit(this);
+
+    }
+
+    #endregion
+
 
     [Command]
     public void ChangeTeam()
     {
-
+        playerTeamIndex = playerTeamIndex == 0 ? 1 : 0;
+        GPNPlay.instance.PlayerStateRefresh();
     }
 
     /// <summary>
@@ -56,8 +96,10 @@ public class PlayerUnit : NetworkBehaviour
     [Command]
     public void SetReady()
     {
-        
+        isReady = isReady ? false : true;
+        GPNPlay.instance.PlayerStateRefresh();
     }
+
 
     #region PnlWord
 

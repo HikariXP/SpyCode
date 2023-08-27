@@ -11,22 +11,12 @@ namespace NetworkControl.GamePlayNetwork
 {
     public class GPNServer : NetworkManager
     {
-        private NetworkDiscovery m_Discovery;
-
-        public GPNPlay GPN_Play;
-
-        public event Action OnConnectedPlayerChange;
-
-        private Dictionary<NetworkConnectionToClient, PlayerUnit> connectPlayers = new Dictionary<NetworkConnectionToClient, PlayerUnit>();
-
-        private List<PlayerUnit> playerListReturnCache = new List<PlayerUnit>();
-
         /// <summary>
         /// 只允许GameOnlineScene的Object调用
         /// </summary>
         public static GPNServer instance;
 
-
+        private NetworkDiscovery m_Discovery;
 
         public override void Awake()
         {
@@ -91,41 +81,6 @@ namespace NetworkControl.GamePlayNetwork
             NetworkClient.Send(playerAddInfo);
         }
 
-        /// <summary>
-        /// [服务端]当有新的客户端连接到服务器
-        /// </summary>
-        /// <param name="conn"></param>
-        public override void OnServerConnect(NetworkConnectionToClient conn)
-        {
-            base.OnServerConnect(conn);
-
-            RefreshPlayerUnitState();
-        }
-
-        /// <summary>
-        /// [服务端]当服务器检测到有玩家离线
-        /// </summary>
-        /// <param name="conn"></param>
-        public override void OnServerDisconnect(NetworkConnectionToClient conn)
-        {
-            base.OnServerDisconnect(conn);
-
-            connectPlayers.Remove(conn);
-
-            RefreshPlayerUnitState();  
-        }
-
-        /// <summary>
-        /// 刷新玩家信息
-        /// </summary>
-        public void RefreshPlayerUnitState()
-        {
-            Debug.Log("Refresh PlayerUnits");
-            OnConnectedPlayerChange?.Invoke();
-            Debug.Log("[GPNServer]"+connectPlayers.Count);
-        }
-
-
 
         /// <summary>
         /// 根据用户传递的个人信息创建玩家(这个方法只会在Server层面调用，所以Client收不到的)
@@ -140,20 +95,8 @@ namespace NetworkControl.GamePlayNetwork
 
             NetworkServer.AddPlayerForConnection(clientConnection, playerTemp);
 
-            connectPlayers.Add(clientConnection, playerUnit);
-
             Debug.Log("Server:New Player is Added,with name:" + playerUnit.playerName);
-
-            RefreshPlayerUnitState();
         }
-
-        //public List<PlayerUnit> GetPlayerUnits()
-        //{
-        //    playerListReturnCache.Clear();
-        //    connectPlayers.Values.CopyTo(playerListReturnCache);
-        //    return playerListReturnCache;
-        //}
-
 
         #region Discovery
 
@@ -173,10 +116,7 @@ namespace NetworkControl.GamePlayNetwork
                 m_Discovery.StopDiscovery();
                 return;
             }
-
             Debug.Log("Discovery Found a Server");
-
-
 
             StartClient(serverResponse.uri);
         }

@@ -36,7 +36,7 @@ public class PnlWord : PanelBase
 
     private void RegisterPlayerCallBack()
     {
-        UIManager.instance.localPlayerUnit.OnLocalPlayerGetCode += OnPlayerGetCode;
+        
     }
 
     private void ClearChilds(Transform parent)
