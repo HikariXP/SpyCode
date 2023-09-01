@@ -5,12 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UI.GamePlayOnline;
 using UnityEngine;
+using UnityEngine.Serialization;
 using static Mirror.SyncIDictionary<uint, PlayerUnit>;
 
 namespace NetworkControl.UI
 {
     /// <summary>
-    /// GamePlayOnlineÏÂÊ¹ÓÃµÄUI×Ü¹ÜÀíÆ÷¡£
+    /// GamePlayOnlineä¸‹ä½¿ç”¨çš„UIæ€»ç®¡ç†å™¨ã€‚
     /// </summary>
     public class UISystem : MonoBehaviour
     {
@@ -20,7 +21,7 @@ namespace NetworkControl.UI
 
         public GameObject PnlRoom;
 
-        public GameObject PnlPlay;
+        [FormerlySerializedAs("PnlPlay")] public GameObject PnlBattle;
 
         public PnlRoom roomUI;
 
@@ -62,21 +63,21 @@ namespace NetworkControl.UI
         }
 
         /// <summary>
-        /// ½øÈë·¿¼äÄ£Ê½
+        /// è¿›å…¥æˆ¿é—´æ¨¡å¼
         /// </summary>
         public void GPNPlay_SetToRoomUI()
         {
             PnlRoom.SetActive(true);
-            PnlPlay.SetActive(false);
+            PnlBattle.SetActive(false);
         }
 
         /// <summary>
-        /// ½øÈëÓÎÍæÄ£Ê½
+        /// è¿›å…¥æ¸¸ç©æ¨¡å¼
         /// </summary>
         public void GPNPlay_SetToPlayUI()
         {
             PnlRoom.SetActive(false);
-            PnlPlay.SetActive(true);
+            PnlBattle.SetActive(true);
         }
     }
 }

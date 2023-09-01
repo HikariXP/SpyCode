@@ -10,14 +10,11 @@ using NetworkControl.UI;
 namespace NetworkControl.GamePlayNetwork
 {
     /// <summary>
-    /// ³¢ÊÔ×ö³É·şÎñÆ÷¶ËÌØÓĞ¹ÜÀíÆ÷¡£
+    /// å°è¯•åšæˆæœåŠ¡å™¨ç«¯ç‰¹æœ‰ç®¡ç†å™¨ã€‚
     /// </summary>
     public class GPNPlay : NetworkBehaviour
     {
         public readonly SyncDictionary<uint, PlayerUnit> playerUnits = new SyncDictionary<uint, PlayerUnit>();
-
-        //[SerializeField]
-        //public readonly Dictionary<uint, PlayerUnit> playerUnits = new Dictionary<uint, PlayerUnit>();
 
         public readonly SyncList<GPNTeam> teams = new SyncList<GPNTeam>();
 
@@ -118,14 +115,17 @@ namespace NetworkControl.GamePlayNetwork
 
             teams.Clear();
 
-            //ÔİÊ±×ö³É¹Ì¶¨Á½¶ÓÉú³É
+            //æš‚æ—¶åšæˆå›ºå®šä¸¤é˜Ÿç”Ÿæˆ
             teams.Add(CreateTeam(0));
             teams.Add(CreateTeam(1));
+            
+            teams[0].SetWordIndex(1,2,3,4);
+            teams[1].SetWordIndex(5,6,7,8);
         }
 
         private void GameEnd()
         {
-            //UIÇĞ»»µ½Room
+            //UIåˆ‡æ¢åˆ°Room
             UISystem.Instance.GPNPlay_SetToRoomUI();
         }
 
@@ -145,7 +145,7 @@ namespace NetworkControl.GamePlayNetwork
             CodeAddNumber(1, 5, 3);
         }
 
-        //Ìí¼ÓµÄÊ±ºò¾Í¼ì²éÖØ¸´ÎÊÌâ¡£
+        //æ·»åŠ çš„æ—¶å€™å°±æ£€æŸ¥é‡å¤é—®é¢˜ã€‚
         private void CodeAddNumber(int minInclusive, int maxExclusive,int codeCount)
         {
             for (int i = 0; i < codeCount; i++)
@@ -168,7 +168,7 @@ namespace NetworkControl.GamePlayNetwork
         [ClientRpc]
         private void RpcPlayerUIChange()
         {
-            //UIÇĞ»»µ½GamePlay
+            //UIåˆ‡æ¢åˆ°GamePlay
             UISystem.Instance.GPNPlay_SetToPlayUI();
         }
 
@@ -229,16 +229,16 @@ namespace NetworkControl.GamePlayNetwork
         }
 
         /// <summary>
-        /// SyncDictionaryºËĞÄÍ¬²½Âß¼­(ÒÔÏÂ¼òĞ´SD)
-        /// ÓÉÓÚSDµÄÍ¬²½Ö»»áÔöÁ¿Í¬²½£¬Ò²¾ÍÊÇµÚ¶ş¸ö¿Í»§¶ËÃ»·¨»ñµÃStartClientÖ®Ç°µÄÒÑ´æÔÚµÄ·şÎñÆ÷ĞÅÏ¢
-        /// Àı×Ó£º·şÎñÆ÷ÓĞÁ½¸öÍæ¼Ò£¬µ«ÊÇ×÷Îª¿Í»§¶Ë¼ÓÈëµÄ£¬2PÍæ¼Ò£¬Ä¬ÈÏÇé¿öÏÂÃ»ÓĞ±»Í¬²½µ½1ºÅÎ»Íæ¼ÒµÄÊı¾İ£¬ËùÒÔ1ºÅÎ»µÄValueÎªNull
-        /// ´Ëº¯Êı½«ËùÓĞÎ»ÖÃµÄÊı¾İ¶¼Ç¿ÖÆÈÃMirrorË¢ĞÂ£¬Ô­µØTPÈÃMirrorÈÏÎªÈ·Êµ³öÏÖÁË±ä¸ü£¬Ã¿¸öÎ»ÖÃ¶¼³öÏÖ±ä¸ü¡£
-        /// ĞŞ¸ÄĞè½÷É÷
+        /// SyncDictionaryæ ¸å¿ƒåŒæ­¥é€»è¾‘(ä»¥ä¸‹ç®€å†™SD)
+        /// ç”±äºSDçš„åŒæ­¥åªä¼šå¢é‡åŒæ­¥ï¼Œä¹Ÿå°±æ˜¯ç¬¬äºŒä¸ªå®¢æˆ·ç«¯æ²¡æ³•è·å¾—StartClientä¹‹å‰çš„å·²å­˜åœ¨çš„æœåŠ¡å™¨ä¿¡æ¯
+        /// ä¾‹å­ï¼šæœåŠ¡å™¨æœ‰ä¸¤ä¸ªç©å®¶ï¼Œä½†æ˜¯ä½œä¸ºå®¢æˆ·ç«¯åŠ å…¥çš„ï¼Œ2Pç©å®¶ï¼Œé»˜è®¤æƒ…å†µä¸‹æ²¡æœ‰è¢«åŒæ­¥åˆ°1å·ä½ç©å®¶çš„æ•°æ®ï¼Œæ‰€ä»¥1å·ä½çš„Valueä¸ºNull
+        /// æ­¤å‡½æ•°å°†æ‰€æœ‰ä½ç½®çš„æ•°æ®éƒ½å¼ºåˆ¶è®©Mirroråˆ·æ–°ï¼ŒåŸåœ°TPè®©Mirrorè®¤ä¸ºç¡®å®å‡ºç°äº†å˜æ›´ï¼Œæ¯ä¸ªä½ç½®éƒ½å‡ºç°å˜æ›´ã€‚
+        /// ä¿®æ”¹éœ€è°¨æ…
         /// </summary>
         [Server]
         private void ForceRefreshPlayerUnits()
         {
-            //ºËĞÄÆÛÆ­Âß¼­
+            //æ ¸å¿ƒæ¬ºéª—é€»è¾‘
             //playerUnits[newNetId] = playerUnits[newNetId];
 
             var count = playerUnits.Count;
@@ -255,8 +255,26 @@ namespace NetworkControl.GamePlayNetwork
         }
     }
 
-    public class GPNPlayWordBackup
+    public static class GPNPlayWordBackup
     {
-
+        public static string[] WordBackup = new []
+        {
+            "é¸¡",
+            "è–„è·",
+            "çƒ¤è‚‰",
+            "å¤§é€ƒæ€",
+            "çŒª",
+            "éæ´²",
+            "å¡”å¡”å¼€",
+            "æˆ‘æµª",
+            "æŠ½ç­‹",
+            "é—­å˜´",
+            "åƒå¤§ä¾¿",
+            "æ²Ÿç½¢",
+            "æœ‰è¶£çš„å‚»é€¼",
+            "æµ‹è¯•ç”¨åŠ›1",
+            "æµ‹è¯•æ°¸åˆ©2",
+            "ä¾§å®¤ç”¨ä¾‹3"
+        };
     }
 }

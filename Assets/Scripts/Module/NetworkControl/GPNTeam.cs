@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class GPNTeam
@@ -8,10 +9,23 @@ public class GPNTeam
 
     private List<PlayerUnit> members = new List<PlayerUnit>();
 
+    //实际字的内容客户端根据字典找
+    private List<int> wordIndex = new List<int>();
+
     private int senderIndex;
 
     public GPNTeam()
     { }
+
+    [Server]
+    public void SetWordIndex(int a,int b,int c,int d)
+    {
+        wordIndex.Clear();
+        wordIndex.Add(a);
+        wordIndex.Add(b);
+        wordIndex.Add(c);
+        wordIndex.Add(d);
+    }
 
     public PlayerUnit GetSenderPlayer()
     {
@@ -41,6 +55,7 @@ public class GPNTeam
         if (!members.Contains(playerUnit))
         {
             members.Add(playerUnit);
+            playerUnit.team = this;
         }
     }
 
@@ -49,6 +64,7 @@ public class GPNTeam
         if (members.Contains(playerUnit))
         {
             members.Remove(playerUnit);
+            playerUnit.team = null;
         }
     }
 

@@ -41,6 +41,8 @@ public class PlayerUnit : NetworkBehaviour
     /// </summary>
     [SyncVar]
     public int playerTeamIndex;
+    
+    public GPNTeam team;
 
     #endregion 对局信息
 
