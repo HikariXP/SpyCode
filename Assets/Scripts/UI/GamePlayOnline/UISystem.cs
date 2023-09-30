@@ -21,7 +21,7 @@ namespace NetworkControl.UI
 
         public GameObject PnlRoom;
 
-        [FormerlySerializedAs("PnlPlay")] public GameObject PnlBattle;
+        public GameObject PnlBattle;
 
         public PnlRoom roomUI;
 

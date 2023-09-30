@@ -11,17 +11,14 @@ using UnityEngine.UI;
 
 public class PnlWordUnit : MonoBehaviour
 {
-    private Text TxtIndex;
+    public Text TxtIndex;
     
-    private Text TxtWordContent;
-    
-    private int m_Index;
-    
-    private string m_WordContent;
+    public Text TxtWordContent;
 
-    public void Refresh()
+    public void Refresh(int wordIndex,string wordContent)
     {
-        
+        TxtIndex.text = wordIndex.ToString();
+        TxtWordContent.text = wordContent;
     }
 
 }

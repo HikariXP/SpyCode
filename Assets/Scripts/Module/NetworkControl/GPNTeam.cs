@@ -10,7 +10,7 @@ public class GPNTeam
     private List<PlayerUnit> members = new List<PlayerUnit>();
 
     //实际字的内容客户端根据字典找
-    private List<int> wordIndex = new List<int>();
+    private List<int> wordIndexs = new List<int>();
 
     private int senderIndex;
 
@@ -20,20 +20,33 @@ public class GPNTeam
     [Server]
     public void SetWordIndex(int a,int b,int c,int d)
     {
-        wordIndex.Clear();
-        wordIndex.Add(a);
-        wordIndex.Add(b);
-        wordIndex.Add(c);
-        wordIndex.Add(d);
+        wordIndexs.Clear();
+        wordIndexs.Add(a);
+        wordIndexs.Add(b);
+        wordIndexs.Add(c);
+        wordIndexs.Add(d);
+        RefreshTeamMemberWordDisplay();
     }
 
+    private void RefreshTeamMemberWordDisplay()
+    {
+        for (int i = 0; i < members.Count; i++)
+        {
+            members[i].Rpc_TeamSetWordDisplay(wordIndexs);
+        }
+    }
+
+    /// <summary>
+    /// 选择新的传译者
+    /// </summary>
+    /// <returns></returns>
     public PlayerUnit GetSenderPlayer()
     {
         var result = members[senderIndex];
         SetSenderIndex();
 
         if(result!=null)return result;
-        else return null;
+        return null;
     }
 
     private void SetSenderIndex()

@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-/// <summary>
-/// ¿ØÖÆÍæ¼ÒµÄĞÅÏ¢Õ¹Ê¾£¬Éú³ÉÍæ¼ÒÔ¤ÀÀµ½¶ÔÓ¦µÄ¶ÓÎéÎ»ÖÃ£¬Ã»Ì«´ó±ØÒª¼ÓÈë¶ÔÏó³Ø¹ÜÀí£¬ÒòÎªÍæ¼Ò×ÜÊı²»³¬¹ı4¸öÈË,ºóÆÚ²»³¬¹ı6¸öÈË
-/// </summary>
 public class PnlRoomPlayerList : MonoBehaviour
 {
     public Transform teamPlayerShowListArchor_A;
@@ -18,7 +14,7 @@ public class PnlRoomPlayerList : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸ù¾İÏÖÔÚGameNetworkManagerµÄ×´¿öË¢ĞÂ·¿¼äÍæ¼ÒÏÔÊ¾
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GameNetworkManagerï¿½ï¿½×´ï¿½ï¿½Ë¢ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
     /// </summary>
     public void RefreshCurrentState()
     {

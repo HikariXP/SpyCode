@@ -1,3 +1,16 @@
+/*
+ * Author: CharSui
+ * Created On: 2023.08.05
+ * Description: 管理几乎所有在线战局的东西(我不会啊操，只能这样先了)
+ */
+
+/*
+ * 一些定义:
+ * Round : 回合
+ * Code : 这一局传递者需要传递的密码
+ * Decoder : 解码者
+ * Sender : 传译者
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +19,7 @@ using Mirror.Discovery;
 using System.Net;
 using System.Linq;
 using NetworkControl.UI;
+using Sirenix.OdinInspector;
 
 namespace NetworkControl.GamePlayNetwork
 {
@@ -17,6 +31,7 @@ namespace NetworkControl.GamePlayNetwork
         public readonly SyncDictionary<uint, PlayerUnit> playerUnits = new SyncDictionary<uint, PlayerUnit>();
 
         public readonly SyncList<GPNTeam> teams = new SyncList<GPNTeam>();
+        private int m_CurrentTeamIndex = -1;
 
         public static GPNPlay instance;
 
@@ -115,12 +130,16 @@ namespace NetworkControl.GamePlayNetwork
 
             teams.Clear();
 
-            //暂时做成固定两队生成
+            // 暂时做成固定两队生成
             teams.Add(CreateTeam(0));
             teams.Add(CreateTeam(1));
             
+            // 固定词序
             teams[0].SetWordIndex(1,2,3,4);
             teams[1].SetWordIndex(5,6,7,8);
+
+            // 开始小回合
+            SmallRound();
         }
 
         private void GameEnd()
@@ -129,16 +148,23 @@ namespace NetworkControl.GamePlayNetwork
             UISystem.Instance.GPNPlay_SetToRoomUI();
         }
 
+        [Server]
+        public void PlayerConfirmCode()
+        {
+            // 测试阶段点击开始解码直接跳过
+            SmallRound();
+        }
+
+        /// <summary>
+        /// 不需要有大回合，实际回合数就是目标回合数*小队数量
+        /// </summary>
         private void SmallRound()
         {
             RefreshCode();
+            ChangeToNextTeamIndex();
+            TeamSelectSender();
         }
-
-        private void BigRound()
-        { 
         
-        }
-
         private void RefreshCode()
         { 
             code.Clear();
@@ -150,19 +176,32 @@ namespace NetworkControl.GamePlayNetwork
         {
             for (int i = 0; i < codeCount; i++)
             {
-                bool isFinish = false;
-                while (!isFinish)
+                while (true)
                 { 
                     var number = Random.Range(minInclusive, maxExclusive);
-                    if (code.Contains(number)) continue;
-                    else
-                    { 
+                    if (!code.Contains(number))
+                    {
                         code.Add(number);
                         break;
                     }
                 }
             }
             Debug.Log(code.ToString());
+        }
+
+        /// <summary>
+        /// 小回合结束后轮到下一队
+        /// </summary>
+        private void ChangeToNextTeamIndex()
+        {
+            m_CurrentTeamIndex += 1;
+            if (m_CurrentTeamIndex < 0 || m_CurrentTeamIndex >= teams.Count) m_CurrentTeamIndex = 0;
+        }
+
+        [Server]
+        private void TeamSelectSender()
+        {
+            teams[m_CurrentTeamIndex].GetSenderPlayer().Rpc_GPNPlaySetCode(code.ToArray());
         }
 
         [ClientRpc]
@@ -174,7 +213,9 @@ namespace NetworkControl.GamePlayNetwork
 
         #endregion
 
-        private GPNTeam CreateTeam(int teamIndex)
+        #region Team
+
+                private GPNTeam CreateTeam(int teamIndex)
         {
             GPNTeam team = new GPNTeam();
             team.teamIndex = teamIndex;
@@ -253,6 +294,8 @@ namespace NetworkControl.GamePlayNetwork
                 }
             }
         }
+
+        #endregion
     }
 
     public static class GPNPlayWordBackup
@@ -277,4 +320,5 @@ namespace NetworkControl.GamePlayNetwork
             "侧室用例3"
         };
     }
+
 }
