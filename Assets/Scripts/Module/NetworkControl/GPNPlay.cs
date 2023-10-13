@@ -37,11 +37,8 @@ namespace NetworkControl.GamePlayNetwork
 
         public readonly SyncList<int> code = new SyncList<int>();
 
-        [Server]
-        private void ResetBattleBase()
-        {
+        private int roundCount = 0;
 
-        }
 
         private void Awake()
         {
@@ -51,8 +48,19 @@ namespace NetworkControl.GamePlayNetwork
         public override void OnStartServer()
         {
             base.OnStartServer();
-            ResetBattleBase();
+            // ResetBattleBase();
         }
+        
+        [Server]
+        private void ResetBattleBase()
+        {
+            var playersInRoom = playerUnits.Values;
+            for (int i = 0; i < playersInRoom.Count; i++)
+            {
+                playersInRoom.ElementAt(i).isReady = false;
+            }
+        }
+
 
         #region Room
 
@@ -129,6 +137,7 @@ namespace NetworkControl.GamePlayNetwork
             RpcPlayerUIChange();
 
             teams.Clear();
+            roundCount = 0;
 
             // 暂时做成固定两队生成
             teams.Add(CreateTeam(0));
@@ -145,6 +154,7 @@ namespace NetworkControl.GamePlayNetwork
         private void GameEnd()
         {
             //UI切换到Room
+            ResetBattleBase();
             UISystem.Instance.GPNPlay_SetToRoomUI();
         }
 
@@ -156,15 +166,35 @@ namespace NetworkControl.GamePlayNetwork
         }
 
         /// <summary>
+        /// 检查每个队伍的提交情况，是否需要切换到下一个回合
+        /// </summary>
+        public void CheckIsNextRound()
+        {
+            
+        }
+
+        /// <summary>
         /// 不需要有大回合，实际回合数就是目标回合数*小队数量
         /// </summary>
         private void SmallRound()
         {
+            if (IsOverRoundCount())
+            {
+                GameEnd();
+            }
+
             RefreshCode();
             ChangeToNextTeamIndex();
-            TeamSelectSender();
+            TeamSelectSender(m_CurrentTeamIndex);
+            roundCount += 1;
         }
-        
+
+        private bool IsOverRoundCount()
+        {
+            if (roundCount > 12) return true;
+            return false;
+        }
+
         private void RefreshCode()
         { 
             code.Clear();
@@ -199,9 +229,10 @@ namespace NetworkControl.GamePlayNetwork
         }
 
         [Server]
-        private void TeamSelectSender()
+        private void TeamSelectSender(int senderTeamIndex)
         {
-            teams[m_CurrentTeamIndex].GetSenderPlayer().Rpc_GPNPlaySetCode(code.ToArray());
+            var senderPlayer = teams[senderTeamIndex].GetSenderPlayer();
+            senderPlayer.Rpc_GPNPlaySetCode(code.ToArray());
         }
 
         [ClientRpc]
@@ -215,7 +246,7 @@ namespace NetworkControl.GamePlayNetwork
 
         #region Team
 
-                private GPNTeam CreateTeam(int teamIndex)
+        private GPNTeam CreateTeam(int teamIndex)
         {
             GPNTeam team = new GPNTeam();
             team.teamIndex = teamIndex;

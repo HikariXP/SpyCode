@@ -1,3 +1,4 @@
+using System;
 using NetworkControl.GamePlayNetwork;
 using System.Linq;
 using UnityEngine;
@@ -50,6 +51,11 @@ namespace UI.GamePlayOnline
                     Destroy(parent.GetChild(i).gameObject);
                 }
             }
+        }
+
+        public void Reset()
+        {
+            
         }
 
         #region Player Action

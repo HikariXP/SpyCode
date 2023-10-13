@@ -132,6 +132,7 @@ public class PlayerUnit : NetworkBehaviour
     [Command]
     public void DecodeNumberConfirm()
     { 
-        GPNPlay.instance.PlayerConfirmCode();
+        // 不应该直接告诉GPNPlay用户确认，应该告诉Team并且触发事件通知GPNPlay
+        // GPNPlay.instance.PlayerConfirmCode();
     }
 }

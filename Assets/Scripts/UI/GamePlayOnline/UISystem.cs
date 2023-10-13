@@ -32,34 +32,21 @@ namespace NetworkControl.UI
             Instance = this;
         }
 
-        //private void Start()
-        //{
-        //    GPNPlay.instance.playerUnits.Callback += RefreshRoomUI;
-        //}
-
-        //private void OnDestroy()
-        //{
-        //    GPNPlay.instance.playerUnits.Callback -= RefreshRoomUI;
-        //}
-
         public void PlayerSetup(PlayerUnit local)
         {
             localPlayerUnit = local;
             roomUI.Init(localPlayerUnit);
             battleUI.Init(localPlayerUnit);
         }
-
-        public void RefreshRoomUI(Operation op, uint key, PlayerUnit item)
-        {
-            //if(op == Operation.OP_SET)
-            //{
-            //    roomUI.RefreshShow();
-            //}
-        }
-
+        
         public void RefreshRoomUIForce()
         {
             roomUI.RefreshShow();
+        }
+
+        public void OnPlayerConfirm()
+        {
+            localPlayerUnit.DecodeNumberConfirm();
         }
 
         /// <summary>
@@ -69,6 +56,7 @@ namespace NetworkControl.UI
         {
             PnlRoom.SetActive(true);
             PnlBattle.SetActive(false);
+            battleUI.Reset();
         }
 
         /// <summary>
@@ -77,6 +65,7 @@ namespace NetworkControl.UI
         public void GPNPlay_SetToPlayUI()
         {
             PnlRoom.SetActive(false);
+            roomUI.Reset();
             PnlBattle.SetActive(true);
         }
     }

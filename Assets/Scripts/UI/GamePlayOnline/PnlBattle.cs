@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace UI.GamePlayOnline
         private PlayerUnit playerUnit;
     
         public PnlWord pnlWord;
+
+        public PnlDecode pnlDecode;
 
         public void Init(PlayerUnit localPlayerUnit)
         {
@@ -43,9 +46,11 @@ namespace UI.GamePlayOnline
         {
             playerUnit.DecodeNumberConfirm();
         }
-    
-    
 
+        public void Reset()
+        {
+            
+        }
     }
 }
 

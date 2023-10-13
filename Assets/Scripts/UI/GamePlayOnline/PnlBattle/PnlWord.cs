@@ -14,11 +14,14 @@ namespace UI.GamePlayOnline
         public GameObject wordDisplayUnitPrefab;
         public Transform wordDisplayAnchor;
 
+        public Button BtnDecode;
+
         [Header("Code")]
         public Text TxtCode;
         
         public void ShowCode(int[] code)
         {
+            SetDecodeButton(false);
             string displayCode = String.Empty;
             for (int i = 0; i < code.Length; i++)
             {
@@ -30,7 +33,13 @@ namespace UI.GamePlayOnline
 
         public void HideCode()
         {
+            SetDecodeButton(true);
             TxtCode.text = "破译密码";
+        }
+
+        private void SetDecodeButton(bool interactable)
+        {
+            BtnDecode.interactable = interactable;
         }
 
         public void RefreshWordDisplay(List<int> wordList)

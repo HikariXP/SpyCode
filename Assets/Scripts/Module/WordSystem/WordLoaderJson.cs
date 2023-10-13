@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Newtonsoft.Json;
 
 /// <summary>
-/// Json´Ê¿â¼ÓÔØÆ÷
+/// Jsonï¿½Ê¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public abstract class WordLoaderJson
 {
