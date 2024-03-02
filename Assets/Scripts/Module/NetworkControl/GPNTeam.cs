@@ -1,7 +1,14 @@
+/*
+ * Author: CharSui
+ * Created On: 2023.08.26
+ * Description: 对于部分规则的实践确保，交由玩游戏的玩家。
+ * Team的实际操作只在Server有，提供对玩家的访问以及快捷操作
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using NetworkControl.GamePlayNetwork;
 using UnityEngine;
 
 public class GPNTeam
@@ -10,18 +17,36 @@ public class GPNTeam
 
     private List<PlayerUnit> members = new List<PlayerUnit>();
 
-    //实际字的内容客户端根据字典找
+    /// <summary>
+    /// 对于词库的词的索引,实际字的内容客户端根据字典找
+    /// </summary>
     private List<int> wordIndexs = new List<int>();
 
+    /// <summary>
+    /// 队伍内部循环传译者
+    /// </summary>
     private int senderIndex;
 
-    private List<int> m_CurrentRoundDecode = new List<int>();
+    /// <summary>
+    /// 当前回合队伍存储的解码
+    /// </summary>
+    public int[] currentTurnDecode;
 
-    private int m_Score;
-    public int score => m_Score;
+    public bool isConfirm;
+
+    public int decodeSuccessScore = 0;
+
+    public int translateFailScore = 0;
+
+    /// <summary>
+    /// 是否本回合
+    /// </summary>
+    public bool isSenderTurn;
 
     public GPNTeam()
-    { }
+    {
+        Debug.Log($"[{nameof(GPNTeam)}]new team created with index: {teamIndex}");
+    }
 
     [Server]
     public void SetWordIndex(int a,int b,int c,int d)
@@ -36,45 +61,74 @@ public class GPNTeam
 
     private void RefreshTeamMemberWordDisplay()
     {
-        for (int i = 0; i < members.Count; i++)
+        foreach (var player in members)
         {
-            members[i].Rpc_TeamSetWordDisplay(wordIndexs);
+            player.Rpc_TeamSetWordDisplay(wordIndexs);
         }
     }
-
-    public void NewRound()
-    {
-
-    }
-
+    
     /// <summary>
     /// 选择新的传译者
     /// </summary>
     /// <returns></returns>
-    [Obsolete("意味着新回合开始，函数名并不能反映这一点")]
-    public PlayerUnit GetSenderPlayer()
+    public void NewTurn(TurnInfo turnInfo)
     {
-        m_CurrentRoundDecode.Clear();
+        Debug.Log($"队伍[{teamIndex}]获取密钥:{turnInfo.currentTurnCode}");
         
-        var result = members[senderIndex];
-        SetSenderIndex();
+        // State set
+        isConfirm = false;
+        isSenderTurn = turnInfo.currentTurnCode != null;
+        
+        for (int i = 0; i < members.Count; i++)
+        {
+            var player = members[i];
+            //当前回合传递者
+            player.Rpc_GPNPlaySetCode(i == senderIndex ? turnInfo.currentTurnCode : null);
+            player.Rpc_GPNPlayGetScore(turnInfo.successScore, turnInfo.failScore);
+        }
+        
+        currentTurnDecode = null;
 
-        if(result!=null)return result;
-        return null;
+        //循环目标传译者的索引
+        if (isSenderTurn)
+        {
+            SetToNextSenderIndex();
+        }
     }
 
-    private void SetSenderIndex()
+    /// <summary>
+    /// 循环目标传译者的索引
+    /// </summary>
+    private void SetToNextSenderIndex()
     {
         senderIndex += 1;
         if(senderIndex>=members.Count)senderIndex = 0;
     }
 
     /// <summary>
-    /// 目前版本确认后无法取消
+    /// 队伍玩家确认代码,确认过就不会删除
     /// </summary>
-    public void OnTeamMemberConfirmDecode(List<int> decode)
+    public void OnTeamMemberConfirmDecode(int[] code)
     {
-        
+        isConfirm = true;
+        currentTurnDecode = code;
+        foreach (var player in members)
+        {
+            player.Rpc_TeamMemberConfirmCode(currentTurnDecode);
+        }
+    }
+
+    /// <summary>
+    /// 队伍玩家取消确认代码
+    /// </summary>
+    public void OnTeamMemberCancelDecode()
+    {
+        isConfirm = false;
+        currentTurnDecode = null;
+        foreach (var player in members)
+        {
+            player.Rpc_TeamMemberCancelConfirm();
+        }
     }
 
     #region Low Level

@@ -1,12 +1,7 @@
-using Mirror;
-using NetworkControl.GamePlayNetwork;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UI.GamePlayOnline;
 using UnityEngine;
-using UnityEngine.Serialization;
-using static Mirror.SyncIDictionary<uint, PlayerUnit>;
+using Sirenix.OdinInspector;
 
 namespace NetworkControl.UI
 {
@@ -44,9 +39,14 @@ namespace NetworkControl.UI
             roomUI.RefreshShow();
         }
 
-        public void OnPlayerConfirm()
+        public void OnPlayerConfirm(int[] answerCodes)
         {
-            localPlayerUnit.DecodeNumberConfirm();
+            localPlayerUnit.DecodeNumberConfirm(answerCodes);
+        }
+
+        public void OnPlayerCancel()
+        {
+            localPlayerUnit.DecodeNumberCancel();
         }
 
         /// <summary>
@@ -68,6 +68,22 @@ namespace NetworkControl.UI
             roomUI.Reset();
             PnlBattle.SetActive(true);
         }
+        
+        #if UNITY_EDITOR
+        
+        [Button]
+        public void ResetUI_Room()
+        {
+            GPNPlay_SetToRoomUI();
+        }
+        
+        [Button]
+        public void ResetUI_Battle()
+        {
+            GPNPlay_SetToPlayUI();
+        }
+        
+        #endif
     }
 }
 

@@ -14,6 +14,10 @@ namespace UI.GamePlayOnline
         public GameObject wordDisplayUnitPrefab;
         public Transform wordDisplayAnchor;
 
+        public Text TxtSuccessScore;
+        public Text TxtFailScore;
+        
+
         public Button BtnDecode;
 
         [Header("Code")]
@@ -21,6 +25,11 @@ namespace UI.GamePlayOnline
         
         public void ShowCode(int[] code)
         {
+            if (code == null)
+            {
+                Debug.LogError("反馈给开发者，这里有问题[PnlWord.ShowCode获取代码为空]");
+            }
+
             SetDecodeButton(false);
             string displayCode = String.Empty;
             for (int i = 0; i < code.Length; i++)
@@ -28,13 +37,19 @@ namespace UI.GamePlayOnline
                 displayCode += code[i] + ".";
             }
 
-            TxtCode.text = displayCode;
+            TxtCode.text = $"// {displayCode} //";
         }
 
         public void HideCode()
         {
             SetDecodeButton(true);
-            TxtCode.text = "破译密码";
+            TxtCode.text = "目标:破译密码";
+        }
+
+        public void RefreshScore(int successScore, int failScore)
+        {
+            TxtSuccessScore.text = successScore.ToString();
+            TxtFailScore.text = failScore.ToString();
         }
 
         private void SetDecodeButton(bool interactable)
