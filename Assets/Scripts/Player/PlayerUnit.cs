@@ -1,50 +1,48 @@
+using System;
+using System.Collections.Generic;
 using Mirror;
 using NetworkControl.GamePlayNetwork;
 using NetworkControl.UI;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// ¾ÖÓòÍøÁª»úµÄÍæ¼ÒÔ¤Éè
-/// Modifity:»ùÓÚ¿ìËÙ¿ª·¢£¬½«Íæ¼Ò´æ´¢Êı¾İÒÔ¼°Íæ¼ÒĞĞÎªñîºÏ¡£¶à¸öÃüÁî·¢ËÍÆ÷ËäÈ»»ùÓÚNetworkBehaviour£¬µ«ÊÇÓ¦¸Ã¿ÉÒÔ´æÔÚÓÚÍ¬Ò»¸öGameObjectÉÏ¡£
-/// </summary>
+
 public class PlayerUnit : NetworkBehaviour
 {
-    #region »ù´¡ĞÅÏ¢
-
     /// <summary>
-    /// Íæ¼ÒÃû×Ö
+    /// ç©å®¶æ˜µç§°
     /// </summary>
     [SyncVar]
     public string playerName;
-
+    
     /// <summary>
-    /// Íæ¼Ò¸öĞÔÇ©Ãû
+    /// ç©å®¶ä¸ªæ€§ç­¾å
     /// </summary>
     [SyncVar]
     public string playerSignature;
-
-    #endregion
-
-    #region ¶Ô¾ÖĞÅÏ¢
-
+    
     /// <summary>
-    /// Íæ¼ÒÊÇ·ñÒÑ¾­×¼±¸
+    /// æ˜¯å¦å·²ç»å‡†å¤‡å¥½æ¸¸æˆ
     /// </summary>
     [SyncVar]
     public bool isReady;
-
+    
     /// <summary>
-    /// Íæ¼Ò¶ÓÎé,0ÊÇÀ¶¶Ó¡¢1ÊÇºì¶Ó£¬ÎŞ¹Ø¶ÓÃû
+    /// ç©å®¶æ‰€å±é˜Ÿä¼Id
+    /// TODO:éœ€è¦é‡æ„ç›¸å…³è·å–è¡Œä¸ºã€‚
     /// </summary>
     [SyncVar]
     public int playerTeamIndex;
 
-    #endregion ¶Ô¾ÖĞÅÏ¢
+    //æœ¬åœ°ç¼“å­˜çš„ç´¢å¼•
+    private List<int> wordIndexs;
 
-    #region ·şÎñÆ÷³õÊ¼»¯
+    /// <summary>
+    /// æ‰€å±é˜Ÿä¼çš„å¼•ç”¨ï¼Œç›®å‰ä¸è¯¥è·å–å…¶
+    /// </summary>
+    public GPNTeam team;
+
+
+
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
@@ -77,10 +75,8 @@ public class PlayerUnit : NetworkBehaviour
     private void UnregisterToGPNPlay()
     {
         GPNPlay.instance.RemovePlayerUnit(this);
-
     }
 
-    #endregion
 
 
     [Command]
@@ -90,18 +86,24 @@ public class PlayerUnit : NetworkBehaviour
         GPNPlay.instance.PlayerStateRefresh();
     }
 
-    /// <summary>
-    /// ·´Ñ¡×¼±¸×´Ì¬
-    /// </summary>
+
     [Command]
     public void SetReady()
     {
-        isReady = isReady ? false : true;
+        isReady = !isReady;
         GPNPlay.instance.PlayerStateRefresh();
     }
 
 
-    #region PnlWord
+    #region Word
+    
+    [ClientRpc]
+    public void Rpc_TeamSetWordDisplay(List<int> getWordIndexs)
+    {
+        if(!isLocalPlayer)return;
+        wordIndexs = getWordIndexs;
+        UISystem.Instance.battleUI.RefreshWordDisplay(wordIndexs);
+    }
 
     [Command]
     public void Word_ChangeWords()
@@ -117,42 +119,90 @@ public class PlayerUnit : NetworkBehaviour
 
     #endregion
 
+    #region Decode
 
+    //TODO:æ”¹æˆè·å–å•ç‹¬ä¸€ä¸ªå®¢æˆ·ç«¯åˆ™ä¸éœ€è¦å¯¹isLocalPlayeråˆ¤æ–­ï¼Œè¿˜èƒ½æå‡å®‰å…¨æ€§
+    
     /// <summary>
-    /// [¿Í->·ş]¸æËß·şÎñÆ÷µ±Ç°Íæ¼ÒÊäÈëÁËÄÄ¸ö°´¼ü¡£
+    /// å®¢æˆ·ç«¯è·å–ä»£ç 
     /// </summary>
-    /// <param name="number"></param>
+    /// <param name="codes"></param>
+    [ClientRpc]
+    public void Rpc_GPNPlaySetCode(int[] codes)
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        
+        UISystem.Instance.battleUI.NewTurnWithCode(codes);
+        UISystem.Instance.battleUI.pnlRoundTips.EndWaitForEnemyMask();
+    }
+
+    [ClientRpc]
+    public void Rpc_GPNPlayGetScore(int successScore, int failScore)
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        
+        UISystem.Instance.battleUI.pnlWord.RefreshScore(successScore, failScore);
+    }
+
+    [ClientRpc]
+    public void Rpc_GPNPlayGameOver()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        UISystem.Instance.GPNPlay_SetToRoomUI();
+    }
+
+    //å¦‚æœå¼•å…¥TargetRpcï¼Œåˆ™éœ€è¦ä¸€å¦‚networkConnectionçš„ä¼ å‚æ”¾åˆ°ç¬¬ä¸€ä½
+    [ClientRpc]
+    public void Rpc_TeamMemberConfirmCode(int[] codes)
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+
+        UISystem.Instance.battleUI.pnlRoundTips.BeginWaitForEnemyMask(codes);
+    }
+
+    [ClientRpc]
+    public void Rpc_TeamMemberCancelConfirm()
+    {
+        if (!isLocalPlayer)
+        {
+            return;
+        }
+        
+        UISystem.Instance.battleUI.pnlRoundTips.EndWaitForEnemyMask();
+    }
+
+    #endregion
+
+
     [Command]
     public void InputDecodeNumber(int number)
     {
         if (number > 9 || number < 0)
             return;
-
-
-
         //Tell Server Which Number Click
     }
 
-    /// <summary>
-    /// [¿Í->·ş]¶Ô½âÂë½á¹û·¢ÆğÈ·ÈÏ
-    /// </summary>
     [Command]
-    public void DecodeNumberConfirm(int[] numbers)
-    { 
-        
+    public void DecodeNumberConfirm(int[] answerCodes)
+    {
+        GPNPlay.instance.PlayerConfirmCode(this ,answerCodes);
     }
-
-
     
-
-
-    ///// <summary>
-    ///// [·ş->ÌØ¿Í]µ¥¶À½ÓÊÕµÄÃÜÔ¿
-    ///// </summary>
-    //[TargetRpc]
-    //[Obsolete("ÀíÂÛÕâ¸öÓÎÏ·ĞèÇóÏëÒªÊµÏÖ£¬µ±Ç°½×¶Î²»ĞèÒªÕâ¸ö¡£")]
-    //public void ReceiveCipher(int cipher)
-    //{ 
-        
-    //}
+    [Command]
+    public void DecodeNumberCancel()
+    {
+        GPNPlay.instance.PlayerCancelCode(this);
+    }
 }

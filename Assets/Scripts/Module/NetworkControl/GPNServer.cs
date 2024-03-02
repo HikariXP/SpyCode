@@ -12,7 +12,7 @@ namespace NetworkControl.GamePlayNetwork
     public class GPNServer : NetworkManager
     {
         /// <summary>
-        /// 只允许GameOnlineScene的Object调用
+        /// ?????GameOnlineScene??Object????
         /// </summary>
         public static GPNServer instance;
 
@@ -31,14 +31,14 @@ namespace NetworkControl.GamePlayNetwork
 
         public override void OnStartServer()
         {
-            //开始前将默认的地址修改为本机地址
+            //???????????????????????
             networkAddress = GetDeviceLANAddress();
 
             base.OnStartServer();
 
             NetworkServer.RegisterHandler<PlayerAddInfo>(RecieveClientPlayerProfileAndCreate);
             
-            //广播
+            //??
             m_Discovery.AdvertiseServer();
 
             Debug.Log("[GPNServer]Start Server, AdvertiseServer");
@@ -55,7 +55,7 @@ namespace NetworkControl.GamePlayNetwork
         }
 
         /// <summary>
-        /// [客户端]当客户端链接上服务器
+        /// [?????]??????????????????
         /// </summary>
         public override void OnClientConnect()
         {
@@ -69,7 +69,7 @@ namespace NetworkControl.GamePlayNetwork
 
             Debug.Log("[GPNServer]As Client Connected");
 
-            //默认是设置了Mirror自己的Ready才允许创建PlayerPref，但是我们用自己的Ready，所以这个得保留
+            //???????????Mirror?????Ready????????PlayerPref?????????????????Ready??????????????
             base.OnClientConnect();
 
             var playerAddInfo = new PlayerAddInfo()
@@ -83,7 +83,7 @@ namespace NetworkControl.GamePlayNetwork
 
 
         /// <summary>
-        /// 根据用户传递的个人信息创建玩家(这个方法只会在Server层面调用，所以Client收不到的)
+        /// ?????????????????????????(????????????Server????????????Client???????)
         /// </summary>
         public void RecieveClientPlayerProfileAndCreate(NetworkConnectionToClient clientConnection, PlayerAddInfo info)
         {
@@ -101,7 +101,7 @@ namespace NetworkControl.GamePlayNetwork
         #region Discovery
 
         /// <summary>
-        /// 房主之外的玩家调用，激活局域网搜索自动加入。
+        /// ???????????????????????????????????
         /// </summary>
         public void StartFindServer()
         {
@@ -123,7 +123,7 @@ namespace NetworkControl.GamePlayNetwork
 
         #endregion
 
-        #region LowLevel - 底层操作
+        #region LowLevel - ??????
 
         public string GetDeviceLANAddress()
         {
@@ -139,7 +139,7 @@ namespace NetworkControl.GamePlayNetwork
         }
 
         /// <summary>
-        /// 主动断开连接
+        /// ???????????
         /// </summary>
         public void Disconnect()
         {
@@ -154,11 +154,11 @@ namespace NetworkControl.GamePlayNetwork
             }
         }
 
-        #endregion LowLevel - 底层操作
+        #endregion LowLevel - ??????
     }
 
     /// <summary>
-    /// 添加玩家需要传递的信息
+    /// ?????????????????
     /// </summary>
     public struct PlayerAddInfo : NetworkMessage
     {

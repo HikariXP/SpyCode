@@ -1,16 +1,12 @@
-using Mirror;
-using NetworkControl.GamePlayNetwork;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UI.GamePlayOnline;
 using UnityEngine;
-using static Mirror.SyncIDictionary<uint, PlayerUnit>;
+using Sirenix.OdinInspector;
 
 namespace NetworkControl.UI
 {
     /// <summary>
-    /// GamePlayOnlineœ¬ π”√µƒUI◊‹π‹¿Ì∆˜°£
+    /// GamePlayOnline‰∏ã‰ΩøÁî®ÁöÑUIÊÄªÁÆ°ÁêÜÂô®„ÄÇ
     /// </summary>
     public class UISystem : MonoBehaviour
     {
@@ -20,7 +16,7 @@ namespace NetworkControl.UI
 
         public GameObject PnlRoom;
 
-        public GameObject PnlPlay;
+        public GameObject PnlBattle;
 
         public PnlRoom roomUI;
 
@@ -31,53 +27,63 @@ namespace NetworkControl.UI
             Instance = this;
         }
 
-        //private void Start()
-        //{
-        //    GPNPlay.instance.playerUnits.Callback += RefreshRoomUI;
-        //}
-
-        //private void OnDestroy()
-        //{
-        //    GPNPlay.instance.playerUnits.Callback -= RefreshRoomUI;
-        //}
-
         public void PlayerSetup(PlayerUnit local)
         {
             localPlayerUnit = local;
             roomUI.Init(localPlayerUnit);
             battleUI.Init(localPlayerUnit);
         }
-
-        public void RefreshRoomUI(Operation op, uint key, PlayerUnit item)
-        {
-            //if(op == Operation.OP_SET)
-            //{
-            //    roomUI.RefreshShow();
-            //}
-        }
-
+        
         public void RefreshRoomUIForce()
         {
             roomUI.RefreshShow();
         }
 
+        public void OnPlayerConfirm(int[] answerCodes)
+        {
+            localPlayerUnit.DecodeNumberConfirm(answerCodes);
+        }
+
+        public void OnPlayerCancel()
+        {
+            localPlayerUnit.DecodeNumberCancel();
+        }
+
         /// <summary>
-        /// Ω¯»Î∑øº‰ƒ£ Ω
+        /// ËøõÂÖ•ÊàøÈó¥Ê®°Âºè
         /// </summary>
         public void GPNPlay_SetToRoomUI()
         {
             PnlRoom.SetActive(true);
-            PnlPlay.SetActive(false);
+            PnlBattle.SetActive(false);
+            battleUI.Reset();
         }
 
         /// <summary>
-        /// Ω¯»Î”ŒÕÊƒ£ Ω
+        /// ËøõÂÖ•Ê∏∏Áé©Ê®°Âºè
         /// </summary>
         public void GPNPlay_SetToPlayUI()
         {
             PnlRoom.SetActive(false);
-            PnlPlay.SetActive(true);
+            roomUI.Reset();
+            PnlBattle.SetActive(true);
         }
+        
+        #if UNITY_EDITOR
+        
+        [Button]
+        public void ResetUI_Room()
+        {
+            GPNPlay_SetToRoomUI();
+        }
+        
+        [Button]
+        public void ResetUI_Battle()
+        {
+            GPNPlay_SetToPlayUI();
+        }
+        
+        #endif
     }
 }
 

@@ -1,7 +1,5 @@
-using Mirror;
+using System;
 using NetworkControl.GamePlayNetwork;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,8 +32,7 @@ namespace UI.GamePlayOnline
         public void RefreshShow()
         {
             ClearChilds(PlayerInfoViewTransform);
-
-            //经过验证，问题不是因为同步的速度问题，延时1秒没有作用
+            
             var tempList = GPNPlay.instance.playerUnits;
 
             for (int i = 0; i < tempList.Count; i++)
@@ -54,6 +51,11 @@ namespace UI.GamePlayOnline
                     Destroy(parent.GetChild(i).gameObject);
                 }
             }
+        }
+
+        public void Reset()
+        {
+            
         }
 
         #region Player Action
