@@ -34,6 +34,8 @@ using System.Linq;
 using Module.WordSystem;
 using NetworkControl.UI;
 using Sirenix.OdinInspector;
+using UnityEditor;
+using UnityEngine.AddressableAssets;
 
 namespace NetworkControl.GamePlayNetwork
 {
@@ -71,13 +73,21 @@ namespace NetworkControl.GamePlayNetwork
         private void Awake()
         {
             instance = this;
+
+            _wordLoader = new WordLoaderJson();
+
+            _wordLoader.Init();
+
+            string context;
             
 #if UNITY_EDITOR
-            _wordLoader = new WordLoaderEditorTest();
+            var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/ProjectAsset/WordLibrary/DecryptoStandard.json");
+            context = textAsset.text;
 #else
-            _wordLoader = new WordLoaderJson();
+            var textAsset = Addressables.LoadAssetAsync<TextAsset>("WordLibrary_DecryptoStandard");
+            context = textAsset.text;
 #endif
-
+            _wordLoader.Load(context);
         }
 
         [Server]
@@ -192,13 +202,11 @@ namespace NetworkControl.GamePlayNetwork
             _teams.Add(CreateTeam(0));
             _teams.Add(CreateTeam(1));
             
-            // 固定词序
+            // TODO:固定词序
             InitializeTeamsWordIndex();
 
             m_CurrentTeamIndex = 0;
             
-            // 开始小回合
-            // NewTurn();
             NewRound();
         }
 
@@ -207,6 +215,8 @@ namespace NetworkControl.GamePlayNetwork
         /// </summary>
         private void InitializeTeamsWordIndex()
         {
+            // 这里需要获取一次战斗的所有词序，然后随机分配成两组可供使用
+            // 需要一次性给队伍所有的Index。
             _teams[0].SetWordIndex(1, 2, 3, 4);
             _teams[1].SetWordIndex(5, 6, 7, 8);
         }

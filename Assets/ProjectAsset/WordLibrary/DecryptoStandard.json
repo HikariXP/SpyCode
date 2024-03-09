@@ -1,0 +1,200 @@
+{
+  "name": "Decrypto Standard Chinese",
+  "description": "《谍报风云》官方中文词库(乱序版)",
+  "language": "cn",
+  "version": "1.0.0",
+  "wordDatas": [
+    {
+      "word_en": "VIOLIN",
+      "word_localization": "小提琴"
+    },
+    {
+      "word_en": "BREAD",
+      "word_localization": "面包"
+    },
+    {
+      "word_en": "CAPITALISM",
+      "word_localization": "资本主义"
+    },
+    {
+      "word_en": "DESERT",
+      "word_localization": "沙漠"
+    },
+    {
+      "word_en": "RECIPE",
+      "word_localization": "配方"
+    },
+    {
+      "word_en": "APPLE",
+      "word_localization": "苹果"
+    },
+    {
+      "word_en": "TOOTH",
+      "word_localization": "牙齿"
+    },
+    {
+      "word_en": "STRESS",
+      "word_localization": "压力"
+    },
+    {
+      "word_en": "MORNING",
+      "word_localization": "早晨"
+    },
+    {
+      "word_en": "BABY",
+      "word_localization": "婴儿"
+    },
+    {
+      "word_en": "BOTTLE",
+      "word_localization": "瓶子"
+    },
+    {
+      "word_en": "WINTER",
+      "word_localization": "冬天"
+    },
+    {
+      "word_en": "PUNK",
+      "word_localization": "朋克"
+    },
+    {
+      "word_en": "CONSTRUCTION",
+      "word_localization": "建筑物"
+    },
+    {
+      "word_en": "MONK",
+      "word_localization": "和尚"
+    },
+    {
+      "word_en": "BUTTON",
+      "word_localization": "按钮"
+    },
+    {
+      "word_en": "CORRUPTION",
+      "word_localization": "堕落"
+    },
+    {
+      "word_en": "SATELLITE",
+      "word_localization": "卫星"
+    },
+    {
+      "word_en": "GIANT",
+      "word_localization": "巨人"
+    },
+    {
+      "word_en": "SCREAM",
+      "word_localization": "尖叫"
+    },
+    {
+      "word_en": "POTATO",
+      "word_localization": "土豆"
+    },
+    {
+      "word_en": "BUTTER",
+      "word_localization": "奶油"
+    },
+    {
+      "word_en": "BURGLARY",
+      "word_localization": "盗窃"
+    },
+    {
+      "word_en": "KEYBOARD",
+      "word_localization": "键盘"
+    },
+    {
+      "word_en": "CAR",
+      "word_localization": "车"
+    },
+    {
+      "word_en": "DEATH",
+      "word_localization": "死亡"
+    },
+    {
+      "word_en": "CAPE",
+      "word_localization": "斗篷"
+    },
+    {
+      "word_en": "DETECTIVE",
+      "word_localization": "侦探"
+    },
+    {
+      "word_en": "DINNER",
+      "word_localization": "晚餐"
+    },
+    {
+      "word_en": "HOURGLASS",
+      "word_localization": "沙漏"
+    },
+    {
+      "word_en": "NEW YORK",
+      "word_localization": "纽约"
+    },
+    {
+      "word_en": "HONEY",
+      "word_localization": "蜂蜜"
+    },
+    {
+      "word_en": "CANDLE",
+      "word_localization": "蜡烛"
+    },
+    {
+      "word_en": "SUMMER",
+      "word_localization": "夏天"
+    },
+    {
+      "word_en": "PARACHUTE",
+      "word_localization": "降落伞"
+    },
+    {
+      "word_en": "DANCE",
+      "word_localization": "跳舞"
+    },
+    {
+      "word_en": "GOLF",
+      "word_localization": "高尔夫"
+    },
+    {
+      "word_en": "THEATRE",
+      "word_localization": "戏院"
+    },
+    {
+      "word_en": "PSYCHOLOGIST",
+      "word_localization": "心理学家"
+    },
+    {
+      "word_en": "NIGHT",
+      "word_localization": "夜晚"
+    },
+    {
+      "word_en": "PILOT",
+      "word_localization": "飞行员"
+    },
+    {
+      "word_en": "WHALE",
+      "word_localization": "鲸鱼"
+    },
+    {
+      "word_en": "DWARF",
+      "word_localization": "侏儒"
+    },
+    {
+      "word_en": "CANON",
+      "word_localization": "大炮"
+    },
+    {
+      "word_en": "SKELETON",
+      "word_localization": "骷髅"
+    },
+    {
+      "word_en": "EGYPT",
+      "word_localization": "埃及"
+    },
+    {
+      "word_en": "HORSE",
+      "word_localization": "马"
+    },
+    {
+      "word_en": "SONG",
+      "word_localization": "歌"
+    }
+  ]
+}
