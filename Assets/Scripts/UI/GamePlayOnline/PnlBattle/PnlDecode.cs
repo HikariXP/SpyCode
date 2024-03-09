@@ -54,12 +54,12 @@ public class PnlDecode : MonoBehaviour
         TxtDecodeDisplay.text = string.Empty;
         var temp = _inputCode.ToArray();
         _sb.Clear();
-
+        
         for (int i = temp.Length; i > 0; i--)
         {
             _sb.Append(temp[i-1]);
         }
-
+        
         TxtDecodeDisplay.text = _sb.ToString();
     }
 
@@ -70,9 +70,9 @@ public class PnlDecode : MonoBehaviour
 
     private void OnConfirmBtnClick()
     {
-        // var answer = TxtDecodeDisplay.text;
         var answer = _inputCode.ToArray();
         UISystem.Instance.OnPlayerConfirm(answer);
+        _inputCode.Clear();
         gameObject.SetActive(false);
     }
     

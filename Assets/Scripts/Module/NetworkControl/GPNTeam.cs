@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Mirror;
 using NetworkControl.GamePlayNetwork;
 using UnityEngine;
@@ -58,7 +59,7 @@ public class GPNTeam
         wordIndexs.Add(d);
         RefreshTeamMemberWordDisplay();
     }
-
+    
     private void RefreshTeamMemberWordDisplay()
     {
         foreach (var player in members)
@@ -82,9 +83,10 @@ public class GPNTeam
         for (int i = 0; i < members.Count; i++)
         {
             var player = members[i];
+            var connectionToClient = player.connectionToClient;
             //当前回合传递者
-            player.Rpc_GPNPlaySetCode(i == senderIndex ? turnInfo.currentTurnCode : null);
-            player.Rpc_GPNPlayGetScore(turnInfo.successScore, turnInfo.failScore);
+            player.Rpc_GPNPlaySetCode(connectionToClient, i == senderIndex ? turnInfo.currentTurnCode : null);
+            player.Rpc_GPNPlayGetScore(connectionToClient, turnInfo.successScore, turnInfo.failScore);
         }
         
         currentTurnDecode = null;
@@ -114,7 +116,8 @@ public class GPNTeam
         currentTurnDecode = code;
         foreach (var player in members)
         {
-            player.Rpc_TeamMemberConfirmCode(currentTurnDecode);
+            var connectionToClient = player.netIdentity.connectionToClient;
+            player.Rpc_TeamMemberConfirmCode(connectionToClient, currentTurnDecode);
         }
     }
 
@@ -127,7 +130,8 @@ public class GPNTeam
         currentTurnDecode = null;
         foreach (var player in members)
         {
-            player.Rpc_TeamMemberCancelConfirm();
+            var connectionToClient = player.netIdentity.connectionToClient;
+            player.Rpc_TeamMemberCancelConfirm(connectionToClient);
         }
     }
 

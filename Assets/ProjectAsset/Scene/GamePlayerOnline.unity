@@ -7050,6 +7050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitForEnemyMask: {fileID: 1363716981}
+  txtTeamCode: {fileID: 1116651072}
   btnCancel: {fileID: 53403772}
 --- !u!1 &1849853241
 GameObject:

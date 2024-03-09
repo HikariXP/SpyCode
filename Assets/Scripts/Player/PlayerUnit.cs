@@ -54,14 +54,14 @@ public class PlayerUnit : NetworkBehaviour
     {
         base.OnStartServer();
         RegisterToGPNPlay();
-        Debug.Log("[PlayerUnit]OnStartClient");
+        Debug.Log($"[{nameof(PlayerUnit)}]OnStartClient");
     }
 
     public override void OnStopServer()
     {
         base.OnStopServer();
         UnregisterToGPNPlay();
-        Debug.Log("[PlayerUnit]OnStopClient");
+        Debug.Log($"[{nameof(PlayerUnit)}]OnStopClient");
     }
 
     [Server]
@@ -122,64 +122,50 @@ public class PlayerUnit : NetworkBehaviour
     #region Decode
 
     //TODO:改成获取单独一个客户端则不需要对isLocalPlayer判断，还能提升安全性
-    
+
     /// <summary>
     /// 客户端获取代码
     /// </summary>
+    /// <param name="_">TargetRpc需要使用</param>
     /// <param name="codes"></param>
-    [ClientRpc]
-    public void Rpc_GPNPlaySetCode(int[] codes)
+    [TargetRpc]
+    public void Rpc_GPNPlaySetCode(NetworkConnectionToClient _, int[] codes)
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-        
         UISystem.Instance.battleUI.NewTurnWithCode(codes);
         UISystem.Instance.battleUI.pnlRoundTips.EndWaitForEnemyMask();
     }
 
-    [ClientRpc]
-    public void Rpc_GPNPlayGetScore(int successScore, int failScore)
+    /// <summary>
+    /// 客户端刷新当前分数
+    /// </summary>
+    /// <param name="_">TargetRpc需要使用</param>
+    /// <param name="successScore"></param>
+    /// <param name="failScore"></param>
+    [TargetRpc]
+    public void Rpc_GPNPlayGetScore(NetworkConnectionToClient _, int successScore, int failScore)
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-        
         UISystem.Instance.battleUI.pnlWord.RefreshScore(successScore, failScore);
+        Debug.Log($"[{nameof(PlayerUnit)}]Rpc_GPNPlayGetScore({successScore}, {failScore})");
     }
 
     [ClientRpc]
     public void Rpc_GPNPlayGameOver()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
+        // 这种代码在纯Server-Client中不需要，但是在Host-Client中需要
+        if (!isLocalPlayer) return;
         UISystem.Instance.GPNPlay_SetToRoomUI();
     }
 
     //如果引入TargetRpc，则需要一如networkConnection的传参放到第一位
-    [ClientRpc]
-    public void Rpc_TeamMemberConfirmCode(int[] codes)
+    [TargetRpc]
+    public void Rpc_TeamMemberConfirmCode(NetworkConnectionToClient _, int[] codes)
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-
         UISystem.Instance.battleUI.pnlRoundTips.BeginWaitForEnemyMask(codes);
     }
 
-    [ClientRpc]
-    public void Rpc_TeamMemberCancelConfirm()
+    [TargetRpc]
+    public void Rpc_TeamMemberCancelConfirm(NetworkConnectionToClient _)
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-        
         UISystem.Instance.battleUI.pnlRoundTips.EndWaitForEnemyMask();
     }
 

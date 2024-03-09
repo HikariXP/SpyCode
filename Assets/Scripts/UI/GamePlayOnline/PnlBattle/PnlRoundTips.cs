@@ -18,6 +18,8 @@ public class PnlRoundTips : MonoBehaviour
     
     [Header("WaitForEnemyMask")]
     public GameObject waitForEnemyMask;
+    //Team Code Show
+    public Text txtTeamCode;
     //取消密码提交
     public Button btnCancel;
 
@@ -39,6 +41,7 @@ public class PnlRoundTips : MonoBehaviour
     public void BeginWaitForEnemyMask(int[] teamCode)
     {
         waitForEnemyMask.SetActive(true);
+        txtTeamCode.text = $"{teamCode[0]}.{teamCode[1]}.{teamCode[2]}.";
     }
 
     public void EndWaitForEnemyMask()
