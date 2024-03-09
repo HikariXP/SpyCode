@@ -1,12 +1,21 @@
-﻿using UnityEngine;
+﻿/*
+ * Author: CharSui
+ * Created On: 2024.03.03
+ * Description: 项目重启
+ */
 using UnityEditor;
+using UnityEngine;
+
 #if UNITY_EDITOR
-public class RebootUnityEditor
+namespace Editor.EditorTool
 {
-    [MenuItem("CharSuiMDTool/Reboot &r", false, 1)]
-    static void ExcuteReopenProject()
+    public class RebootUnityEditor
     {
-        EditorApplication.OpenProject(Application.dataPath.Replace("Assets", string.Empty));
+        [MenuItem("CharSuiMDTool/Reboot &r", false, 1)]
+        static void ExcuteReopenProject()
+        {
+            EditorApplication.OpenProject(Application.dataPath.Replace("Assets", string.Empty));
+        }
     }
 }
 #endif
