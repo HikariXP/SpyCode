@@ -49,6 +49,11 @@ namespace NetworkControl.UI
             localPlayerUnit.DecodeNumberCancel();
         }
 
+        public void OnPlayerChangeWord(int wordIndex)
+        {
+            localPlayerUnit.Cmd_PlayerChangeWord(wordIndex);
+        }
+
         /// <summary>
         /// 进入房间模式
         /// </summary>

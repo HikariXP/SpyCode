@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Module.WordSystem;
 using UnityEngine;
 
 namespace UI.GamePlayOnline
@@ -19,12 +20,11 @@ namespace UI.GamePlayOnline
         {
             playerUnit = localPlayerUnit;
             pnlRoundTips.Init(this);
-            // pnlWord.RefreshWordDisplay(playerUnit.team);
         }
 
-        public void RefreshWordDisplay(List<int> wordIndexs)
+        public void RefreshWordDisplay(List<WordData> words)
         {
-            pnlWord.RefreshWordDisplay(wordIndexs);
+            pnlWord.RefreshWordDisplay(words);
         }
         
         /// <summary>
@@ -39,9 +39,6 @@ namespace UI.GamePlayOnline
             }
 
             pnlWord.ShowCode(codes);
-            //TODO:耦合性太强了，应该由服务器通知分数
-            // pnlWord.RefreshScore(playerUnit.team.decodeSuccessScore,playerUnit.team.translateFailScore);
-            
         }
 
 

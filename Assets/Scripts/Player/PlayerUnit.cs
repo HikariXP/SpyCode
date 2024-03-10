@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Mirror;
+using Module.WordSystem;
 using NetworkControl.GamePlayNetwork;
 using NetworkControl.UI;
 using UnityEngine;
@@ -33,11 +34,8 @@ public class PlayerUnit : NetworkBehaviour
     [SyncVar]
     public int playerTeamIndex;
 
-    //本地缓存的索引
-    private List<int> wordIndexs;
-
     /// <summary>
-    /// 所属队伍的引用，目前不该获取其
+    /// 所属队伍的引用，对于其用法需要再考虑
     /// </summary>
     public GPNTeam team;
 
@@ -80,7 +78,7 @@ public class PlayerUnit : NetworkBehaviour
 
 
     [Command]
-    public void ChangeTeam()
+    public void Cmd_ChangeTeam()
     {
         playerTeamIndex = playerTeamIndex == 0 ? 1 : 0;
         GPNPlay.instance.PlayerStateRefresh();
@@ -88,7 +86,7 @@ public class PlayerUnit : NetworkBehaviour
 
 
     [Command]
-    public void SetReady()
+    public void Cmd_SetReady()
     {
         isReady = !isReady;
         GPNPlay.instance.PlayerStateRefresh();
@@ -96,13 +94,18 @@ public class PlayerUnit : NetworkBehaviour
 
 
     #region Word
-    
+
+    [Command]
+    public void Cmd_PlayerChangeWord(int wordIndex)
+    {
+        GPNPlay.instance.PlayerChangeWord(this, wordIndex);
+    }
+
     [ClientRpc]
-    public void Rpc_TeamSetWordDisplay(List<int> getWordIndexs)
+    public void Rpc_TeamSetWordDisplay(List<WordData> words)
     {
         if(!isLocalPlayer)return;
-        wordIndexs = getWordIndexs;
-        UISystem.Instance.battleUI.RefreshWordDisplay(wordIndexs);
+        UISystem.Instance.battleUI.RefreshWordDisplay(words);
     }
 
     [Command]

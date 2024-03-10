@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Mirror;
+using Module.WordSystem;
 using NetworkControl.GamePlayNetwork;
 using UnityEngine;
 
@@ -21,12 +22,17 @@ public class GPNTeam
     /// <summary>
     /// 对于词库的词的索引,实际字的内容客户端根据字典找
     /// </summary>
+    [Obsolete]
     private List<int> wordIndexs = new List<int>();
 
     /// <summary>
     /// 队伍内部循环传译者
     /// </summary>
     private int senderIndex;
+
+    private Queue<WordData> _wordDatas = new Queue<WordData>(10);
+
+    private List<WordData> _wordSelected = new List<WordData>(4);
 
     /// <summary>
     /// 当前回合队伍存储的解码
@@ -49,6 +55,7 @@ public class GPNTeam
         Debug.Log($"[{nameof(GPNTeam)}]new team created with index: {teamIndex}");
     }
 
+    [Obsolete]
     [Server]
     public void SetWordIndex(int a,int b,int c,int d)
     {
@@ -59,12 +66,59 @@ public class GPNTeam
         wordIndexs.Add(d);
         RefreshTeamMemberWordDisplay();
     }
+
+    [Server]
+    public void GetWordDatas(List<WordData> wordDatas)
+    {
+        if (wordDatas == null)
+        {
+            Debug.LogError($"[{nameof(GPNTeam)}]wordData is null");
+        }
+
+        if (wordDatas.Count == 0)
+        {
+            Debug.LogError($"[{nameof(GPNTeam)}]wordData is count 0");
+        }
+
+        foreach (var wordData in wordDatas)
+        {
+            _wordDatas.Enqueue(wordData);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            var item = _wordDatas.Dequeue();
+            _wordSelected.Add(item);
+        }
+        RefreshTeamMemberWordDisplay();
+    }
+
+    /// <summary>
+    /// 队伍内玩家切换词语
+    /// </summary>
+    /// <param name="wordIndex"></param>
+    [Server]
+    public void ChangeWordData(int wordIndex)
+    {
+        if(wordIndex < 0 || wordIndex > 3)return;
+
+        var previousWord = _wordSelected[wordIndex];
+
+        var nextWord = _wordDatas.Dequeue();
+
+        _wordSelected[wordIndex] = nextWord;
+        
+        _wordDatas.Enqueue(previousWord);
+
+        RefreshTeamMemberWordDisplay();
+    }
     
+    [Server]
     private void RefreshTeamMemberWordDisplay()
     {
         foreach (var player in members)
         {
-            player.Rpc_TeamSetWordDisplay(wordIndexs);
+            player.Rpc_TeamSetWordDisplay(_wordSelected);
         }
     }
     

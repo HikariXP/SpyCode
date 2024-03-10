@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Module.WordSystem;
 using NetworkControl.GamePlayNetwork;
+using NetworkControl.UI;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -17,7 +19,6 @@ namespace UI.GamePlayOnline
         public Text TxtSuccessScore;
         public Text TxtFailScore;
         
-
         public Button BtnDecode;
 
         [Header("Code")]
@@ -57,17 +58,23 @@ namespace UI.GamePlayOnline
             BtnDecode.interactable = interactable;
         }
 
-        public void RefreshWordDisplay(List<int> wordList)
+        public void RefreshWordDisplay(List<WordData> wordList)
         {
             ClearChild(wordDisplayAnchor);
 
             for (int i = 0; i < wordList.Count; i++)
             {
-                var wordIndex = wordList[i];
-                var word = GPNPlayWordBackup.WordBackup[wordIndex];
+                var wordIndex = i;
+                // var word = GPNPlayWordBackup.WordBackup[wordIndex];
+                var word = wordList[i];
                 var wordUnit = Instantiate(wordDisplayUnitPrefab,wordDisplayAnchor).GetComponent<PnlWordUnit>();
-                wordUnit.Refresh(i,word);
+                wordUnit.Refresh(wordIndex, word.word_localization, this);
             }
+        }
+
+        public void OnPlayerClickChangeWord(int index)
+        {
+            UISystem.Instance.OnPlayerChangeWord(index);
         }
 
         private void ClearChild(Transform parent)
@@ -83,11 +90,11 @@ namespace UI.GamePlayOnline
 
         #region EditorTest
 
-        [Button]
-        public void RefreshWordIndex(List<int> wordIndexs)
-        {
-            RefreshWordDisplay(wordIndexs);
-        }
+        // [Button]
+        // public void RefreshWordIndex(List<int> wordIndexs)
+        // {
+        //     RefreshWordDisplay(wordIndexs);
+        // }
 
         #endregion
     }

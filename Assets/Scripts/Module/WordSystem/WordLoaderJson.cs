@@ -14,13 +14,6 @@ namespace Module.WordSystem
     public class WordLoaderJson : WordLoader
     {
         private WordLibrary _wordLibrary;
-        
-        private List<WordData> wordCache;
-
-        public override int GetCount()
-        {
-            return wordCache.Count;
-        }
 
         [Obsolete("似乎没用")]
         public override bool Init()
@@ -30,7 +23,6 @@ namespace Module.WordSystem
 
         public override bool Release()
         {
-            wordCache = null;
             return true;
         }
 
@@ -46,8 +38,7 @@ namespace Module.WordSystem
             {
                 var data = JsonConvert.DeserializeObject<WordLibrary>(context);
                 _wordLibrary = data;
-                wordCache.Clear();
-                
+                count = _wordLibrary.wordDatas.Count;
             }
             catch (Exception e)
             {

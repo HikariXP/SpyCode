@@ -12,7 +12,7 @@ namespace UI.GamePlayOnline
 
         public Button BtnChangeTeam;
 
-        private PlayerUnit playerUnit;
+        private PlayerUnit _playerUnit;
 
         public Transform PlayerInfoViewTransform;
 
@@ -20,7 +20,7 @@ namespace UI.GamePlayOnline
 
         public void Init(PlayerUnit localPlayerUnit)
         {
-            playerUnit = localPlayerUnit;
+            _playerUnit = localPlayerUnit;
         }
 
         public void Start()
@@ -62,12 +62,12 @@ namespace UI.GamePlayOnline
 
         public void CMD_PlayerReady()
         {
-            playerUnit.SetReady();
+            _playerUnit.Cmd_SetReady();
         }
 
         public void CMD_PlayerChangeTeam()
         {
-            playerUnit.ChangeTeam();
+            _playerUnit.Cmd_ChangeTeam();
         }
 
         #endregion

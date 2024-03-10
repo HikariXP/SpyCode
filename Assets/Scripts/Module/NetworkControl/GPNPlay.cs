@@ -22,6 +22,11 @@
  * 循环
  */
 
+/*
+ * 尚未完成的功能：
+ * 回合开始的密码没有经过重复判断：缓存历史代码，跳过出现过的代码
+ */
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,11 +36,13 @@ using Mirror;
 using Mirror.Discovery;
 using System.Net;
 using System.Linq;
+using Module.CommonUtil;
 using Module.WordSystem;
 using NetworkControl.UI;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine.AddressableAssets;
+using Random = UnityEngine.Random;
 
 namespace NetworkControl.GamePlayNetwork
 {
@@ -69,7 +76,7 @@ namespace NetworkControl.GamePlayNetwork
         private int _TranslateFailScore = 2;
 
         private WordLoader _wordLoader;
-        
+
         private void Awake()
         {
             instance = this;
@@ -80,13 +87,16 @@ namespace NetworkControl.GamePlayNetwork
 
             string context;
             
-#if UNITY_EDITOR
-            var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/ProjectAsset/WordLibrary/DecryptoStandard.json");
-            context = textAsset.text;
-#else
+// #if UNITY_EDITOR
+//             var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/ProjectAsset/WordLibrary/DecryptoStandard.json");
+//             context = textAsset.text;
+// #else
+            //TODO:这里是异步的，应该做成异步加载的流程。
             var textAsset = Addressables.LoadAssetAsync<TextAsset>("WordLibrary_DecryptoStandard");
-            context = textAsset.text;
-#endif
+            textAsset.WaitForCompletion();
+            context = textAsset.Result.text;
+            
+// #endif
             _wordLoader.Load(context);
         }
 
@@ -213,12 +223,45 @@ namespace NetworkControl.GamePlayNetwork
         /// <summary>
         /// TODO:完善随机序号和可换序号
         /// </summary>
+        [Server]
         private void InitializeTeamsWordIndex()
         {
+            var wordCount = _wordLoader.GetCount();
+            var tempRandomCacher = new RandomCacher(wordCount);
+            
+            // TODO:重复的代码，记得修复
             // 这里需要获取一次战斗的所有词序，然后随机分配成两组可供使用
             // 需要一次性给队伍所有的Index。
-            _teams[0].SetWordIndex(1, 2, 3, 4);
-            _teams[1].SetWordIndex(5, 6, 7, 8);
+            List<WordData> tempCacheWords = new List<WordData>(64);
+            tempCacheWords.Clear();
+            //每个队伍给十个词
+            for (int i = 0; i < 10; i++)
+            {
+                if (tempRandomCacher.GetNumber(out int wordIndex))
+                {
+                    if (_wordLoader.TryGetWord(wordIndex, out WordData word))
+                    {
+                        tempCacheWords.Add(word);
+                    }
+                }
+            }
+
+            _teams[0].GetWordDatas(tempCacheWords);
+            tempCacheWords.Clear();
+            for (int i = 0; i < 10; i++)
+            {
+                if (tempRandomCacher.GetNumber(out int wordIndex))
+                {
+                    if (_wordLoader.TryGetWord(wordIndex, out WordData word))
+                    {
+                        tempCacheWords.Add(word);
+                    }
+                }
+            }
+            _teams[1].GetWordDatas(tempCacheWords);
+            
+            // _teams[0].SetWordIndex(1, 2, 3, 4);
+            // _teams[1].SetWordIndex(5, 6, 7, 8);
         }
 
         private void GameEnd()
@@ -226,7 +269,13 @@ namespace NetworkControl.GamePlayNetwork
             //展示结算画面，确认后切换到UIRoom
             ResetBattleBase();
             ResetUI();
-            
+        }
+
+        [Server]
+        public void PlayerChangeWord(PlayerUnit changePlayer, int wordIndex)
+        {
+            var playerTeam = changePlayer.team;
+            playerTeam.ChangeWordData(wordIndex);
         }
 
         /// <summary>
