@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using Module.WordSystem;
@@ -46,27 +47,26 @@ public class PlayerUnit : NetworkBehaviour
         base.OnStartLocalPlayer();
 
         UISystem.Instance.PlayerSetup(this);
+        
+        RegisterToGPNPlay();
     }
 
-    public override void OnStartServer()
+    public override void OnStartClient()
     {
-        base.OnStartServer();
-        RegisterToGPNPlay();
+        
         Debug.Log($"[{nameof(PlayerUnit)}]OnStartClient");
     }
 
     public override void OnStopServer()
     {
-        base.OnStopServer();
         UnregisterToGPNPlay();
-        Debug.Log($"[{nameof(PlayerUnit)}]OnStopClient");
+        Debug.Log($"[{nameof(PlayerUnit)}]OnStopServer");
     }
 
-    [Server]
+    [Command]
     private void RegisterToGPNPlay()
     {
         GPNPlay.instance.AddPlayerUnit(this);
-
     }
 
     [Server]
@@ -81,7 +81,7 @@ public class PlayerUnit : NetworkBehaviour
     public void Cmd_ChangeTeam()
     {
         playerTeamIndex = playerTeamIndex == 0 ? 1 : 0;
-        GPNPlay.instance.PlayerStateRefresh();
+        GPNPlay.instance.OnPlayerRefreshState();
     }
 
 
@@ -89,7 +89,22 @@ public class PlayerUnit : NetworkBehaviour
     public void Cmd_SetReady()
     {
         isReady = !isReady;
-        GPNPlay.instance.PlayerStateRefresh();
+        GPNPlay.instance.OnPlayerRefreshState();
+    }
+
+    [ClientRpc]
+    public void Rpc_RefreshRoomUI()
+    {
+        if(!isLocalPlayer)return;
+        // ClientRpc即使执行顺序是对的，但是Sync的数据却不一定能几时同步
+        // 或许最好的方式是通过Sync的数值改变事件进行回调
+        StartCoroutine(waitEndFrame());
+    }
+
+    private IEnumerator waitEndFrame()
+    {
+        yield return new WaitForSeconds(0.05f);
+        UISystem.Instance.RefreshRoomUIForce();
     }
 
 

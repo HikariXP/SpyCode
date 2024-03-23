@@ -65,10 +65,9 @@ namespace UI.GamePlayOnline
             for (int i = 0; i < wordList.Count; i++)
             {
                 var wordIndex = i;
-                // var word = GPNPlayWordBackup.WordBackup[wordIndex];
                 var word = wordList[i];
                 var wordUnit = Instantiate(wordDisplayUnitPrefab,wordDisplayAnchor).GetComponent<PnlWordUnit>();
-                wordUnit.Refresh(wordIndex, word.word_localization, this);
+                wordUnit.Refresh(wordIndex, word.word_localization, word.word_en, this);
             }
         }
 

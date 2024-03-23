@@ -19,7 +19,6 @@ namespace UI.GamePlayOnline
         public void Init(PlayerUnit localPlayerUnit)
         {
             playerUnit = localPlayerUnit;
-            pnlRoundTips.Init(this);
         }
 
         public void RefreshWordDisplay(List<WordData> words)

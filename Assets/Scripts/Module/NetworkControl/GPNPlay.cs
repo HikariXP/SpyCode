@@ -51,7 +51,7 @@ namespace NetworkControl.GamePlayNetwork
     /// </summary>
     public class GPNPlay : NetworkBehaviour
     {
-        public readonly SyncDictionary<uint, PlayerUnit> playerUnits = new SyncDictionary<uint, PlayerUnit>();
+        public readonly SyncList<PlayerUnit> playerUnits = new SyncList<PlayerUnit>();
 
         private readonly SyncList<GPNTeam> _teams = new SyncList<GPNTeam>();
         
@@ -103,7 +103,7 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         private void ResetBattleBase()
         {
-            var playersInRoom = playerUnits.Values;
+            var playersInRoom = playerUnits;
             for (int i = 0; i < playersInRoom.Count; i++)
             {
                 playersInRoom.ElementAt(i).isReady = false;
@@ -113,7 +113,7 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         private void ResetUI()
         {
-            var playersInRoom = playerUnits.Values;
+            var playersInRoom = playerUnits;
             for (int i = 0; i < playersInRoom.Count; i++)
             {
                 var player = playersInRoom.ElementAt(i);
@@ -126,10 +126,10 @@ namespace NetworkControl.GamePlayNetwork
         #region Room
 
         [Server]
-        public void PlayerStateRefresh()
+        public void OnPlayerRefreshState()
         {
             RefreshRoomUI();
-
+            
             var isMemberEnough = CheckTeamMemberCount();
 
             var isAllReady = CheckReadyStateIsReadyForGame();
@@ -140,10 +140,13 @@ namespace NetworkControl.GamePlayNetwork
             }
         }
 
-        [ClientRpc]
+        [Server]
         private void RefreshRoomUI()
         {
-            UISystem.Instance.RefreshRoomUIForce();
+            foreach (var player in playerUnits)
+            {
+                player.Rpc_RefreshRoomUI();
+            }
         }
 
         /// <summary>
@@ -152,8 +155,9 @@ namespace NetworkControl.GamePlayNetwork
         /// <returns></returns>
         private bool CheckTeamMemberCount()
         {
-            var playersInRoom = playerUnits.Values;
+            var playersInRoom = playerUnits;
             if(playersInRoom.Count<4)return false;
+            // if(playersInRoom.Count<2)return false;
 
             int teamACount = 0;
             int teamBCount = 0;
@@ -161,7 +165,7 @@ namespace NetworkControl.GamePlayNetwork
             
             for (int i = 0; i < playersInRoom.Count; i++)
             {
-                if (playersInRoom.ElementAt(i).playerTeamIndex == 0)
+                if (playersInRoom[i].playerTeamIndex == 0)
                 {
                     teamACount += 1;
                 }
@@ -184,10 +188,10 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         private bool CheckReadyStateIsReadyForGame()
         { 
-            var playersInRoom = playerUnits.Values;
+            var playersInRoom = playerUnits;
             for (int i = 0; i < playersInRoom.Count; i++)
             {
-                if (!playersInRoom.ElementAt(i).isReady)
+                if (!playersInRoom[i].isReady)
                 {
                     return false;
                 }
@@ -259,9 +263,6 @@ namespace NetworkControl.GamePlayNetwork
                 }
             }
             _teams[1].GetWordDatas(tempCacheWords);
-            
-            // _teams[0].SetWordIndex(1, 2, 3, 4);
-            // _teams[1].SetWordIndex(5, 6, 7, 8);
         }
 
         private void GameEnd()
@@ -538,10 +539,10 @@ namespace NetworkControl.GamePlayNetwork
             GPNTeam team = new GPNTeam();
             team.teamIndex = teamIndex;
 
-            var playersInRoom = playerUnits.Values;
+            var playersInRoom = playerUnits;
             for (int i = 0; i < playersInRoom.Count; i++)
             {
-                var player = playersInRoom.ElementAt(i);
+                var player = playersInRoom[i];
                 if (player.playerTeamIndex == teamIndex)
                 {
                     team.Add(player);
@@ -558,15 +559,11 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         public void AddPlayerUnit(PlayerUnit playerUnit)
         {
-            var playerUnitNetId = playerUnit.netIdentity.netId;
-            if (!playerUnits.ContainsKey(playerUnitNetId))
+            if (!playerUnits.Contains(playerUnit))
             {
-                playerUnits.Add(playerUnitNetId, playerUnit);
+                playerUnits.Add(playerUnit);
                 Debug.Log("[GPNPlay]Add: " + playerUnit.playerName);
-                PlayerStateRefresh();
-
                 ForceRefreshPlayerUnits();
-
                 RefreshRoomUI();
             }
         }
@@ -574,15 +571,11 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         public void RemovePlayerUnit(PlayerUnit playerUnit)
         {
-            var playerUnitNetId = playerUnit.netIdentity.netId;
-            if (playerUnits.ContainsKey(playerUnitNetId))
+            if (playerUnits.Contains(playerUnit))
             {
-                playerUnits.Remove(playerUnitNetId);
+                playerUnits.Remove(playerUnit);
                 Debug.Log("[GPNPlay]Remove: " + playerUnit.playerName);
-                PlayerStateRefresh();
-
                 ForceRefreshPlayerUnits();
-
                 RefreshRoomUI();
             }
         }
@@ -603,13 +596,15 @@ namespace NetworkControl.GamePlayNetwork
             var count = playerUnits.Count;
             Debug.Log("[GPNPlay]Count:" + count);
 
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < count-1; i++)
             {
-                var tempKey = playerUnits.ElementAt(i).Key;
-                if (playerUnits[tempKey] != null) 
-                {
-                    playerUnits[tempKey] = playerUnits[tempKey];
-                }
+                // var tempKey = playerUnits[i];
+                // var tempKey2 = playerUnits[i+1];
+                // if (tempKey != null)
+                // {
+                //     
+                // }
+                (playerUnits[i], playerUnits[i+1]) = (playerUnits[i+1], playerUnits[i]);
             }
         }
 

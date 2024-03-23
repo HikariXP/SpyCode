@@ -14,8 +14,6 @@ using UnityEngine.UI;
 
 public class PnlRoundTips : MonoBehaviour
 {
-    private PnlBattle m_PnlBattle;
-    
     [Header("WaitForEnemyMask")]
     public GameObject waitForEnemyMask;
     //Team Code Show
@@ -31,11 +29,6 @@ public class PnlRoundTips : MonoBehaviour
     private void OnDestroy()
     {
         btnCancel.onClick.RemoveAllListeners();
-    }
-
-    public void Init(PnlBattle pnlBattle)
-    {
-        m_PnlBattle = pnlBattle;
     }
 
     public void BeginWaitForEnemyMask(int[] teamCode)

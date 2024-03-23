@@ -18,7 +18,9 @@ public class PnlWordUnit : MonoBehaviour
     
     public Text TxtIndex;
     
-    public Text TxtWordContent;
+    public Text TxtWordContent_Localization;
+    
+    public Text TxtWordContent_En;
 
     private Button _BtnChangeWord;
 
@@ -48,14 +50,16 @@ public class PnlWordUnit : MonoBehaviour
     /// TODO:狗屎写法没有EventManager解耦
     /// </summary>
     /// <param name="wordIndex"></param>
-    /// <param name="wordContent"></param>
+    /// <param name="wordContentLocalization"></param>
+    /// <param name="wordContentEn"></param>
     /// <param name="parent"></param>
-    public void Refresh(int wordIndex,string wordContent, PnlWord parent)
+    public void Refresh(int wordIndex,string wordContentLocalization, string wordContentEn, PnlWord parent)
     {
         _pnlWord = parent;
         _index = wordIndex;
         TxtIndex.text = wordIndex.ToString();
-        TxtWordContent.text = wordContent;
+        TxtWordContent_Localization.text = wordContentLocalization;
+        TxtWordContent_En.text = wordContentEn;
     }
 
 }

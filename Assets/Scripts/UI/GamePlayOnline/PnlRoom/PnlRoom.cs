@@ -35,10 +35,11 @@ namespace UI.GamePlayOnline
             
             var tempList = GPNPlay.instance.playerUnits;
 
-            for (int i = 0; i < tempList.Count; i++)
+            foreach (var playerUnit in tempList)
             {
+                if(playerUnit==null)continue;
                 var cell = Instantiate(PlayerInfoCellPrefab, PlayerInfoViewTransform).GetComponent<PlayerInfoRoomCell>();
-                cell.RefreshInfo(tempList.ElementAt(i).Value);
+                cell.RefreshInfo(playerUnit);
             }
         }
 

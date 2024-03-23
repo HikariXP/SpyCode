@@ -46,6 +46,11 @@ public class GPNTeam
     public int translateFailScore = 0;
 
     /// <summary>
+    /// 用于选词阶段，队伍是否两个玩家都确认词语
+    /// </summary>
+    public bool wordConfirm;
+
+    /// <summary>
     /// 是否本回合
     /// </summary>
     public bool isSenderTurn;
