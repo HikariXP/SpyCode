@@ -195,6 +195,1568 @@
     {
       "word_en": "SONG",
       "word_localization": "歌"
+    },
+    {
+      "word_en": "MONSTER",
+      "word_localization": "怪物"
+    },
+    {
+      "word_en": "TOILET",
+      "word_localization": "厕所"
+    },
+    {
+      "word_en": "MONUMENT",
+      "word_localization": "纪念碑"
+    },
+    {
+      "word_en": "JOB",
+      "word_localization": "工作"
+    },
+    {
+      "word_en": "RENAISSANCE",
+      "word_localization": "文艺复兴"
+    },
+    {
+      "word_en": "SNOW",
+      "word_localization": "雪"
+    },
+    {
+      "word_en": "LEG",
+      "word_localization": "腿"
+    },
+    {
+      "word_en": "SUITCASE",
+      "word_localization": "行李箱"
+    },
+    {
+      "word_en": "HORN",
+      "word_localization": "角"
+    },
+    {
+      "word_en": "COMIC BOOK",
+      "word_localization": "漫画书"
+    },
+    {
+      "word_en": "CAMERA",
+      "word_localization": "相机"
+    },
+    {
+      "word_en": "BELL",
+      "word_localization": "铃"
+    },
+    {
+      "word_en": "WHEAT",
+      "word_localization": "小麦"
+    },
+    {
+      "word_en": "BLACK",
+      "word_localization": "黑色"
+    },
+    {
+      "word_en": "PEARL",
+      "word_localization": "珍珠"
+    },
+    {
+      "word_en": "NECKLACE",
+      "word_localization": "项链"
+    },
+    {
+      "word_en": "GUITAR",
+      "word_localization": "吉他"
+    },
+    {
+      "word_en": "FRAUD",
+      "word_localization": "骗子"
+    },
+    {
+      "word_en": "BEARD",
+      "word_localization": "胡子"
+    },
+    {
+      "word_en": "ORANGE",
+      "word_localization": "橘子"
+    },
+    {
+      "word_en": "CAKE",
+      "word_localization": "蛋糕"
+    },
+    {
+      "word_en": "CALENDAR",
+      "word_localization": "日历"
+    },
+    {
+      "word_en": "CANDY",
+      "word_localization": "糖果"
+    },
+    {
+      "word_en": "MIRROR",
+      "word_localization": "镜子"
+    },
+    {
+      "word_en": "DREAM",
+      "word_localization": "梦想"
+    },
+    {
+      "word_en": "GUILLOTINE",
+      "word_localization": "断头台"
+    },
+    {
+      "word_en": "COOKIE",
+      "word_localization": "饼干"
+    },
+    {
+      "word_en": "PRINCESS",
+      "word_localization": "公主"
+    },
+    {
+      "word_en": "LIBRARY",
+      "word_localization": "图书馆"
+    },
+    {
+      "word_en": "EGG",
+      "word_localization": "鸡蛋"
+    },
+    {
+      "word_en": "ARMOUR",
+      "word_localization": "护具"
+    },
+    {
+      "word_en": "POCKET",
+      "word_localization": "口袋"
+    },
+    {
+      "word_en": "HAMMER",
+      "word_localization": "锤子"
+    },
+    {
+      "word_en": "MAGNET",
+      "word_localization": "磁铁"
+    },
+    {
+      "word_en": "POISON",
+      "word_localization": "毒物"
+    },
+    {
+      "word_en": "NEWSPAPER",
+      "word_localization": "报纸"
+    },
+    {
+      "word_en": "LEGEND",
+      "word_localization": "传说"
+    },
+    {
+      "word_en": "GEEK",
+      "word_localization": "怪胎"
+    },
+    {
+      "word_en": "SQUIRREL",
+      "word_localization": "松鼠"
+    },
+    {
+      "word_en": "PATH",
+      "word_localization": "道路"
+    },
+    {
+      "word_en": "MOON",
+      "word_localization": "月亮"
+    },
+    {
+      "word_en": "GARDEN",
+      "word_localization": "花园"
+    },
+    {
+      "word_en": "WOMAN",
+      "word_localization": "女人"
+    },
+    {
+      "word_en": "RIVER",
+      "word_localization": "河"
+    },
+    {
+      "word_en": "DICTIONARY",
+      "word_localization": "字典"
+    },
+    {
+      "word_en": "VOLCANO",
+      "word_localization": "火山"
+    },
+    {
+      "word_en": "DRESS",
+      "word_localization": "衣服"
+    },
+    {
+      "word_en": "WOLF",
+      "word_localization": "狼"
+    },
+    {
+      "word_en": "COMPUTER",
+      "word_localization": "电脑"
+    },
+    {
+      "word_en": "BUTTERFLY",
+      "word_localization": "蝴蝶"
+    },
+    {
+      "word_en": "HEAT",
+      "word_localization": "热"
+    },
+    {
+      "word_en": "CASINO",
+      "word_localization": "赌场"
+    },
+    {
+      "word_en": "JOY",
+      "word_localization": "快乐"
+    },
+    {
+      "word_en": "ANTIQUITY",
+      "word_localization": "古代"
+    },
+    {
+      "word_en": "CANYON",
+      "word_localization": "峡谷"
+    },
+    {
+      "word_en": "COFFEE",
+      "word_localization": "咖啡"
+    },
+    {
+      "word_en": "BIT",
+      "word_localization": "一点点"
+    },
+    {
+      "word_en": "HORROR",
+      "word_localization": "恐怖"
+    },
+    {
+      "word_en": "EAR",
+      "word_localization": "耳朵"
+    },
+    {
+      "word_en": "PEACOCK",
+      "word_localization": "孔雀"
+    },
+    {
+      "word_en": "EXORCISM",
+      "word_localization": "驱魔"
+    },
+    {
+      "word_en": "DRUM",
+      "word_localization": "鼓"
+    },
+    {
+      "word_en": "BASEBALL",
+      "word_localization": "棒球"
+    },
+    {
+      "word_en": "SCULPTURE",
+      "word_localization": "雕塑"
+    },
+    {
+      "word_en": "PASSENGER",
+      "word_localization": "乘客"
+    },
+    {
+      "word_en": "CLOUD",
+      "word_localization": "云"
+    },
+    {
+      "word_en": "BRICK",
+      "word_localization": "砖块"
+    },
+    {
+      "word_en": "MASK",
+      "word_localization": "面具"
+    },
+    {
+      "word_en": "PREHISTORY",
+      "word_localization": "史前时代"
+    },
+    {
+      "word_en": "ROOM",
+      "word_localization": "房间"
+    },
+    {
+      "word_en": "RED",
+      "word_localization": "红色"
+    },
+    {
+      "word_en": "SURGERY",
+      "word_localization": "手术"
+    },
+    {
+      "word_en": "SLEEP",
+      "word_localization": "睡觉"
+    },
+    {
+      "word_en": "BICYCLE",
+      "word_localization": "自行车"
+    },
+    {
+      "word_en": "PEANUT",
+      "word_localization": "花生"
+    },
+    {
+      "word_en": "MUSEUM",
+      "word_localization": "博物馆"
+    },
+    {
+      "word_en": "MACHINE",
+      "word_localization": "机械"
+    },
+    {
+      "word_en": "CHURCH",
+      "word_localization": "教堂"
+    },
+    {
+      "word_en": "ZOMBIE",
+      "word_localization": "僵尸"
+    },
+    {
+      "word_en": "BEACH",
+      "word_localization": "沙滩"
+    },
+    {
+      "word_en": "ISLAND",
+      "word_localization": "岛屿"
+    },
+    {
+      "word_en": "QUEBEC",
+      "word_localization": "魁北克"
+    },
+    {
+      "word_en": "DRAGON",
+      "word_localization": "龙"
+    },
+    {
+      "word_en": "PEGASUS",
+      "word_localization": "飞马"
+    },
+    {
+      "word_en": "INTERNET",
+      "word_localization": "网络"
+    },
+    {
+      "word_en": "BIRTHDAY",
+      "word_localization": "生日"
+    },
+    {
+      "word_en": "TOURIST",
+      "word_localization": "观光"
+    },
+    {
+      "word_en": "RESTAURANT",
+      "word_localization": "餐厅"
+    },
+    {
+      "word_en": "SLED",
+      "word_localization": "雪橇"
+    },
+    {
+      "word_en": "EVENING",
+      "word_localization": "傍晚"
+    },
+    {
+      "word_en": "TASTE",
+      "word_localization": "味道"
+    },
+    {
+      "word_en": "ECONOMICS",
+      "word_localization": "经济学"
+    },
+    {
+      "word_en": "CIRCUS",
+      "word_localization": "马戏团"
+    },
+    {
+      "word_en": "PIG",
+      "word_localization": "猪"
+    },
+    {
+      "word_en": "PIZZA",
+      "word_localization": "披萨"
+    },
+    {
+      "word_en": "AIRPLANE",
+      "word_localization": "飞机"
+    },
+    {
+      "word_en": "TRIANGLE",
+      "word_localization": "三角形"
+    },
+    {
+      "word_en": "TABLE",
+      "word_localization": "桌子"
+    },
+    {
+      "word_en": "MADNESS",
+      "word_localization": "疯狂"
+    },
+    {
+      "word_en": "CONCERT",
+      "word_localization": "音乐会"
+    },
+    {
+      "word_en": "CINEMA",
+      "word_localization": "电影院"
+    },
+    {
+      "word_en": "FATHER",
+      "word_localization": "父亲"
+    },
+    {
+      "word_en": "GOD",
+      "word_localization": "神"
+    },
+    {
+      "word_en": "RING",
+      "word_localization": "戒指"
+    },
+    {
+      "word_en": "RELIGION",
+      "word_localization": "信仰"
+    },
+    {
+      "word_en": "GIRAFFE",
+      "word_localization": "长颈鹿"
+    },
+    {
+      "word_en": "MATHEMATICS",
+      "word_localization": "数学"
+    },
+    {
+      "word_en": "ACCIDENT",
+      "word_localization": "意外"
+    },
+    {
+      "word_en": "LIGHT BULB",
+      "word_localization": "灯泡"
+    },
+    {
+      "word_en": "KING",
+      "word_localization": "国王"
+    },
+    {
+      "word_en": "GERMANY",
+      "word_localization": "德国"
+    },
+    {
+      "word_en": "PUZZLE",
+      "word_localization": "拼图"
+    },
+    {
+      "word_en": "ALCOHOL",
+      "word_localization": "酒精"
+    },
+    {
+      "word_en": "ATTACK",
+      "word_localization": "攻击"
+    },
+    {
+      "word_en": "SWIMMING POOL",
+      "word_localization": "游泳池"
+    },
+    {
+      "word_en": "DIAMOND",
+      "word_localization": "钻石"
+    },
+    {
+      "word_en": "CARPET",
+      "word_localization": "地毯"
+    },
+    {
+      "word_en": "COCKROACH",
+      "word_localization": "蟑螂"
+    },
+    {
+      "word_en": "CAT",
+      "word_localization": "猫"
+    },
+    {
+      "word_en": "ROOF",
+      "word_localization": "屋顶"
+    },
+    {
+      "word_en": "GENIUS",
+      "word_localization": "天才"
+    },
+    {
+      "word_en": "BANANA",
+      "word_localization": "香蕉"
+    },
+    {
+      "word_en": "BOMB",
+      "word_localization": "炸弹"
+    },
+    {
+      "word_en": "FACE",
+      "word_localization": "脸"
+    },
+    {
+      "word_en": "BANK",
+      "word_localization": "银行"
+    },
+    {
+      "word_en": "BUTLER",
+      "word_localization": "男管家"
+    },
+    {
+      "word_en": "DISEASE",
+      "word_localization": "疾病"
+    },
+    {
+      "word_en": "SPY",
+      "word_localization": "间谍"
+    },
+    {
+      "word_en": "LUNCH",
+      "word_localization": "午餐"
+    },
+    {
+      "word_en": "PYRAMID",
+      "word_localization": "金字塔"
+    },
+    {
+      "word_en": "DOMINO",
+      "word_localization": "骨牌"
+    },
+    {
+      "word_en": "VAMPIRE",
+      "word_localization": "吸血鬼"
+    },
+    {
+      "word_en": "HUNT",
+      "word_localization": "狩猎"
+    },
+    {
+      "word_en": "GLASS",
+      "word_localization": "玻璃"
+    },
+    {
+      "word_en": "MOTHER",
+      "word_localization": "妈妈"
+    },
+    {
+      "word_en": "FRUIT",
+      "word_localization": "水果"
+    },
+    {
+      "word_en": "OUTER SPACE",
+      "word_localization": "外太空"
+    },
+    {
+      "word_en": "SQUARE",
+      "word_localization": "正方形"
+    },
+    {
+      "word_en": "HAND",
+      "word_localization": "手"
+    },
+    {
+      "word_en": "SOCIAL MEDIA",
+      "word_localization": "社交媒体"
+    },
+    {
+      "word_en": "PERFUME",
+      "word_localization": "香水"
+    },
+    {
+      "word_en": "FROG",
+      "word_localization": "青蛙"
+    },
+    {
+      "word_en": "DUNGEON",
+      "word_localization": "地下城"
+    },
+    {
+      "word_en": "TRACK",
+      "word_localization": "轨道"
+    },
+    {
+      "word_en": "PLANET",
+      "word_localization": "星球"
+    },
+    {
+      "word_en": "ARCHITECTURE",
+      "word_localization": "建筑学"
+    },
+    {
+      "word_en": "RUSSIA",
+      "word_localization": "俄罗斯"
+    },
+    {
+      "word_en": "SADNESS",
+      "word_localization": "难过"
+    },
+    {
+      "word_en": "BASEMENT",
+      "word_localization": "地下室"
+    },
+    {
+      "word_en": "OASIS",
+      "word_localization": "绿洲"
+    },
+    {
+      "word_en": "LEPRECHAUN",
+      "word_localization": "小妖精"
+    },
+    {
+      "word_en": "SNAKE",
+      "word_localization": "蛇"
+    },
+    {
+      "word_en": "SHEEP",
+      "word_localization": "绵羊"
+    },
+    {
+      "word_en": "CHOCOLATE",
+      "word_localization": "巧克力"
+    },
+    {
+      "word_en": "WITCH",
+      "word_localization": "女巫"
+    },
+    {
+      "word_en": "PIANO",
+      "word_localization": "钢琴"
+    },
+    {
+      "word_en": "BEER",
+      "word_localization": "啤酒"
+    },
+    {
+      "word_en": "SCARECROW",
+      "word_localization": "稻草人"
+    },
+    {
+      "word_en": "YELLOW",
+      "word_localization": "黄色"
+    },
+    {
+      "word_en": "BOAT",
+      "word_localization": "船"
+    },
+    {
+      "word_en": "ROBOT",
+      "word_localization": "机器人"
+    },
+    {
+      "word_en": "CALIFORNIA",
+      "word_localization": "加州"
+    },
+    {
+      "word_en": "TORPEDO",
+      "word_localization": "鱼雷"
+    },
+    {
+      "word_en": "WOOL",
+      "word_localization": "羊毛"
+    },
+    {
+      "word_en": "SOCCER",
+      "word_localization": "足球"
+    },
+    {
+      "word_en": "LAUGH",
+      "word_localization": "笑"
+    },
+    {
+      "word_en": "MERMAID",
+      "word_localization": "美人鱼"
+    },
+    {
+      "word_en": "CARDBOARD",
+      "word_localization": "厚纸板"
+    },
+    {
+      "word_en": "PARKING LOT",
+      "word_localization": "停车场"
+    },
+    {
+      "word_en": "PURPLE",
+      "word_localization": "紫色"
+    },
+    {
+      "word_en": "KNIFE",
+      "word_localization": "刀"
+    },
+    {
+      "word_en": "CLOCK",
+      "word_localization": "时钟"
+    },
+    {
+      "word_en": "HOSPITAL",
+      "word_localization": "医院"
+    },
+    {
+      "word_en": "ART",
+      "word_localization": "艺术"
+    },
+    {
+      "word_en": "PIT",
+      "word_localization": "井"
+    },
+    {
+      "word_en": "FOOT",
+      "word_localization": "脚"
+    },
+    {
+      "word_en": "PICNIC",
+      "word_localization": "野餐"
+    },
+    {
+      "word_en": "WALL",
+      "word_localization": "墙壁"
+    },
+    {
+      "word_en": "SOAP",
+      "word_localization": "肥皂"
+    },
+    {
+      "word_en": "NEST",
+      "word_localization": "鸟巢"
+    },
+    {
+      "word_en": "FOREST",
+      "word_localization": "森林"
+    },
+    {
+      "word_en": "TRUMPET",
+      "word_localization": "小号"
+    },
+    {
+      "word_en": "BEES",
+      "word_localization": "蜜蜂"
+    },
+    {
+      "word_en": "SUBWAY",
+      "word_localization": "地铁"
+    },
+    {
+      "word_en": "COMPASS",
+      "word_localization": "罗盘"
+    },
+    {
+      "word_en": "LEATHER",
+      "word_localization": "皮革"
+    },
+    {
+      "word_en": "MESSAGE",
+      "word_localization": "信息"
+    },
+    {
+      "word_en": "LABORATORY",
+      "word_localization": "实验室"
+    },
+    {
+      "word_en": "POLLUTION",
+      "word_localization": "污染"
+    },
+    {
+      "word_en": "ARROW",
+      "word_localization": "弓箭"
+    },
+    {
+      "word_en": "COWBOY",
+      "word_localization": "牛仔"
+    },
+    {
+      "word_en": "FEATHER",
+      "word_localization": "羽毛"
+    },
+    {
+      "word_en": "DIVER",
+      "word_localization": "潜水员"
+    },
+    {
+      "word_en": "BREAKFAST",
+      "word_localization": "早餐"
+    },
+    {
+      "word_en": "CHILDHOOD",
+      "word_localization": "童年"
+    },
+    {
+      "word_en": "SHRINE",
+      "word_localization": "神殿"
+    },
+    {
+      "word_en": "HEAVEN",
+      "word_localization": "天堂"
+    },
+    {
+      "word_en": "AQUARIUM",
+      "word_localization": "水族馆"
+    },
+    {
+      "word_en": "ELEVATOR",
+      "word_localization": "电梯"
+    },
+    {
+      "word_en": "SPIDER",
+      "word_localization": "蜘蛛"
+    },
+    {
+      "word_en": "PANTS",
+      "word_localization": "裤子"
+    },
+    {
+      "word_en": "MAPLE",
+      "word_localization": "枫树"
+    },
+    {
+      "word_en": "AFRICA",
+      "word_localization": "非洲"
+    },
+    {
+      "word_en": "PLASTIC",
+      "word_localization": "塑料"
+    },
+    {
+      "word_en": "CROWN",
+      "word_localization": "皇冠"
+    },
+    {
+      "word_en": "DEVIL",
+      "word_localization": "恶魔"
+    },
+    {
+      "word_en": "CENTAUR",
+      "word_localization": "半人马"
+    },
+    {
+      "word_en": "PLUMBER",
+      "word_localization": "水电工"
+    },
+    {
+      "word_en": "CLONE",
+      "word_localization": "复制品"
+    },
+    {
+      "word_en": "BORDER",
+      "word_localization": "边境"
+    },
+    {
+      "word_en": "COCKTAIL",
+      "word_localization": "鸡尾酒"
+    },
+    {
+      "word_en": "SHOE",
+      "word_localization": "鞋子"
+    },
+    {
+      "word_en": "MARTIAL ARTS",
+      "word_localization": "武术"
+    },
+    {
+      "word_en": "WEATHER",
+      "word_localization": "天气"
+    },
+    {
+      "word_en": "LOVE",
+      "word_localization": "爱"
+    },
+    {
+      "word_en": "HOTEL",
+      "word_localization": "旅馆"
+    },
+    {
+      "word_en": "ARM",
+      "word_localization": "手臂"
+    },
+    {
+      "word_en": "OGRE",
+      "word_localization": "食人魔"
+    },
+    {
+      "word_en": "LION",
+      "word_localization": "狮子"
+    },
+    {
+      "word_en": "JAZZ",
+      "word_localization": "爵士"
+    },
+    {
+      "word_en": "ZOO",
+      "word_localization": "动物园"
+    },
+    {
+      "word_en": "EXIT",
+      "word_localization": "出口"
+    },
+    {
+      "word_en": "PHONE",
+      "word_localization": "电话"
+    },
+    {
+      "word_en": "ELECTION",
+      "word_localization": "选举"
+    },
+    {
+      "word_en": "CHAMELEON",
+      "word_localization": "变色龙"
+    },
+    {
+      "word_en": "PHOTOGRAPH",
+      "word_localization": "照片"
+    },
+    {
+      "word_en": "CIRCLE",
+      "word_localization": "圆圈"
+    },
+    {
+      "word_en": "SCHOOL",
+      "word_localization": "学校"
+    },
+    {
+      "word_en": "SCIENCE FICTION",
+      "word_localization": "科幻"
+    },
+    {
+      "word_en": "TIME",
+      "word_localization": "时间"
+    },
+    {
+      "word_en": "MAFIA",
+      "word_localization": "黑手党"
+    },
+    {
+      "word_en": "LABYRINTH",
+      "word_localization": "迷宫"
+    },
+    {
+      "word_en": "CELEBRITY",
+      "word_localization": "名人"
+    },
+    {
+      "word_en": "RAINBOW",
+      "word_localization": "彩虹"
+    },
+    {
+      "word_en": "NIGHTMARE",
+      "word_localization": "噩梦"
+    },
+    {
+      "word_en": "BOSSY",
+      "word_localization": "蛮横"
+    },
+    {
+      "word_en": "TELEVISION",
+      "word_localization": "电视"
+    },
+    {
+      "word_en": "NOSE",
+      "word_localization": "鼻子"
+    },
+    {
+      "word_en": "DUST",
+      "word_localization": "灰尘"
+    },
+    {
+      "word_en": "PENCIL",
+      "word_localization": "铅笔"
+    },
+    {
+      "word_en": "ANGER",
+      "word_localization": "愤怒"
+    },
+    {
+      "word_en": "AMBULANCE",
+      "word_localization": "救护车"
+    },
+    {
+      "word_en": "FRANCE",
+      "word_localization": "法国"
+    },
+    {
+      "word_en": "STAIRCASE",
+      "word_localization": "楼梯间"
+    },
+    {
+      "word_en": "PAINTING",
+      "word_localization": "图画"
+    },
+    {
+      "word_en": "BAIT",
+      "word_localization": "诱饵"
+    },
+    {
+      "word_en": "LASER",
+      "word_localization": "激光"
+    },
+    {
+      "word_en": "EARTH",
+      "word_localization": "地球"
+    },
+    {
+      "word_en": "DRUG",
+      "word_localization": "药"
+    },
+    {
+      "word_en": "SWORD",
+      "word_localization": "剑"
+    },
+    {
+      "word_en": "DINOSAUR",
+      "word_localization": "恐龙"
+    },
+    {
+      "word_en": "FIRE",
+      "word_localization": "火"
+    },
+    {
+      "word_en": "SPRING",
+      "word_localization": "春天"
+    },
+    {
+      "word_en": "SPEAR",
+      "word_localization": "矛"
+    },
+    {
+      "word_en": "ORCHESTRA",
+      "word_localization": "管弦乐队"
+    },
+    {
+      "word_en": "COMMUNISM",
+      "word_localization": "共产主义"
+    },
+    {
+      "word_en": "BARRACKS",
+      "word_localization": "军营"
+    },
+    {
+      "word_en": "WIRE",
+      "word_localization": "电线"
+    },
+    {
+      "word_en": "MAGIC",
+      "word_localization": "魔法"
+    },
+    {
+      "word_en": "DOCTOR",
+      "word_localization": "医生"
+    },
+    {
+      "word_en": "ATHLETE",
+      "word_localization": "运动员"
+    },
+    {
+      "word_en": "CONTEST",
+      "word_localization": "比赛"
+    },
+    {
+      "word_en": "BIRD",
+      "word_localization": "鸟"
+    },
+    {
+      "word_en": "LOCOMOTIVE",
+      "word_localization": "火车头"
+    },
+    {
+      "word_en": "MOUSE",
+      "word_localization": "老鼠"
+    },
+    {
+      "word_en": "CORPSE",
+      "word_localization": "尸体"
+    },
+    {
+      "word_en": "WHITE",
+      "word_localization": "白色"
+    },
+    {
+      "word_en": "GREEN",
+      "word_localization": "绿色"
+    },
+    {
+      "word_en": "MOUNTAIN",
+      "word_localization": "山"
+    },
+    {
+      "word_en": "JUNGLE",
+      "word_localization": "丛林"
+    },
+    {
+      "word_en": "SHIELD",
+      "word_localization": "盾牌"
+    },
+    {
+      "word_en": "DOLL",
+      "word_localization": "玩偶"
+    },
+    {
+      "word_en": "SECRETARY",
+      "word_localization": "秘书"
+    },
+    {
+      "word_en": "BLOOD",
+      "word_localization": "血"
+    },
+    {
+      "word_en": "SKIN",
+      "word_localization": "皮肤"
+    },
+    {
+      "word_en": "VACATION",
+      "word_localization": "假期"
+    },
+    {
+      "word_en": "BLUE",
+      "word_localization": "蓝色"
+    },
+    {
+      "word_en": "MIDDLE AGES",
+      "word_localization": "中世纪"
+    },
+    {
+      "word_en": "CHAIR",
+      "word_localization": "椅子"
+    },
+    {
+      "word_en": "GIFT",
+      "word_localization": "礼物"
+    },
+    {
+      "word_en": "TONGUE",
+      "word_localization": "舌头"
+    },
+    {
+      "word_en": "BED",
+      "word_localization": "床"
+    },
+    {
+      "word_en": "APOCALYPSE",
+      "word_localization": "世界末日"
+    },
+    {
+      "word_en": "PIRATE",
+      "word_localization": "海盗"
+    },
+    {
+      "word_en": "DOG",
+      "word_localization": "狗"
+    },
+    {
+      "word_en": "CAVE",
+      "word_localization": "洞穴"
+    },
+    {
+      "word_en": "PLAGUE",
+      "word_localization": "瘟疫"
+    },
+    {
+      "word_en": "OCEAN",
+      "word_localization": "海洋"
+    },
+    {
+      "word_en": "HELICOPTER",
+      "word_localization": "直升机"
+    },
+    {
+      "word_en": "PUPPET",
+      "word_localization": "木偶"
+    },
+    {
+      "word_en": "HAT",
+      "word_localization": "帽子"
+    },
+    {
+      "word_en": "TURTLE",
+      "word_localization": "海龟"
+    },
+    {
+      "word_en": "BIOLOGY",
+      "word_localization": "生物学"
+    },
+    {
+      "word_en": "NATURE",
+      "word_localization": "自然"
+    },
+    {
+      "word_en": "LIZARD",
+      "word_localization": "蜥蜴"
+    },
+    {
+      "word_en": "EXTRA TERRESTRIAL",
+      "word_localization": "外星人"
+    },
+    {
+      "word_en": "CAGE",
+      "word_localization": "笼子"
+    },
+    {
+      "word_en": "DOOR",
+      "word_localization": "门"
+    },
+    {
+      "word_en": "SUIT",
+      "word_localization": "西装"
+    },
+    {
+      "word_en": "AUSTRALIA",
+      "word_localization": "澳洲"
+    },
+    {
+      "word_en": "PADLOCK",
+      "word_localization": "密码锁"
+    },
+    {
+      "word_en": "REFRIGERATOR",
+      "word_localization": "电冰箱"
+    },
+    {
+      "word_en": "MOUSTACHE",
+      "word_localization": "小胡子"
+    },
+    {
+      "word_en": "MUSHROOM",
+      "word_localization": "蘑菇"
+    },
+    {
+      "word_en": "HEAD",
+      "word_localization": "头"
+    },
+    {
+      "word_en": "SENATE",
+      "word_localization": "参议院"
+    },
+    {
+      "word_en": "SCIENCE",
+      "word_localization": "科学"
+    },
+    {
+      "word_en": "TOWER",
+      "word_localization": "塔"
+    },
+    {
+      "word_en": "BLANKET",
+      "word_localization": "毛毯"
+    },
+    {
+      "word_en": "GASOLINE",
+      "word_localization": "汽油"
+    },
+    {
+      "word_en": "RAT",
+      "word_localization": "老鼠"
+    },
+    {
+      "word_en": "BOOK",
+      "word_localization": "书本"
+    },
+    {
+      "word_en": "BIRTH",
+      "word_localization": "出生"
+    },
+    {
+      "word_en": "ARCHEOLOGY",
+      "word_localization": "考古学"
+    },
+    {
+      "word_en": "MUSICIAN",
+      "word_localization": "音乐家"
+    },
+    {
+      "word_en": "METAL",
+      "word_localization": "金属"
+    },
+    {
+      "word_en": "BODY",
+      "word_localization": "身体"
+    },
+    {
+      "word_en": "PROTEST",
+      "word_localization": "抗议"
+    },
+    {
+      "word_en": "ARMY",
+      "word_localization": "军队"
+    },
+    {
+      "word_en": "SAXOPHONE",
+      "word_localization": "萨克斯"
+    },
+    {
+      "word_en": "CHEESE",
+      "word_localization": "芝士"
+    },
+    {
+      "word_en": "RAIN",
+      "word_localization": "雨"
+    },
+    {
+      "word_en": "GLUE",
+      "word_localization": "胶水"
+    },
+    {
+      "word_en": "OCTOPUS",
+      "word_localization": "章鱼"
+    },
+    {
+      "word_en": "GHOST",
+      "word_localization": "鬼"
+    },
+    {
+      "word_en": "INK",
+      "word_localization": "墨水"
+    },
+    {
+      "word_en": "OWL",
+      "word_localization": "猫头鹰"
+    },
+    {
+      "word_en": "PHILOSOPHY",
+      "word_localization": "哲学"
+    },
+    {
+      "word_en": "MICROSCOPE",
+      "word_localization": "显微镜"
+    },
+    {
+      "word_en": "TEACHER",
+      "word_localization": "老师"
+    },
+    {
+      "word_en": "UNICORN",
+      "word_localization": "独角兽"
+    },
+    {
+      "word_en": "LANGUAGE",
+      "word_localization": "语言"
+    },
+    {
+      "word_en": "ARCTIC",
+      "word_localization": "北极"
+    },
+    {
+      "word_en": "ELECTRICITY",
+      "word_localization": "电"
+    },
+    {
+      "word_en": "FLAG",
+      "word_localization": "旗帜"
+    },
+    {
+      "word_en": "MYSTERY",
+      "word_localization": "神秘"
+    },
+    {
+      "word_en": "INDEX",
+      "word_localization": "索引"
+    },
+    {
+      "word_en": "TEXAS",
+      "word_localization": "德州"
+    },
+    {
+      "word_en": "UNDERWEAR",
+      "word_localization": "内衣"
+    },
+    {
+      "word_en": "FISH",
+      "word_localization": "鱼"
+    },
+    {
+      "word_en": "CARROT",
+      "word_localization": "胡萝卜"
+    },
+    {
+      "word_en": "GAME",
+      "word_localization": "游戏"
+    },
+    {
+      "word_en": "THUNDER STORM",
+      "word_localization": "暴风雪"
+    },
+    {
+      "word_en": "COTTON",
+      "word_localization": "棉花"
+    },
+    {
+      "word_en": "SANDWICH",
+      "word_localization": "三明治"
+    },
+    {
+      "word_en": "STOMACH",
+      "word_localization": "胃"
+    },
+    {
+      "word_en": "SCORPION",
+      "word_localization": "蝎子"
+    },
+    {
+      "word_en": "CHAIN",
+      "word_localization": "锁链"
+    },
+    {
+      "word_en": "POLICE",
+      "word_localization": "警察"
+    },
+    {
+      "word_en": "GUN",
+      "word_localization": "枪"
+    },
+    {
+      "word_en": "NEEDLE",
+      "word_localization": "针"
+    },
+    {
+      "word_en": "FESTIVAL",
+      "word_localization": "祭典"
+    },
+    {
+      "word_en": "CHINA",
+      "word_localization": "中国"
+    },
+    {
+      "word_en": "OFFICE",
+      "word_localization": "办公室"
+    },
+    {
+      "word_en": "MONEY",
+      "word_localization": "钱"
+    },
+    {
+      "word_en": "PENGUIN",
+      "word_localization": "企鹅"
+    },
+    {
+      "word_en": "AUTUMN",
+      "word_localization": "秋天"
+    },
+    {
+      "word_en": "ARISTOCRAT",
+      "word_localization": "贵族"
+    },
+    {
+      "word_en": "SPEED",
+      "word_localization": "速度"
+    },
+    {
+      "word_en": "ASSASSIN",
+      "word_localization": "刺客"
+    },
+    {
+      "word_en": "MEMORY",
+      "word_localization": "记忆"
+    },
+    {
+      "word_en": "WATER",
+      "word_localization": "水"
+    },
+    {
+      "word_en": "CYCLOPS",
+      "word_localization": "独眼巨人"
+    },
+    {
+      "word_en": "KITCHEN",
+      "word_localization": "厨房"
+    },
+    {
+      "word_en": "OLYMPICS",
+      "word_localization": "奥林匹克运动会"
+    },
+    {
+      "word_en": "SUBMARINE",
+      "word_localization": "潜水艇"
+    },
+    {
+      "word_en": "MARKET",
+      "word_localization": "市场"
+    },
+    {
+      "word_en": "WEDDING",
+      "word_localization": "婚礼"
+    },
+    {
+      "word_en": "MEDAL",
+      "word_localization": "奖牌"
+    },
+    {
+      "word_en": "POEM",
+      "word_localization": "诗"
+    },
+    {
+      "word_en": "REVOLUTION",
+      "word_localization": "革命"
+    },
+    {
+      "word_en": "CHEMISTRY",
+      "word_localization": "化学"
+    },
+    {
+      "word_en": "TRADITION",
+      "word_localization": "传统"
+    },
+    {
+      "word_en": "SKY",
+      "word_localization": "天空"
+    },
+    {
+      "word_en": "OVEN",
+      "word_localization": "烤箱"
+    },
+    {
+      "word_en": "WAR",
+      "word_localization": "战争"
+    },
+    {
+      "word_en": "ROOT",
+      "word_localization": "树根"
+    },
+    {
+      "word_en": "MAN",
+      "word_localization": "男人"
+    },
+    {
+      "word_en": "ELEPHANT",
+      "word_localization": "大象"
+    },
+    {
+      "word_en": "POKER",
+      "word_localization": "扑克"
+    },
+    {
+      "word_en": "CLOWN",
+      "word_localization": "小丑"
+    },
+    {
+      "word_en": "ROCKET",
+      "word_localization": "火箭"
+    },
+    {
+      "word_en": "WING",
+      "word_localization": "翅膀"
+    },
+    {
+      "word_en": "WINDOW",
+      "word_localization": "窗户"
+    },
+    {
+      "word_en": "OPERA",
+      "word_localization": "歌剧"
+    },
+    {
+      "word_en": "HOCKEY",
+      "word_localization": "曲棍球"
+    },
+    {
+      "word_en": "WEEKEND",
+      "word_localization": "周末"
+    },
+    {
+      "word_en": "ENERGY",
+      "word_localization": "能量"
+    },
+    {
+      "word_en": "SLAUGHTER HOUSE",
+      "word_localization": "屠宰场"
+    },
+    {
+      "word_en": "BRIBERY",
+      "word_localization": "贿赂"
     }
+    
+    
   ]
 }

@@ -1,0 +1,68 @@
+{
+  "name": "开发者严选",
+  "description": "啊哈哈哈哈哈哈哈哈哈哈啊哈哈哈！！！我浪！",
+  "language": "cn",
+  "version": "1.0.0",
+  "wordDatas": [
+    {
+      "word_en": "VIOLIN",
+      "word_localization": "小提琴"
+    },
+    {
+      "word_en": "BREAD",
+      "word_localization": "面包"
+    },
+    {
+      "word_en": "CAPITALISM",
+      "word_localization": "资本主义"
+    },
+    {
+      "word_en": "DESERT",
+      "word_localization": "沙漠"
+    },
+    {
+      "word_en": "RECIPE",
+      "word_localization": "配方"
+    },
+    {
+      "word_en": "APPLE",
+      "word_localization": "苹果"
+    },
+    {
+      "word_en": "TOOTH",
+      "word_localization": "牙齿"
+    },
+    {
+      "word_en": "STRESS",
+      "word_localization": "压力"
+    },
+    {
+      "word_en": "MORNING",
+      "word_localization": "早晨"
+    },
+    {
+      "word_en": "BABY",
+      "word_localization": "婴儿"
+    },
+    {
+      "word_en": "BOTTLE",
+      "word_localization": "瓶子"
+    },
+    {
+      "word_en": "WINTER",
+      "word_localization": "冬天"
+    },
+    {
+      "word_en": "PUNK",
+      "word_localization": "朋克"
+    },
+    {
+      "word_en": "CONSTRUCTION",
+      "word_localization": "建筑物"
+    },
+    {
+      "word_en": "MONK",
+      "word_localization": "和尚"
+    }
+  ]
+}
