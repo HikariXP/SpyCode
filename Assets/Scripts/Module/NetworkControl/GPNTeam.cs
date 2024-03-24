@@ -4,6 +4,14 @@
  * Description: 对于部分规则的实践确保，交由玩游戏的玩家。
  * Team的实际操作只在Server有，提供对玩家的访问以及快捷操作
  */
+
+/*
+ * 重新确认了逻辑：当队伍处于破译方的时候，不需要显示自己的词语，当队伍处于传译方的时候才需要显示自己的词语。
+ * 
+ * 
+ */
+
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
