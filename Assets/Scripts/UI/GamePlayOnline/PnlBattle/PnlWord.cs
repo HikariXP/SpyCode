@@ -19,16 +19,35 @@ namespace UI.GamePlayOnline
         public Text TxtSuccessScore;
         public Text TxtFailScore;
         
+        public Button BtnConfirmWordList;
         public Button BtnDecode;
+        
 
         [Header("Code")]
         public Text TxtCode;
-        
+
+        private void Awake()
+        {
+            BtnConfirmWordList.onClick.AddListener(OnPlayerConfirmWordList);
+        }
+
+        private void OnDisable()
+        {
+            BtnConfirmWordList.onClick.RemoveAllListeners();
+        }
+
+        public void Init()
+        {
+            BtnConfirmWordList.gameObject.SetActive(true);
+            BtnDecode.gameObject.SetActive(false);
+        }
+
         public void ShowCode(int[] code)
         {
             if (code == null)
             {
                 Debug.LogError("反馈给开发者，这里有问题[PnlWord.ShowCode获取代码为空]");
+                return;
             }
 
             SetDecodeButton(false);
@@ -58,6 +77,17 @@ namespace UI.GamePlayOnline
             BtnDecode.interactable = interactable;
         }
 
+        private void OnPlayerConfirmWordList()
+        {
+            BattleHelper.LocalPlayerUnit.Cmd_PlayerConfirmWordList();
+        }
+
+        public void OnTeamEndWordSelected()
+        {
+            BtnConfirmWordList.gameObject.SetActive(false);
+            BtnDecode.gameObject.SetActive(true);
+        }
+
         public void RefreshWordDisplay(List<WordData> wordList)
         {
             ClearChild(wordDisplayAnchor);
@@ -70,12 +100,7 @@ namespace UI.GamePlayOnline
                 wordUnit.Refresh(wordIndex, word.word_localization, word.word_en, this);
             }
         }
-
-        public void OnPlayerClickChangeWord(int index)
-        {
-            UISystem.Instance.OnPlayerChangeWord(index);
-        }
-
+        
         private void ClearChild(Transform parent)
         {
             if (parent.childCount > 0)
@@ -86,16 +111,6 @@ namespace UI.GamePlayOnline
                 }
             }
         }
-
-        #region EditorTest
-
-        // [Button]
-        // public void RefreshWordIndex(List<int> wordIndexs)
-        // {
-        //     RefreshWordDisplay(wordIndexs);
-        // }
-
-        #endregion
     }
 }
 

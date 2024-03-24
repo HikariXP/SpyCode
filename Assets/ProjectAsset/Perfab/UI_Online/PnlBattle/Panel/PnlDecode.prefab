@@ -559,7 +559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtDecodeDisplay: {fileID: 1635238550840534838}
   allowRepeatNumber: 0
-  maxInputCount: 4
+  maxInputCount: 3
   BtnCancel: {fileID: 1635238549778745565}
   BtnConfirm: {fileID: 1635238550952671268}
 --- !u!1 &1635238550840534836

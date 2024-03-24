@@ -12,16 +12,9 @@ namespace UI.GamePlayOnline
 
         public Button BtnChangeTeam;
 
-        private PlayerUnit _playerUnit;
-
         public Transform PlayerInfoViewTransform;
 
         public GameObject PlayerInfoCellPrefab;
-
-        public void Init(PlayerUnit localPlayerUnit)
-        {
-            _playerUnit = localPlayerUnit;
-        }
 
         public void Start()
         {
@@ -61,14 +54,14 @@ namespace UI.GamePlayOnline
 
         #region Player Action
 
-        public void CMD_PlayerReady()
+        private void CMD_PlayerReady()
         {
-            _playerUnit.Cmd_SetReady();
+            BattleHelper.LocalPlayerUnit.Cmd_SetReady();
         }
 
-        public void CMD_PlayerChangeTeam()
+        private void CMD_PlayerChangeTeam()
         {
-            _playerUnit.Cmd_ChangeTeam();
+            BattleHelper.LocalPlayerUnit.Cmd_ChangeTeam();
         }
 
         #endregion

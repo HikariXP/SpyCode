@@ -11,19 +11,10 @@ namespace UI.GamePlayOnline
 {
     public class PnlBattle : MonoBehaviour
     {
-        private PlayerUnit playerUnit;
-    
         public PnlWord pnlWord;
 
-        public PnlDecode pnlDecode;
-
         public PnlRoundTips pnlRoundTips;
-
-        public void Init(PlayerUnit localPlayerUnit)
-        {
-            playerUnit = localPlayerUnit;
-        }
-
+        
         public void RefreshWordDisplay(List<WordData> words)
         {
             pnlWord.RefreshWordDisplay(words);
@@ -41,12 +32,6 @@ namespace UI.GamePlayOnline
             }
 
             pnlWord.ShowCode(codes);
-        }
-
-
-        public void Reset()
-        {
-            
         }
     }
 }

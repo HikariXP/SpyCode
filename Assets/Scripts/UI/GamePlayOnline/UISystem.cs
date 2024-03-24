@@ -12,7 +12,7 @@ namespace NetworkControl.UI
     {
         public static UISystem Instance;
 
-        private PlayerUnit localPlayerUnit;
+        private PlayerUnit localPlayerUnit => BattleHelper.LocalPlayerUnit;
 
         public GameObject PnlRoom;
 
@@ -27,13 +27,6 @@ namespace NetworkControl.UI
             Instance = this;
         }
 
-        public void PlayerSetup(PlayerUnit local)
-        {
-            localPlayerUnit = local;
-            roomUI.Init(localPlayerUnit);
-            battleUI.Init(localPlayerUnit);
-        }
-        
         public void RefreshRoomUIForce()
         {
             roomUI.RefreshShow();
@@ -48,11 +41,7 @@ namespace NetworkControl.UI
         {
             localPlayerUnit.DecodeNumberCancel();
         }
-
-        public void OnPlayerChangeWord(int wordIndex)
-        {
-            localPlayerUnit.Cmd_PlayerChangeWord(wordIndex);
-        }
+        
 
         /// <summary>
         /// 进入房间模式
@@ -61,7 +50,6 @@ namespace NetworkControl.UI
         {
             PnlRoom.SetActive(true);
             PnlBattle.SetActive(false);
-            battleUI.Reset();
         }
 
         /// <summary>

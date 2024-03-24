@@ -93,6 +93,16 @@ public class PnlDecode : MonoBehaviour
 
     public void OnNumberBtnClick(int number)
     {
+        // 如果不允许重复数字，则会会已输入的数字做检查
+        if (!allowRepeatNumber)
+        {
+            foreach (var numberInputed in _inputCode)
+            {
+                // 有重复的内容
+                if (numberInputed == number) return;
+            }
+        }
+
         _inputCode.Push(number);
         RefreshDisplay();
     }

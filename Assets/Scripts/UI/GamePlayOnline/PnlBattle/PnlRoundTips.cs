@@ -22,13 +22,13 @@ public class PnlRoundTips : MonoBehaviour
     //取消密码提交
     public Button btnCancel;
 
-    private StringBuilder _sb;
+    private StringBuilder _sb = new StringBuilder();
     private char dividesSymbol = '.';
 
     private void Start()
     {
         btnCancel.onClick.AddListener(OnPlayerClickCancel);
-        _sb = new StringBuilder();
+
     }
 
     private void OnDestroy()
@@ -41,7 +41,7 @@ public class PnlRoundTips : MonoBehaviour
     {
         waitForEnemyMask.SetActive(true);
         _sb.Clear();
-        for (int i = teamCode.Length; i > 0 ; i--)
+        for (int i = teamCode.Length-1; i >= 0 ; i--)
         {
             _sb.Append(teamCode[i]);
             _sb.Append(dividesSymbol);

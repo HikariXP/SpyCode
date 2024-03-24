@@ -43,7 +43,7 @@ public class PnlWordUnit : MonoBehaviour
 
     private void OnChangeWord()
     {
-        _pnlWord.OnPlayerClickChangeWord(_index);
+        BattleHelper.LocalPlayerUnit.Cmd_PlayerChangeWord(_index);
     }
 
     /// <summary>

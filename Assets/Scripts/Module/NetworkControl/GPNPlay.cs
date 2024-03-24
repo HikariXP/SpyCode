@@ -27,22 +27,16 @@
  * 回合开始的密码没有经过重复判断：缓存历史代码，跳过出现过的代码
  */
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing.Printing;
 using UnityEngine;
 using Mirror;
-using Mirror.Discovery;
-using System.Net;
 using System.Linq;
 using Module.CommonUtil;
+using Module.NetworkControl;
 using Module.WordSystem;
 using NetworkControl.UI;
-using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine.AddressableAssets;
-using Random = UnityEngine.Random;
+
 
 namespace NetworkControl.GamePlayNetwork
 {
@@ -87,26 +81,23 @@ namespace NetworkControl.GamePlayNetwork
 
             string context;
             
-// #if UNITY_EDITOR
-//             var textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/ProjectAsset/WordLibrary/DecryptoStandard.json");
-//             context = textAsset.text;
-// #else
             //TODO:这里是异步的，应该做成异步加载的流程。
             var textAsset = Addressables.LoadAssetAsync<TextAsset>("WordLibrary_DecryptoStandard");
             textAsset.WaitForCompletion();
             context = textAsset.Result.text;
-            
-// #endif
+
             _wordLoader.Load(context);
         }
 
+        /// <summary>
+        /// 重置所有队伍的状态到默认
+        /// </summary>
         [Server]
         private void ResetBattleBase()
         {
-            var playersInRoom = playerUnits;
-            for (int i = 0; i < playersInRoom.Count; i++)
+            for (int i = 0; i < _teams.Count; i++)
             {
-                playersInRoom.ElementAt(i).isReady = false;
+                _teams[i].Reset();
             }
         }
 
@@ -204,6 +195,26 @@ namespace NetworkControl.GamePlayNetwork
 
         #region Game
 
+        /// <summary>
+        /// 检查是不是所有队伍都已经准备好
+        /// </summary>
+        [Server]
+        public void CheckTeamWordListConfirm()
+        {
+            for (int i = 0; i < _teams.Count; i++)
+            {
+                if(!_teams[i].wordConfirm)return;;
+            }
+            
+            for (int i = 0; i < _teams.Count; i++)
+            {
+                _teams[i].OnAllConfirmWordSelect();
+            }
+            
+            NewRound();
+        }
+        
+
         [Server]
         private void GameBegin()
         {
@@ -220,8 +231,6 @@ namespace NetworkControl.GamePlayNetwork
             InitializeTeamsWordIndex();
 
             m_CurrentTeamIndex = 0;
-            
-            NewRound();
         }
 
         /// <summary>
@@ -276,7 +285,14 @@ namespace NetworkControl.GamePlayNetwork
         public void PlayerChangeWord(PlayerUnit changePlayer, int wordIndex)
         {
             var playerTeam = changePlayer.team;
-            playerTeam.ChangeWordData(wordIndex);
+            playerTeam.OnPlayerCmdChangeWordData(wordIndex);
+        }
+
+        [Server]
+        public void PlayerConfirmWordList(PlayerUnit confirmPlayer)
+        {
+            var playerTeam = confirmPlayer.team;
+            playerTeam.OnPlayerCmdConfirmWordList();
         }
 
         /// <summary>
@@ -333,7 +349,7 @@ namespace NetworkControl.GamePlayNetwork
             //遍历所有队伍，如果有队伍还没提交则还没可以
             foreach (var team in _teams)
             {
-                if (!team.isConfirm)
+                if (!team.isDecodeConfirm)
                 {
                     return false;
                 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using Module.NetworkControl;
 using Module.WordSystem;
 using NetworkControl.GamePlayNetwork;
 using NetworkControl.UI;
@@ -27,6 +28,9 @@ public class PlayerUnit : NetworkBehaviour
     /// </summary>
     [SyncVar]
     public bool isReady;
+
+    [SyncVar] 
+    public bool isConfirmWordList = false;
     
     /// <summary>
     /// 玩家所属队伍Id
@@ -45,16 +49,9 @@ public class PlayerUnit : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
-
-        UISystem.Instance.PlayerSetup(this);
         
+        BattleHelper.SetLocalPlayer(this);
         RegisterToGPNPlay();
-    }
-
-    public override void OnStartClient()
-    {
-        
-        Debug.Log($"[{nameof(PlayerUnit)}]OnStartClient");
     }
 
     public override void OnStopServer()
@@ -114,6 +111,20 @@ public class PlayerUnit : NetworkBehaviour
     public void Cmd_PlayerChangeWord(int wordIndex)
     {
         GPNPlay.instance.PlayerChangeWord(this, wordIndex);
+    }
+
+    [Command]
+    public void Cmd_PlayerConfirmWordList()
+    {
+        isConfirmWordList = true;
+        GPNPlay.instance.PlayerConfirmWordList(this);
+    }
+
+    [ClientRpc]
+    public void Rpc_AllTeamEndWordSelect()
+    {
+        if(!isLocalPlayer)return;
+        UISystem.Instance.battleUI.pnlWord.OnTeamEndWordSelected();
     }
 
     [ClientRpc]
@@ -176,15 +187,6 @@ public class PlayerUnit : NetworkBehaviour
     }
 
     #endregion
-
-
-    [Command]
-    public void InputDecodeNumber(int number)
-    {
-        if (number > 9 || number < 0)
-            return;
-        //Tell Server Which Number Click
-    }
 
     [Command]
     public void DecodeNumberConfirm(int[] answerCodes)
