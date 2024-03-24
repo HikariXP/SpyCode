@@ -78,6 +78,7 @@ public class GPNTeam
         if (wordDatas == null)
         {
             Debug.LogError($"[{nameof(GPNTeam)}]wordData is null");
+            return;
         }
 
         if (wordDatas.Count == 0)

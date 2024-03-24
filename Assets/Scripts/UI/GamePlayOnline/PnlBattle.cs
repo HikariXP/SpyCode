@@ -1,5 +1,8 @@
-using System;
-using System.Collections;
+/*
+ * Author: CharSui
+ * Created On: 2023.08.19
+ * Description: 战局UI
+ */
 using System.Collections.Generic;
 using Module.WordSystem;
 using UnityEngine;

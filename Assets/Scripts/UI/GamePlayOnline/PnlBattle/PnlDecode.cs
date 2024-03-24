@@ -15,8 +15,16 @@ using UnityEngine.UI;
 
 public class PnlDecode : MonoBehaviour
 {
-    public TMP_Text TxtDecodeDisplay;
+    public TMP_Text txtDecodeDisplay;
 
+    /// <summary>
+    /// 是否允许重复数字
+    /// </summary>
+    public bool allowRepeatNumber;
+
+    /// <summary>
+    /// 最大输入
+    /// </summary>
     public int maxInputCount = 4;
 
     [Header("UI")]
@@ -46,12 +54,12 @@ public class PnlDecode : MonoBehaviour
     public void Show() 
     {
         gameObject.SetActive(true);
-        TxtDecodeDisplay.text = String.Empty;
+        txtDecodeDisplay.text = String.Empty;
     }
 
     private void RefreshDisplay()
     {
-        TxtDecodeDisplay.text = string.Empty;
+        txtDecodeDisplay.text = string.Empty;
         var temp = _inputCode.ToArray();
         _sb.Clear();
         
@@ -60,7 +68,7 @@ public class PnlDecode : MonoBehaviour
             _sb.Append(temp[i-1]);
         }
         
-        TxtDecodeDisplay.text = _sb.ToString();
+        txtDecodeDisplay.text = _sb.ToString();
     }
 
     public void Hide()

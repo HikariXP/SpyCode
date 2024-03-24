@@ -7,6 +7,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using NetworkControl.UI;
 using UI.GamePlayOnline;
 using UnityEngine;
@@ -21,20 +22,31 @@ public class PnlRoundTips : MonoBehaviour
     //取消密码提交
     public Button btnCancel;
 
+    private StringBuilder _sb;
+    private char dividesSymbol = '.';
+
     private void Start()
     {
         btnCancel.onClick.AddListener(OnPlayerClickCancel);
+        _sb = new StringBuilder();
     }
 
     private void OnDestroy()
     {
         btnCancel.onClick.RemoveAllListeners();
+        _sb = null;
     }
 
     public void BeginWaitForEnemyMask(int[] teamCode)
     {
         waitForEnemyMask.SetActive(true);
-        txtTeamCode.text = $"{teamCode[0]}.{teamCode[1]}.{teamCode[2]}.";
+        _sb.Clear();
+        for (int i = teamCode.Length; i > 0 ; i--)
+        {
+            _sb.Append(teamCode[i]);
+            _sb.Append(dividesSymbol);
+        }
+        txtTeamCode.text = _sb.ToString();
     }
 
     public void EndWaitForEnemyMask()

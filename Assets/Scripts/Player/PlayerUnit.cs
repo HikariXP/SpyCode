@@ -123,18 +123,6 @@ public class PlayerUnit : NetworkBehaviour
         UISystem.Instance.battleUI.RefreshWordDisplay(words);
     }
 
-    [Command]
-    public void Word_ChangeWords()
-    {
-
-    }
-
-    [Command]
-    public void Word_Confirm()
-    {
-
-    }
-
     #endregion
 
     #region Decode
