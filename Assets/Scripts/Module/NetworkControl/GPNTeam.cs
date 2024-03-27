@@ -25,7 +25,7 @@ namespace Module.NetworkControl
     {
         public int teamIndex;
 
-        private List<PlayerUnit> members = new List<PlayerUnit>();
+        private Queue<PlayerUnit> _members = new Queue<PlayerUnit>();
         
         /// <summary>
         /// 服务器给的10个词语
@@ -35,15 +35,13 @@ namespace Module.NetworkControl
         private List<WordData> _wordSelected = new List<WordData>(4);
 
         /// <summary>
-        /// 队伍内部循环传译者
-        /// </summary>
-        private int senderIndex;
-        
-        /// <summary>
         /// 当前回合队伍存储的解码
         /// </summary>
         public int[] currentTurnDecode;
 
+        /// <summary>
+        /// 是否确认提交的代码
+        /// </summary>
         public bool isDecodeConfirm;
 
         public int decodeSuccessScore = 0;
@@ -128,7 +126,7 @@ namespace Module.NetworkControl
         [Server]
         private void CheckIsAllTeamMemberConfirmWordList()
         {
-            foreach (var player in members)
+            foreach (var player in _members)
             {
                 if (!player.isConfirmWordList)return;
             }
@@ -140,7 +138,7 @@ namespace Module.NetworkControl
         [Server]
         private void RefreshTeamMemberWordDisplay()
         {
-            foreach (var player in members)
+            foreach (var player in _members)
             {
                 player.Rpc_TeamSetWordDisplay(_wordSelected);
             }
@@ -158,7 +156,7 @@ namespace Module.NetworkControl
         [Server]
         public void OnAllConfirmWordSelect()
         {
-            foreach (var member in members)
+            foreach (var member in _members)
             {
                 member.Rpc_AllTeamEndWordSelect();
             }
@@ -178,29 +176,47 @@ namespace Module.NetworkControl
             
             isDecodeConfirm = false;
             isSenderTurn = turnInfo.currentTurnCode != null;
-        
-            for (int i = 0; i < members.Count; i++)
-            {
-                var player = members[i];
-                var connectionToClient = player.connectionToClient;
-                //当前回合传递者
-                player.Rpc_GPNPlaySetCode(connectionToClient, i == senderIndex ? turnInfo.currentTurnCode : null);
-                player.Rpc_GPNPlayGetScore(connectionToClient, turnInfo.successScore, turnInfo.failScore);
-            }
-        
             currentTurnDecode = null;
+            
+            // 给所有玩家刷新UI
+            foreach (var member in _members)
+            {
+                var memberConnectionToClient = member.connectionToClient;
+                member.Rpc_GPNPlaySetCode(memberConnectionToClient, null);
+                member.Rpc_GPNPlayGetScore(memberConnectionToClient, turnInfo.successScore, turnInfo.failScore);
+            }
+            
+            // 给下一个Sender发送密码
+            if (!TryGetNextSender(out var nextSender))
+            {
+                Debug.LogError($"[{nameof(GPNTeam)}]Get next Sender Player Failed");
+                return;
+            }
 
-            //循环目标传译者的索引
-            if (isSenderTurn) SetToNextSenderIndex();
+            //当前回合传递者
+            var connectionToClient = nextSender.connectionToClient;
+            nextSender.Rpc_GPNPlaySetCode(connectionToClient, turnInfo.currentTurnCode);
         }
 
-        /// <summary>
-        /// 循环目标传译者的索引
-        /// </summary>
-        private void SetToNextSenderIndex()
+        private bool TryGetNextSender(out PlayerUnit nextSender)
         {
-            senderIndex += 1;
-            if(senderIndex>=members.Count)senderIndex = 0;
+            if (_members == null)
+            {
+                nextSender = null;
+                Debug.LogError($"[{nameof(GPNTeam)}]members is null");
+                return false;
+            }
+
+            if (_members.Count <= 0)
+            {
+                nextSender = null;
+                Debug.LogError($"[{nameof(GPNTeam)}]members count <= 0");
+                return false;
+            }
+
+            nextSender = _members.Dequeue();
+            _members.Enqueue(nextSender);
+            return true;
         }
 
         /// <summary>
@@ -210,7 +226,7 @@ namespace Module.NetworkControl
         {
             isDecodeConfirm = true;
             currentTurnDecode = code;
-            foreach (var player in members)
+            foreach (var player in _members)
             {
                 var connectionToClient = player.netIdentity.connectionToClient;
                 player.Rpc_TeamMemberConfirmCode(connectionToClient, currentTurnDecode);
@@ -224,7 +240,7 @@ namespace Module.NetworkControl
         {
             isDecodeConfirm = false;
             currentTurnDecode = null;
-            foreach (var player in members)
+            foreach (var player in _members)
             {
                 var connectionToClient = player.netIdentity.connectionToClient;
                 player.Rpc_TeamMemberCancelConfirm(connectionToClient);
@@ -235,40 +251,52 @@ namespace Module.NetworkControl
 
         public void Reset()
         {
-            senderIndex = 0;
             currentTurnDecode = null;
             isDecodeConfirm = false;
             wordConfirm = false;
             isSenderTurn = false;
-            
-            for (int i = 0; i < members.Count; i++)
+
+            foreach (var member in _members)
             {
-                members[i].isReady = false;
-                members[i].isConfirmWordList = false;
+                member.isReady = false;
+                member.isConfirmWordList = false;
             }
         }
 
         public void Add(PlayerUnit playerUnit)
         {
-            if (!members.Contains(playerUnit))
+            if (!_members.Contains(playerUnit))
             {
-                members.Add(playerUnit);
+                _members.Enqueue(playerUnit);
                 playerUnit.team = this;
             }
         }
 
         public void Remove(PlayerUnit playerUnit) 
         {
-            if (members.Contains(playerUnit))
+            // if (members.Contains(playerUnit))
+            // {
+            //     members.Remove(playerUnit);
+            //     playerUnit.team = null;
+            // }
+
+            List<PlayerUnit> tempCache = new List<PlayerUnit>();
+            while (_members.Count > 0)
             {
-                members.Remove(playerUnit);
-                playerUnit.team = null;
+                tempCache.Add(_members.Dequeue());
+            }
+            _members.Clear();
+            tempCache.Remove(playerUnit);
+
+            foreach (var playerCached in tempCache)
+            {
+                _members.Enqueue(playerCached);
             }
         }
 
         public int Count()
         {
-            return members.Count;
+            return _members.Count;
         }
 
         #endregion
