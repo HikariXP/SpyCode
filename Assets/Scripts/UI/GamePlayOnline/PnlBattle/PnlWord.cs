@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace UI.GamePlayOnline
 {
-    public class PnlWord : MonoBehaviour
+    public class PnlWord : MonoBehaviour,IInitAndReset
     {
         public GameObject wordDisplayUnitPrefab;
         public Transform wordDisplayAnchor;
@@ -35,11 +35,16 @@ namespace UI.GamePlayOnline
         {
             BtnConfirmWordList.onClick.RemoveAllListeners();
         }
-
-        public void Init()
+        
+        public void UI_Init()
         {
             BtnConfirmWordList.gameObject.SetActive(true);
             BtnDecode.gameObject.SetActive(false);
+        }
+
+        public void UI_Reset()
+        {
+            
         }
 
         public void ShowCode(int[] code)
