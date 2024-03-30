@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class EventManager
 {
-    private static EventManager _instance
+    private static EventManager _instance;
+    
+    public static EventManager instance
     {
         get
         {
@@ -21,7 +23,7 @@ public class EventManager
         }
     }
 
-    public static EventManager instance => _instance;
+    
 
     private Dictionary<uint,NoArgEvent> _NoArgEvents = new Dictionary<uint,NoArgEvent>();
     
