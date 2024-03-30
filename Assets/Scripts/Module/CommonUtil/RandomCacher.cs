@@ -17,25 +17,26 @@ namespace Module.CommonUtil
         // 清空缓存的次数 = 最大值除以2
         private int clearCacheCount => _maxExcluesive / 2;
         
+        private HashSet<int> _numberCache;
+        
         public RandomCacher(int maxExclusive)
         {
             _maxExcluesive = maxExclusive;
-            _numberCache = new List<int>(_maxExcluesive);
+            _numberCache = new HashSet<int>(_maxExcluesive);
         }
     
         public void ClearCache()
         {
             _numberCache.Clear();
         }
-    
-        private List<int> _numberCache;
-    
+        
         /// <summary>
         /// 如果获取的数字
         /// </summary>
         /// <returns></returns>
         public bool GetNumber(out int resultNumber)
         {
+            // 最大获取次数
             var checkCount = 0;
             while (true)
             { 
