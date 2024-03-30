@@ -68,15 +68,10 @@ namespace Module.NetworkControl
         [Server]
         public void GetWordDatas(List<WordData> wordDatas)
         {
-            if (wordDatas == null)
+            if (wordDatas == null || wordDatas.Count == 0)
             {
-                Debug.LogError($"[{nameof(GPNTeam)}]wordData is null");
+                Debug.LogError($"[{nameof(GPNTeam)}]wordData is wrong");
                 return;
-            }
-
-            if (wordDatas.Count == 0)
-            {
-                Debug.LogError($"[{nameof(GPNTeam)}]wordData is count 0");
             }
 
             foreach (var wordData in wordDatas)
@@ -158,7 +153,7 @@ namespace Module.NetworkControl
         {
             foreach (var member in _members)
             {
-                member.Rpc_AllTeamEndWordSelect();
+                member.Rpc_AllTeamEndWordSelect(member.connectionToClient);
             }
         }
 
@@ -185,17 +180,27 @@ namespace Module.NetworkControl
                 member.Rpc_GPNPlaySetCode(memberConnectionToClient, null);
                 member.Rpc_GPNPlayGetScore(memberConnectionToClient, turnInfo.successScore, turnInfo.failScore);
             }
-            
-            // 给下一个Sender发送密码
+
+            var currentTurnCode = turnInfo.currentTurnCode;
+            if(currentTurnCode == null || currentTurnCode.Length == 0) return;
+            SetCodeToSender(currentTurnCode);
+        }
+
+        /// <summary>
+        /// 获取下一个对内玩家且发送密钥让其成为Sender
+        /// </summary>
+        /// <param name="turnCode"></param>
+        private void SetCodeToSender(int[] turnCode)
+        {
+            // 从队列给下一个Sender发送密码
             if (!TryGetNextSender(out var nextSender))
             {
                 Debug.LogError($"[{nameof(GPNTeam)}]Get next Sender Player Failed");
                 return;
             }
 
-            //当前回合传递者
             var connectionToClient = nextSender.connectionToClient;
-            nextSender.Rpc_GPNPlaySetCode(connectionToClient, turnInfo.currentTurnCode);
+            nextSender.Rpc_GPNPlaySetCode(connectionToClient, turnCode);
         }
 
         private bool TryGetNextSender(out PlayerUnit nextSender)
@@ -292,11 +297,6 @@ namespace Module.NetworkControl
             {
                 _members.Enqueue(playerCached);
             }
-        }
-
-        public int Count()
-        {
-            return _members.Count;
         }
 
         #endregion

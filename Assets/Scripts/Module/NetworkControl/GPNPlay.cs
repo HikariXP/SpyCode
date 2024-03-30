@@ -12,6 +12,9 @@
  * Code : 这一局传递者需要传递的密码
  * Decoder : 解码者
  * Sender : 传译者
+ *
+ * 战局内数据
+ * 
  */
 
 /*
@@ -201,19 +204,26 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         public void CheckTeamWordListConfirm()
         {
-            for (int i = 0; i < _teams.Count; i++)
-            {
-                if(!_teams[i].wordConfirm)return;;
-            }
+            if (!IsAllTeamConfirmWordList()) return;
             
-            for (int i = 0; i < _teams.Count; i++)
+            //当所有队伍已经确认代码，则开始新回合
+            foreach (var team in _teams)
             {
-                _teams[i].OnAllConfirmWordSelect();
+                team.OnAllConfirmWordSelect();
             }
             
             NewRound();
         }
-        
+
+        private bool IsAllTeamConfirmWordList()
+        {
+            foreach (var team in _teams)
+            {
+                if (!team.wordConfirm) return false;
+            }
+
+            return true;
+        }
 
         [Server]
         private void GameBegin()
@@ -234,23 +244,33 @@ namespace NetworkControl.GamePlayNetwork
         }
 
         /// <summary>
-        /// TODO:完善随机序号和可换序号
+        /// 基于所有队伍
         /// </summary>
         [Server]
         private void InitializeTeamsWordIndex()
         {
             var wordCount = _wordLoader.GetCount();
             var tempRandomCacher = new RandomCacher(wordCount);
-            
-            // TODO:重复的代码，记得修复
-            // 这里需要获取一次战斗的所有词序，然后随机分配成两组可供使用
-            // 需要一次性给队伍所有的Index。
+
+            foreach (var team in _teams)
+            {
+                SetWordListToTeam(tempRandomCacher, team, 10);
+            }
+        }
+
+        /// <summary>
+        /// 给队伍传
+        /// </summary>
+        /// <param name="rc"></param>
+        /// <param name="team"></param>
+        /// <param name="maxWordCount"></param>
+        private void SetWordListToTeam(RandomCacher rc, GPNTeam team, int maxWordCount)
+        {
             List<WordData> tempCacheWords = new List<WordData>(64);
             tempCacheWords.Clear();
-            //每个队伍给十个词
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < maxWordCount; i++)
             {
-                if (tempRandomCacher.GetNumber(out int wordIndex))
+                if (rc.GetNumber(out int wordIndex))
                 {
                     if (_wordLoader.TryGetWord(wordIndex, out WordData word))
                     {
@@ -259,19 +279,7 @@ namespace NetworkControl.GamePlayNetwork
                 }
             }
 
-            _teams[0].GetWordDatas(tempCacheWords);
-            tempCacheWords.Clear();
-            for (int i = 0; i < 10; i++)
-            {
-                if (tempRandomCacher.GetNumber(out int wordIndex))
-                {
-                    if (_wordLoader.TryGetWord(wordIndex, out WordData word))
-                    {
-                        tempCacheWords.Add(word);
-                    }
-                }
-            }
-            _teams[1].GetWordDatas(tempCacheWords);
+            team.GetWordDatas(tempCacheWords);
         }
 
         private void GameEnd()
@@ -291,6 +299,9 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         public void PlayerConfirmWordList(PlayerUnit confirmPlayer)
         {
+            confirmPlayer.isConfirmWordList = true;
+            confirmPlayer.TargetRpc_OnPlayerConfirmWordList(confirmPlayer.connectionToClient);
+            
             var playerTeam = confirmPlayer.team;
             playerTeam.OnPlayerCmdConfirmWordList();
         }

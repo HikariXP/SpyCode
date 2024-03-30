@@ -113,17 +113,28 @@ public class PlayerUnit : NetworkBehaviour
         GPNPlay.instance.PlayerChangeWord(this, wordIndex);
     }
 
+    /// <summary>
+    /// 玩家请求服务器确认代码
+    /// </summary>
     [Command]
     public void Cmd_PlayerConfirmWordList()
     {
-        isConfirmWordList = true;
         GPNPlay.instance.PlayerConfirmWordList(this);
     }
 
-    [ClientRpc]
-    public void Rpc_AllTeamEndWordSelect()
+    [TargetRpc]
+    public void TargetRpc_OnPlayerConfirmWordList(NetworkConnectionToClient _)
     {
-        if(!isLocalPlayer)return;
+        if (isConfirmWordList)
+        {
+            EventManager.instance.TryGetNoArgEvent(EventDefine.BATTLE_PLAYER_CONFIRM_WORDLIST).Notify();
+        }
+        UISystem.Instance.battleUI.OnLocalPlayerConfirmWordList();
+    }
+
+    [TargetRpc]
+    public void Rpc_AllTeamEndWordSelect(NetworkConnectionToClient _)
+    {
         UISystem.Instance.battleUI.pnlWord.OnTeamEndWordSelected();
     }
 
@@ -137,9 +148,7 @@ public class PlayerUnit : NetworkBehaviour
     #endregion
 
     #region Decode
-
-    //TODO:改成获取单独一个客户端则不需要对isLocalPlayer判断，还能提升安全性
-
+    
     /// <summary>
     /// 客户端获取代码
     /// </summary>
