@@ -93,6 +93,9 @@ public class PnlDecode : MonoBehaviour
 
     public void OnNumberBtnClick(int number)
     {
+        // 最大输入限制
+        if (_inputCode.Count >= maxInputCount) return;
+        
         // 如果不允许重复数字，则会会已输入的数字做检查
         if (!allowRepeatNumber)
         {

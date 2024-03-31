@@ -12,6 +12,8 @@
  * Code : 这一局传递者需要传递的密码
  * Decoder : 解码者
  * Sender : 传译者
+ * 明文：加密前的
+ * 密码:用于加密的词语
  *
  * 战局内数据
  * 
@@ -56,7 +58,7 @@ namespace NetworkControl.GamePlayNetwork
 
         public static GPNPlay instance;
 
-        public readonly SyncList<int> code = new SyncList<int>();
+        private readonly SyncList<int> _Code = new SyncList<int>();
 
         private int _turnCount = 0;
 
@@ -82,13 +84,11 @@ namespace NetworkControl.GamePlayNetwork
 
             _wordLoader.Init();
 
-            string context;
-            
             //TODO:这里是异步的，应该做成异步加载的流程。
             var textAsset = Addressables.LoadAssetAsync<TextAsset>("WordLibrary_DecryptoStandard");
             textAsset.WaitForCompletion();
-            context = textAsset.Result.text;
-
+            var context = textAsset.Result.text;
+            
             _wordLoader.Load(context);
         }
 
@@ -376,7 +376,7 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         private void CheckTeamCode()
         {
-            var answer = code.ToArray();
+            var answer = _Code.ToArray();
             foreach (var team in _teams)
             {
                 //TODO:需要优化
@@ -490,7 +490,7 @@ namespace NetworkControl.GamePlayNetwork
         /// <param name="codeCount">生成密码数</param>
         private void RefreshCode(int minInclusive = 1, int maxExclusive = 5,int codeCount = 3)
         {
-            code.Clear();
+            _Code.Clear();
             var numberRange = maxExclusive - minInclusive;
             if (codeCount > numberRange)
             {
@@ -505,9 +505,9 @@ namespace NetworkControl.GamePlayNetwork
                     //1、获取随机数
                     var number = UnityEngine.Random.Range(minInclusive, maxExclusive);
                     //2、如果不重复则添加
-                    if (!code.Contains(number))
+                    if (!_Code.Contains(number))
                     {
-                        code.Add(number);
+                        _Code.Add(number);
                         break;
                     }
                 }
@@ -527,7 +527,7 @@ namespace NetworkControl.GamePlayNetwork
                 if (team.teamIndex == senderTeamIndex)
                 {
                     //本回合传递队伍
-                    var codeArray = code.ToArray();
+                    var codeArray = _Code.ToArray();
                     var turnInfo = new TurnInfo()
                     {
                         currentTurnCode = codeArray,

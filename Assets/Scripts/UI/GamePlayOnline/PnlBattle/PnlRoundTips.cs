@@ -15,6 +15,8 @@ using UnityEngine.UI;
 
 public class PnlRoundTips : MonoBehaviour
 {
+
+    
     [Header("WaitForEnemyMask")]
     public GameObject waitForEnemyMask;
     //Team Code Show
@@ -28,7 +30,14 @@ public class PnlRoundTips : MonoBehaviour
     private void Start()
     {
         btnCancel.onClick.AddListener(OnPlayerClickCancel);
+    }
 
+    /// <summary>
+    /// 当此小回合结束后，显示5秒的赛局结果，并等待点击后关闭
+    /// </summary>
+    private void OnTurnEnd(TurnResult tr)
+    {
+        
     }
 
     private void OnDestroy()

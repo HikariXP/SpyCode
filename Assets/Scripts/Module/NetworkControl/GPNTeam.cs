@@ -21,6 +21,24 @@ using UnityEngine;
 
 namespace Module.NetworkControl
 {
+    /// <summary>
+    /// 队伍所处于的状态
+    /// </summary>
+    public enum TeamState
+    {
+        // 密码确认阶段
+        wordListNotConfirm, 
+        
+        // 传递模式(友方不可破译，能看到wordList)
+        translate, 
+        
+        // 破译模式(不显示词语，显示破译面板{笔记系统，破译输入等})
+        decode, 
+        
+        // 
+        
+    }
+
     public class GPNTeam
     {
         public int teamIndex;
@@ -39,6 +57,11 @@ namespace Module.NetworkControl
         /// </summary>
         public int[] currentTurnDecode;
 
+        /// <summary>
+        /// 是否可以破译密码(传递方需要等破译方先提交)
+        /// </summary>
+        public bool canDecodde;
+        
         /// <summary>
         /// 是否确认提交的代码
         /// </summary>
@@ -202,33 +225,19 @@ namespace Module.NetworkControl
             var connectionToClient = nextSender.connectionToClient;
             nextSender.Rpc_GPNPlaySetCode(connectionToClient, turnCode);
         }
-
-        private bool TryGetNextSender(out PlayerUnit nextSender)
-        {
-            if (_members == null)
-            {
-                nextSender = null;
-                Debug.LogError($"[{nameof(GPNTeam)}]members is null");
-                return false;
-            }
-
-            if (_members.Count <= 0)
-            {
-                nextSender = null;
-                Debug.LogError($"[{nameof(GPNTeam)}]members count <= 0");
-                return false;
-            }
-
-            nextSender = _members.Dequeue();
-            _members.Enqueue(nextSender);
-            return true;
-        }
-
+        
         /// <summary>
         /// 队伍玩家确认代码,确认过就不会删除
         /// </summary>
         public void OnTeamMemberConfirmDecode(int[] code)
         {
+            //如果是传递方，需要等待对方破译方提交
+            if (!canDecodde)
+            {
+                // 提示需要先等敌方先破译。
+                return;
+            }
+
             isDecodeConfirm = true;
             currentTurnDecode = code;
             foreach (var player in _members)
@@ -253,6 +262,27 @@ namespace Module.NetworkControl
         }
 
         #region Low Level
+        
+        private bool TryGetNextSender(out PlayerUnit nextSender)
+        {
+            if (_members == null)
+            {
+                nextSender = null;
+                Debug.LogError($"[{nameof(GPNTeam)}]members is null");
+                return false;
+            }
+
+            if (_members.Count <= 0)
+            {
+                nextSender = null;
+                Debug.LogError($"[{nameof(GPNTeam)}]members count <= 0");
+                return false;
+            }
+
+            nextSender = _members.Dequeue();
+            _members.Enqueue(nextSender);
+            return true;
+        }
 
         public void Reset()
         {
