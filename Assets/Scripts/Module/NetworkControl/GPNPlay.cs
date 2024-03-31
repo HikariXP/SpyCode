@@ -384,6 +384,8 @@ namespace NetworkControl.GamePlayNetwork
                 var teamAnswerReverse = teamAnswerOrigin.Reverse().ToArray();
                 //需要注意，数组是引用类型，里面的值才是值类型
                 var isAnswerCorrect = CheckArrayIsSame(teamAnswerReverse, answer);
+
+                TurnResult tr;
                 
                 if (team.isSenderTurn)
                 {
@@ -391,9 +393,26 @@ namespace NetworkControl.GamePlayNetwork
                     if (!isAnswerCorrect)
                     {
                         team.translateFailScore += 1;
+
+                        tr = new TurnResult()
+                        {
+                            isSender = true,
+                            isSuccess = false,
+                            turnCode = answer
+                        };
+                        
                         Debug.Log($"Team{team.teamIndex} - Sender Turn get 1 fail:\n" +
                                   $"code:{answer[0]},{answer[1]},{answer[2]}\n" +
                                   $"answer:{teamAnswerReverse[0]},{teamAnswerReverse[1]},{teamAnswerReverse[2]}");
+                    }
+                    else
+                    {
+                        tr = new TurnResult()
+                        {
+                            isSender = true,
+                            isSuccess = true,
+                            turnCode = answer
+                        };
                     }
                 }
                 else
@@ -402,11 +421,29 @@ namespace NetworkControl.GamePlayNetwork
                     if (isAnswerCorrect)
                     {
                         team.decodeSuccessScore += 1;
+                        
+                        tr = new TurnResult()
+                        {
+                            isSender = false,
+                            isSuccess = true,
+                            turnCode = answer
+                        };
+                        
                         Debug.Log($"Team{team.teamIndex} - Decode Turn get 1 success:\n" +
                                   $"code:{answer[0]},{answer[1]},{answer[2]}\n" +
                                   $"answer:{teamAnswerReverse[0]},{teamAnswerReverse[1]},{teamAnswerReverse[2]}");
                     }
+                    else
+                    {
+                        tr = new TurnResult()
+                        {
+                            isSender = false,
+                            isSuccess = false,
+                            turnCode = answer
+                        };
+                    }
                 }
+                team.OnTeamEndTurnWithTurnResult(tr);
             }
 
             #if UNITY_EDITOR

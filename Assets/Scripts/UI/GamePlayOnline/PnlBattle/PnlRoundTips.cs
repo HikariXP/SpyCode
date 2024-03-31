@@ -13,10 +13,8 @@ using UI.GamePlayOnline;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PnlRoundTips : MonoBehaviour
+public class PnlRoundTips : MonoBehaviour, IInitAndReset
 {
-
-    
     [Header("WaitForEnemyMask")]
     public GameObject waitForEnemyMask;
     //Team Code Show
@@ -26,6 +24,15 @@ public class PnlRoundTips : MonoBehaviour
 
     private StringBuilder _sb = new StringBuilder();
     private char dividesSymbol = '.';
+
+    [SerializeField]
+    private PnlTurnResult _pnlTurnResult;
+
+    public void Awake()
+    {
+        // UISystem.Instance.UI_RegisterIInit(_pnlTurnResult);
+        _pnlTurnResult.UI_Init();
+    }
 
     private void Start()
     {
@@ -68,5 +75,15 @@ public class PnlRoundTips : MonoBehaviour
     {
         EndWaitForEnemyMask();
         UISystem.Instance.OnPlayerCancel();
+    }
+
+    public void UI_Init()
+    {
+        
+    }
+
+    public void UI_Reset()
+    {
+        
     }
 }

@@ -81,6 +81,7 @@ public class PnlDecode : MonoBehaviour
         var answer = _inputCode.ToArray();
         UISystem.Instance.OnPlayerConfirm(answer);
         _inputCode.Clear();
+        txtDecodeDisplay.text = string.Empty;
         gameObject.SetActive(false);
     }
     

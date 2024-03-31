@@ -231,12 +231,12 @@ namespace Module.NetworkControl
         /// </summary>
         public void OnTeamMemberConfirmDecode(int[] code)
         {
-            //如果是传递方，需要等待对方破译方提交
-            if (!canDecodde)
-            {
-                // 提示需要先等敌方先破译。
-                return;
-            }
+            // //如果是传递方，需要等待对方破译方提交
+            // if (!canDecodde)
+            // {
+            //     // 提示需要先等敌方先破译。
+            //     return;
+            // }
 
             isDecodeConfirm = true;
             currentTurnDecode = code;
@@ -258,6 +258,15 @@ namespace Module.NetworkControl
             {
                 var connectionToClient = player.netIdentity.connectionToClient;
                 player.Rpc_TeamMemberCancelConfirm(connectionToClient);
+            }
+        }
+
+        [Server]
+        public void OnTeamEndTurnWithTurnResult(TurnResult tr)
+        {
+            foreach (var member in _members)
+            {
+                member.TargetRpc_OnTurnEnd(member.connectionToClient, tr);
             }
         }
 

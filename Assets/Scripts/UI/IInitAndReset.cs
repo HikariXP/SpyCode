@@ -6,7 +6,13 @@
 
 public interface IInitAndReset
 {
+    /// <summary>
+    /// 需要自己写镜像卸载对于事件
+    /// </summary>
     public void UI_Init();
 
+    /// <summary>
+    /// 战局结束后回到房间的操作
+    /// </summary>
     public void UI_Reset();
 }

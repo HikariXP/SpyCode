@@ -208,4 +208,10 @@ public class PlayerUnit : NetworkBehaviour
     {
         GPNPlay.instance.PlayerCancelCode(this);
     }
+
+    [TargetRpc]
+    public void TargetRpc_OnTurnEnd(NetworkConnectionToClient _, TurnResult tr)
+    {
+        EventManager.instance.TryGetArgEvent<TurnResult>(EventDefine.BATTLE_TURN_END).Notify(tr);
+    }
 }
