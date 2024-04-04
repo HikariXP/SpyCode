@@ -43,7 +43,13 @@ namespace Module.NetworkControl
     {
         public int teamIndex;
 
+        
         private Queue<PlayerUnit> _members = new Queue<PlayerUnit>();
+
+        /// <summary>
+        /// 队伍内成员数量
+        /// </summary>
+        public int memberCount => _members.Count;
         
         /// <summary>
         /// 服务器给的10个词语

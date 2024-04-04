@@ -149,30 +149,13 @@ namespace NetworkControl.GamePlayNetwork
         /// <returns></returns>
         private bool CheckTeamMemberCount()
         {
-            var playersInRoom = playerUnits;
-            if(playersInRoom.Count<4)return false;
-            // if(playersInRoom.Count<2)return false;
-
-            int teamACount = 0;
-            int teamBCount = 0;
-
-            
-            for (int i = 0; i < playersInRoom.Count; i++)
+            foreach (var team in _teams)
             {
-                if (playersInRoom[i].playerTeamIndex == 0)
-                {
-                    teamACount += 1;
-                }
-                else
-                {
-                    teamBCount += 1;
-                }
+                if(team.memberCount >= 2) continue;
+                return false;
             }
-            if (teamACount == teamBCount)
-            {
-                return true;
-            }
-            return false;
+
+            return true;
         }
 
         /// <summary>
