@@ -288,7 +288,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: a6be34dd6b55daa428773c2952b6c5a2, type: 3}
+  m_Texture: {fileID: 2800000, guid: 3cb76b6bd47dc5e499083bf94baaea9e, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1114,6 +1114,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 578647361}
     m_Modifications:
+    - target: {fileID: 1455237810715112272, guid: cddb1cac2a6da484caffc03e875e1410, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1455237811404593776, guid: cddb1cac2a6da484caffc03e875e1410, type: 3}
       propertyPath: m_Name
       value: PnlRoundTips
@@ -1462,7 +1466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4190537913619588167, guid: 058733f7e40deb941a8bcb7563632761, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4190537913619588167, guid: 058733f7e40deb941a8bcb7563632761, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1656,7 +1660,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6858742901471196352, guid: a8b8745dddca85c418c0110e9b083f74, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6858742901471196352, guid: a8b8745dddca85c418c0110e9b083f74, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1885,6 +1889,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8711858308090008779, guid: 1911f3014876e9b46b48bc4402c2bdea, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8711858308480221594, guid: 1911f3014876e9b46b48bc4402c2bdea, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8711858308640252317, guid: 1911f3014876e9b46b48bc4402c2bdea, type: 3}

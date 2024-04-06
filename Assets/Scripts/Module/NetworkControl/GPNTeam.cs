@@ -33,10 +33,7 @@ namespace Module.NetworkControl
         translate, 
         
         // 破译模式(不显示词语，显示破译面板{笔记系统，破译输入等})
-        decode, 
-        
-        // 
-        
+        decode,
     }
 
     public class GPNTeam
@@ -86,6 +83,8 @@ namespace Module.NetworkControl
         /// 本回合
         /// </summary>
         public bool isSenderTurn;
+
+        private PlayerUnit senderPlayer;
 
         public GPNTeam()
         {
@@ -213,6 +212,7 @@ namespace Module.NetworkControl
             var currentTurnCode = turnInfo.currentTurnCode;
             if(currentTurnCode == null || currentTurnCode.Length == 0) return;
             SetCodeToSender(currentTurnCode);
+            SetMaskForOtherMemberNotSender();
         }
 
         /// <summary>
@@ -230,20 +230,28 @@ namespace Module.NetworkControl
 
             var connectionToClient = nextSender.connectionToClient;
             nextSender.Rpc_GPNPlaySetCode(connectionToClient, turnCode);
+            senderPlayer = nextSender;
         }
-        
+
+        /// <summary>
+        /// 给其他
+        /// </summary>
+        private void SetMaskForOtherMemberNotSender()
+        {
+            foreach (var member in _members)
+            {
+                if (member != senderPlayer)
+                {
+                    member.Rpc_ShowWaitForEnemyDecode(member.connectionToClient);
+                }
+            }
+        }
+
         /// <summary>
         /// 队伍玩家确认代码,确认过就不会删除
         /// </summary>
         public void OnTeamMemberConfirmDecode(int[] code)
         {
-            // //如果是传递方，需要等待对方破译方提交
-            // if (!canDecodde)
-            // {
-            //     // 提示需要先等敌方先破译。
-            //     return;
-            // }
-
             isDecodeConfirm = true;
             currentTurnDecode = code;
             foreach (var player in _members)
@@ -251,6 +259,20 @@ namespace Module.NetworkControl
                 var connectionToClient = player.netIdentity.connectionToClient;
                 player.Rpc_TeamMemberConfirmCode(connectionToClient, currentTurnDecode);
             }
+        }
+
+        /// <summary>
+        /// 当敌方提交确认代码后，我方解除约束
+        /// </summary>
+        public void OnEnemyConfirmDecode()
+        {
+            if(!isSenderTurn)return;
+            foreach (var member in _members)
+            {
+                member.Rpc_HideWaitForEnemyDecode(member.connectionToClient);
+            }
+
+            senderPlayer.Rpc_HideSenderSpeckMask(senderPlayer.connectionToClient);
         }
 
         /// <summary>
@@ -324,12 +346,6 @@ namespace Module.NetworkControl
 
         public void Remove(PlayerUnit playerUnit) 
         {
-            // if (members.Contains(playerUnit))
-            // {
-            //     members.Remove(playerUnit);
-            //     playerUnit.team = null;
-            // }
-
             List<PlayerUnit> tempCache = new List<PlayerUnit>();
             while (_members.Count > 0)
             {

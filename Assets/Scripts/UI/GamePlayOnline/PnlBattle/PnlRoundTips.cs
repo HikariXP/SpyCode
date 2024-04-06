@@ -4,12 +4,9 @@
  * Description: 用于处理一些置顶提示
  */
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
+using Module.EventManager;
 using NetworkControl.UI;
-using UI.GamePlayOnline;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,32 +22,45 @@ public class PnlRoundTips : MonoBehaviour, IInitAndReset
     private StringBuilder _sb = new StringBuilder();
     private char dividesSymbol = '.';
 
+    public GameObject pnlWaitForDecoder;
+    public GameObject pnlSenderSpeck;
+
     [SerializeField]
     private PnlTurnResult _pnlTurnResult;
 
     public void Awake()
     {
-        // UISystem.Instance.UI_RegisterIInit(_pnlTurnResult);
+        // TODO:重构一个集中管理器处理。
         _pnlTurnResult.UI_Init();
     }
 
     private void Start()
     {
         btnCancel.onClick.AddListener(OnPlayerClickCancel);
-    }
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_TEAM_MASK).Register(ShowWaitForDecoderUI);
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_SPEAK).Register(ShowSenderSpeak);
 
-    /// <summary>
-    /// 当此小回合结束后，显示5秒的赛局结果，并等待点击后关闭
-    /// </summary>
-    private void OnTurnEnd(TurnResult tr)
-    {
-        
     }
 
     private void OnDestroy()
     {
         btnCancel.onClick.RemoveAllListeners();
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_TEAM_MASK).Unregister(ShowWaitForDecoderUI);
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_SPEAK).Unregister(ShowSenderSpeak);
         _sb = null;
+    }
+
+    /// <summary>
+    /// 传递方等待对方提交密码
+    /// </summary>
+    private void ShowWaitForDecoderUI(bool isShow)
+    {
+        pnlWaitForDecoder.SetActive(isShow);
+    }
+
+    private void ShowSenderSpeak(bool isShow)
+    {
+        pnlSenderSpeck.SetActive(isShow);
     }
 
     public void BeginWaitForEnemyMask(int[] teamCode)

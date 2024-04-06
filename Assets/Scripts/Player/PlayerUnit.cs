@@ -2,12 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using Module.EventManager;
 using Module.NetworkControl;
 using Module.WordSystem;
 using NetworkControl.GamePlayNetwork;
 using NetworkControl.UI;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 
 public class PlayerUnit : NetworkBehaviour
 {
@@ -148,6 +149,25 @@ public class PlayerUnit : NetworkBehaviour
     #endregion
 
     #region Decode
+
+    [TargetRpc]
+    public void Rpc_HideWaitForEnemyDecode(NetworkConnectionToClient _)
+    {
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_TEAM_MASK).Notify(false);
+    }
+    
+    [TargetRpc]
+    public void Rpc_ShowWaitForEnemyDecode(NetworkConnectionToClient _)
+    {
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_TEAM_MASK).Notify(true);
+    }
+    
+    [TargetRpc]
+    public void Rpc_HideSenderSpeckMask(NetworkConnectionToClient _)
+    {
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_SPEAK).Notify(false);
+    }
+
     
     /// <summary>
     /// 客户端获取代码

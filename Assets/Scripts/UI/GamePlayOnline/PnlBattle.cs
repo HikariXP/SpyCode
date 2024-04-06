@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using Module.EventManager;
 using Module.WordSystem;
 using UnityEngine;
 
@@ -74,6 +75,7 @@ namespace UI.GamePlayOnline
             }
 
             pnlWord.ShowCode(codes);
+            EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_SENDER_SPEAK).Notify(true);
         }
 
         public void ResetToDefault()

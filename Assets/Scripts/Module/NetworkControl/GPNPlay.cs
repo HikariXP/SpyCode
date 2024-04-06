@@ -299,6 +299,11 @@ namespace NetworkControl.GamePlayNetwork
         {
             var playerTeam = answerPlayer.team;
             playerTeam.OnTeamMemberConfirmDecode(playerAnswerCodes);
+            foreach (var team in _teams)
+            {
+                if(team == playerTeam)continue;
+                team.OnEnemyConfirmDecode();
+            }
 
             CheckTurn();
         }
@@ -379,7 +384,6 @@ namespace NetworkControl.GamePlayNetwork
 
                         tr = new TurnResult()
                         {
-                            isSender = true,
                             isSuccess = false,
                             turnCode = answer
                         };
@@ -392,7 +396,6 @@ namespace NetworkControl.GamePlayNetwork
                     {
                         tr = new TurnResult()
                         {
-                            isSender = true,
                             isSuccess = true,
                             turnCode = answer
                         };
@@ -407,7 +410,6 @@ namespace NetworkControl.GamePlayNetwork
                         
                         tr = new TurnResult()
                         {
-                            isSender = false,
                             isSuccess = true,
                             turnCode = answer
                         };
@@ -420,7 +422,6 @@ namespace NetworkControl.GamePlayNetwork
                     {
                         tr = new TurnResult()
                         {
-                            isSender = false,
                             isSuccess = false,
                             turnCode = answer
                         };

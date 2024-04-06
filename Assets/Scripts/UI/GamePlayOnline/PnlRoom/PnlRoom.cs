@@ -1,4 +1,4 @@
-using System;
+
 using NetworkControl.GamePlayNetwork;
 using System.Linq;
 using UnityEngine;
@@ -8,18 +8,32 @@ namespace UI.GamePlayOnline
 {
     public class PnlRoom : MonoBehaviour
     {
-        public Button BtnReady;
 
-        public Button BtnChangeTeam;
 
         public Transform PlayerInfoViewTransform;
 
         public GameObject PlayerInfoCellPrefab;
+        
+        
+        [Header("Button")]
+        public Button BtnReady;
+
+        public Button BtnChangeTeam;
+
+        public Button BtnBack;
 
         public void Start()
         {
             BtnReady.onClick.AddListener(CMD_PlayerReady);
             BtnChangeTeam.onClick.AddListener(CMD_PlayerChangeTeam);
+            BtnBack.onClick.AddListener(DisconnectAndBackToTitle);
+        }
+
+        private void Awake()
+        {
+            BtnReady.onClick.RemoveAllListeners();
+            BtnChangeTeam.onClick.RemoveAllListeners();
+            BtnBack.onClick.RemoveAllListeners();
         }
 
         public void RefreshShow()
@@ -62,6 +76,11 @@ namespace UI.GamePlayOnline
         private void CMD_PlayerChangeTeam()
         {
             BattleHelper.LocalPlayerUnit.Cmd_ChangeTeam();
+        }
+
+        private void DisconnectAndBackToTitle()
+        {
+            
         }
 
         #endregion

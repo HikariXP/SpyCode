@@ -1,18 +1,15 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+/*
+ * Author: CharSui
+ * Created On: 2024.03.31
+ * Description: 用于显示当前回合的信息
+ */
 using System.Text;
-using NetworkControl.UI;
+using Module.EventManager;
 using UnityEngine;
 using UnityEngine.UI;
 
 public struct TurnResult
 {
-    /// <summary>
-    /// 是否传递方
-    /// </summary>
-    public bool isSender;
-        
     /// <summary>
     /// 是否破译成功
     /// </summary>

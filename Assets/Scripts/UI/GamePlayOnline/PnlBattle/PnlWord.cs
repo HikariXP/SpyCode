@@ -1,11 +1,11 @@
+/*
+ * Author: CharSui
+ * Created On: 2024.04.06
+ * Description: 展示战局所选的单词
+ */
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Module.WordSystem;
-using NetworkControl.GamePlayNetwork;
-using NetworkControl.UI;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +21,6 @@ namespace UI.GamePlayOnline
         
         public Button BtnConfirmWordList;
         public Button BtnDecode;
-        
 
         [Header("Code")]
         public Text TxtCode;
@@ -47,9 +46,9 @@ namespace UI.GamePlayOnline
             
         }
 
-        public void ShowCode(int[] code)
+        public void ShowCode(int[] codes)
         {
-            if (code == null)
+            if (codes == null)
             {
                 Debug.LogError("反馈给开发者，这里有问题[PnlWord.ShowCode获取代码为空]");
                 return;
@@ -57,9 +56,9 @@ namespace UI.GamePlayOnline
 
             SetDecodeButton(false);
             string displayCode = String.Empty;
-            for (int i = 0; i < code.Length; i++)
+            foreach (var code in codes)
             {
-                displayCode += code[i] + ".";
+                displayCode += code + ".";
             }
 
             TxtCode.text = $"// {displayCode} //";
