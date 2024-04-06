@@ -80,17 +80,13 @@ public class PnlTurnResult : MonoBehaviour, IInitAndReset
     /// <param name="tr"></param>
     private void Show(TurnResult tr)
     {
-        // if (_BtnCancelShowCoroutine != null)
-        // {
-        //     StopCoroutine(_BtnCancelShowCoroutine);
-        // }
         _Animator.Play("show");
 
-        var code = tr.turnCode;
+        var codes = tr.turnCode;
         _sb.Clear();
-        for (int i = code.Length-1; i >= 0 ; i--)
+        foreach (var code in codes)
         {
-            _sb.Append(code[i]);
+            _sb.Append(code);
             _sb.Append(dividesSymbol);
         }
         _TxtTurnCode.text = _sb.ToString();
@@ -102,15 +98,7 @@ public class PnlTurnResult : MonoBehaviour, IInitAndReset
         fail.SetActive(!tr.isSuccess);
         _BtnCancel.interactable = true;
         _BtnCancel.gameObject.SetActive(true);
-        // 这个逼协程还得GO开着才能用
-        // _BtnCancelShowCoroutine = StartCoroutine(E_BtnCancelShowCoroutine());
     }
-
-    // private IEnumerator E_BtnCancelShowCoroutine()
-    // {
-    //     yield return new WaitForSeconds(_BtnCancelShowTime);
-    //     _BtnCancel.interactable = true;
-    // }
 
     private void Hide()
     {
