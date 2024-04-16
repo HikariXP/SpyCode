@@ -1,3 +1,4 @@
+using System;
 using Mirror;
 using NetworkControl.GamePlayNetwork;
 using System.Collections;
@@ -18,12 +19,16 @@ public class PnlProfile : MonoBehaviour
 
     void Start()
     {
-        //加载曾经保存的个签和姓名
         LoadProfile();
 
         RegisterButtonClickCallBack();
 
         server = GPNServer.instance;
+    }
+
+    private void OnDestroy()
+    {
+        UnregisterButtonClickCallBack();
     }
 
     void RegisterButtonClickCallBack()
@@ -32,8 +37,14 @@ public class PnlProfile : MonoBehaviour
         ClientButton.onClick.AddListener(PlayerDoStartClient);
     }
 
+    void UnregisterButtonClickCallBack()
+    {
+        HostButton.onClick.RemoveAllListeners();
+        ClientButton.onClick.RemoveAllListeners();
+    }
+
     /// <summary>
-    /// 客户端发起Host，开始广播服务器
+    /// 
     /// </summary>
     void PlayerDoStartHost()
     {
@@ -45,16 +56,16 @@ public class PnlProfile : MonoBehaviour
     }
 
     /// <summary>
-    /// 客户端发起Client,开始寻找服务器
+    /// 
     /// </summary>
     void PlayerDoStartClient()
     {
         if (!CheckAndSaveProfile()) return;
 
         server.StartFindServer();
-
-        Debug.Log("PnlProfile:StartFindServer");
     }
+
+
 
 
     private void SaveProfile()
@@ -91,19 +102,4 @@ public class PnlProfile : MonoBehaviour
 
         return true;
     }
-
-    //private void OnPlayerConnectedToServer()
-    //{
-    //    UIManager.instance.ChangePanel(1);
-    //}
-
-    //public override void Reset()
-    //{
-    //    Debug.Log("Reset");
-    //}
-
-    //public override void Init()
-    //{
-    //    server = UIManager.instance.GPN_Server;
-    //}
 }
