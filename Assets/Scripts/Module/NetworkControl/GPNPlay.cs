@@ -37,6 +37,7 @@ using UnityEngine;
 using Mirror;
 using System.Linq;
 using Module.CommonUtil;
+using Module.EventManager;
 using Module.NetworkControl;
 using Module.WordSystem;
 using NetworkControl.UI;
@@ -98,9 +99,9 @@ namespace NetworkControl.GamePlayNetwork
         [Server]
         private void ResetBattleBase()
         {
-            for (int i = 0; i < _teams.Count; i++)
+            foreach (var team in _teams)
             {
-                _teams[i].Reset();
+                team.Reset();
             }
         }
 
@@ -112,7 +113,7 @@ namespace NetworkControl.GamePlayNetwork
             {
                 var player = playersInRoom.ElementAt(i);
                 player.isReady = false;
-                player.Rpc_GPNPlayGameOver();
+                // player.Rpc_GPNPlayGameOver();
                 // UISystem.Instance.GPNPlay_SetToRoomUI();
             }
         }
@@ -149,12 +150,24 @@ namespace NetworkControl.GamePlayNetwork
         /// <returns></returns>
         private bool CheckTeamMemberCount()
         {
-            foreach (var team in _teams)
+            int teamAcount = 0;
+            int teamBcount = 0;
+
+            var playersInRoom = playerUnits;
+            foreach (var member in playersInRoom)
             {
-                if(team.memberCount >= 2) continue;
-                return false;
+                if (member.playerTeamIndex == 0)
+                {
+                    teamAcount += 1;
+                }
+                else
+                {
+                    teamBcount += 1;
+                }
             }
 
+            if (teamAcount < 2 || teamBcount < 2) return false;
+            
             return true;
         }
 
@@ -166,9 +179,9 @@ namespace NetworkControl.GamePlayNetwork
         private bool CheckReadyStateIsReadyForGame()
         { 
             var playersInRoom = playerUnits;
-            for (int i = 0; i < playersInRoom.Count; i++)
+            foreach (var member in playersInRoom)
             {
-                if (!playersInRoom[i].isReady)
+                if (!member.isReady)
                 {
                     return false;
                 }
@@ -479,21 +492,45 @@ namespace NetworkControl.GamePlayNetwork
         /// <returns></returns>
         private bool IsHaveWinner()
         {
+            GPNTeam winnerTeam = null;
+            GPNTeam loserTeam = null;
+            
+            // 先检查失败
             foreach (var team in _teams)
             {
-                Debug.Log( $"[Team{team.teamIndex}]:Decode:{team.decodeSuccessScore} - fail:{team.translateFailScore}");
-                if (team.decodeSuccessScore >= _DecodeSuccessScore)
-                {
-                    // winnerTeam = team;
-                    return true;
-                }
-
                 if (team.translateFailScore >= _TranslateFailScore)
                 {
-                    return true;
+                    loserTeam = team;
+                    foreach (var tempTeam in _teams)
+                    {
+                        if (tempTeam != loserTeam) winnerTeam = tempTeam;
+                    }
                 }
             }
-            return false;
+            
+            // 再检查胜利
+            foreach (var team in _teams)
+            {
+                if (team.decodeSuccessScore >= _DecodeSuccessScore)
+                {
+                    winnerTeam = team;
+                }
+            }
+
+            var haveWinner = winnerTeam != null;
+            if (!haveWinner)
+            {
+                return false;
+            }
+            
+            foreach (var team in _teams)
+            {
+                if (winnerTeam == team) continue;
+                team.GameEnd(false);
+            }
+            winnerTeam.GameEnd(true);
+
+            return true;
         }
 
         private bool IsOverTurnCount()
@@ -576,6 +613,7 @@ namespace NetworkControl.GamePlayNetwork
         {
             //UI切换到GamePlay
             UISystem.Instance.GPNPlay_SetToPlayUI();
+            EventManager.instance.TryGetNoArgEvent(EventDefine.BATTLE_GAME_START).Notify();
         }
 
         #endregion

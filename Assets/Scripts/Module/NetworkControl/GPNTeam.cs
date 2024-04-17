@@ -298,6 +298,14 @@ namespace Module.NetworkControl
             }
         }
 
+        public void GameEnd(bool isSuccess)
+        {
+            foreach (var member in _members)
+            {
+                member.Rpc_GPNPlayGameOver(member.connectionToClient, isSuccess);
+            }
+        }
+
         #region Low Level
         
         private bool TryGetNextSender(out PlayerUnit nextSender)

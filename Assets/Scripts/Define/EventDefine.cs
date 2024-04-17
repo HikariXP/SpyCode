@@ -12,6 +12,8 @@ public struct EventDefine
     
     
     // Battle相关2000开始
+    public const uint BATTLE_GAME_START = 1999;
+    
     public const uint BATTLE_PLAYER_CONFIRM_WORDLIST = 2000;
 
     public const uint BATTLE_TURN_END = 2001;

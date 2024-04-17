@@ -5,7 +5,6 @@
  */
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using NetworkControl.UI;
@@ -78,6 +77,8 @@ public class PnlDecode : MonoBehaviour
 
     private void OnConfirmBtnClick()
     {
+        if(_inputCode.Count != 3) return;
+        
         var answer = _inputCode.ToArray();
         UISystem.Instance.OnPlayerConfirm(answer);
         _inputCode.Clear();

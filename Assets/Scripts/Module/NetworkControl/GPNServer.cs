@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Module.EventManager;
 using UnityEngine;
 
 
@@ -101,12 +102,20 @@ namespace NetworkControl.GamePlayNetwork
         #region Discovery
 
         /// <summary>
-        /// ???????????????????????????????????
+        /// 开始寻找局域网内的服务器
         /// </summary>
         public void StartFindServer()
         {
             m_Discovery.StartDiscovery();
-            Debug.Log("Start Discovery Server");
+            EventManager.instance.TryGetNoArgEvent(EventDefine.SERVER_START_DISCOVER).Notify();
+            Debug.Log($"[{nameof(GPNServer)}]Start Discovery Server");
+        }
+
+        public void StopFindServer()
+        {
+            m_Discovery.StopDiscovery();
+            EventManager.instance.TryGetNoArgEvent(EventDefine.SERVER_STOP_DISCOVER).Notify();
+            Debug.Log($"[{nameof(GPNServer)}]Stop Discovery Server");
         }
 
         public void OnDiscoveryFindServer(ServerResponse serverResponse)

@@ -194,12 +194,12 @@ public class PlayerUnit : NetworkBehaviour
         Debug.Log($"[{nameof(PlayerUnit)}]Rpc_GPNPlayGetScore({successScore}, {failScore})");
     }
 
-    [ClientRpc]
-    public void Rpc_GPNPlayGameOver()
+    [TargetRpc]
+    public void Rpc_GPNPlayGameOver(NetworkConnectionToClient _, bool isSuccess)
     {
         // 这种代码在纯Server-Client中不需要，但是在Host-Client中需要
-        if (!isLocalPlayer) return;
         UISystem.Instance.GPNPlay_SetToRoomUI();
+        EventManager.instance.TryGetArgEvent<bool>(EventDefine.BATTLE_GAME_END).Notify(isSuccess);
     }
 
     //如果引入TargetRpc，则需要一如networkConnection的传参放到第一位
